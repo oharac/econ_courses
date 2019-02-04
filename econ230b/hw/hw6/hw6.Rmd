@@ -131,7 +131,7 @@ However, Jacob is a buttierface! $$buttface_j = butt + face(Jacob)$$
 
 $buttface_j>buttface_v$
 
-everybody is a buttface
+nobody is a buttface. everyone is a good person.
 
 ### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
 
