@@ -1,0 +1,57 @@
+
+From this simplified analysis many interesting implications arise.  To begin with, we can explore the effects of several TURF management policies intended to reduce or eliminate the rate of defection, and thus ensure the long-term stability and value of the fishery.  From a starting point at which an established TURF is facing the end of a subsidy for collective enforcement, we must consider the population of fishers to be given, and thus must work with participation costs determined by the population's cost distribution.  However, from a starting point prior to the establishment of the TURF in the first place, we can consider policies that _ex ante_ affect the cost distribution of the fishers participating in the TURF.  Finally, we can probe the decision rule fishers use to decide whether to defect or cooperate to identify some interesting issues.
+
+## Implications for TURF management
+
+Assuming a situation in which an external agency has over time facilitated the development of a cooperative fishery through generous subsidies for collective enforcement, the cost of participation is hardly a concern for individual fishers.  However, upon the demise of the subsidy, and without additional policy in place, each fisher would suddenly be responsible for his or her individual participation costs, resulting in the possible collapse of the fishery as demonstrated in the naive model.  However, presuming that there is already in place an authority (e.g. managing committee) with the ability to monitor fishers and expel defectors, there may be an opportunity for this authority to act as a social planner to distribute the costs and benefits in such a way as to prevent defection.
+
+First let us assume a social planner with complete and perfect information about the participation costs of all fishers.  If she were to hold back enough profit from the fishing harvest to cover the participation costs of all fishers, our dynamic programming equation would include a participation cost term $c_{pi}$: 
+\begin{align}
+  V_{t}(x_{t}) &= \sum_{i=1}^n\left(\max_{e_{it}}\left[p(x_{it} - e_{it}) 
+      - \int_{e_{it}}^{x_{it}}\frac{B}{s}ds - c_{pi}
+      + \delta V_{it+1}(G(e_{it}))\right]\right)
+\end{align}
+Since the cost of participation for each fisher is independent of the stock size or the harvest, the $c_{pi}$ term drops out of the first-order conditions required to maximize the value function; the participation cost similarly has no impact on the open access equilibrium stock size.  While the participation costs clearly affect the value, they do not affect the patch-specific policy functions $e_i^*$.  In this situation, the participation costs are perfectly internalized by the fishery, which is illustrated in Fig. 3C as the difference between the green line ($c_p$ subsidized) and orange line ($c_p$ internalized).
+
+Unfortunately, it is not realistic to think that the social planner can observe the participation costs of the individual fishers, even if she is aware of the distribution of costs in the population.  With participation costs imperfectly observed, fishers would be likely to overstate their personal costs, resulting in overpayment and an inefficient outcome.  If instead the social planner were to hold back some portion of profits and pay these back to fishers in equal amounts, there would again be inefficiencies: low-cost fishers would receive more than required to maintain their participation, while high-cost fishers may not receive enough to deter them from defecting.
+
+A policy that treated participation in collective enforcement as a tradeable obligation could allow fishers with high participation costs (e.g., opportunity for a high-wage second job outside of fishing hours) to pay another fisher to cover their obligation (e.g., take a second shift on patrol).  The threshold cost between high-cost and low-cost fishers, i.e. the participation cost at which the fisher is indifferent between cooperation and defection, can be determined from equation (6) by setting the two sides equal: 
+\begin{align*}
+  p_{obs} \times \frac{\delta}{1 - \delta} (b_{it} - c_{pi}) = 
+      c_{pi} - \frac{b_{it}}{n}
+\end{align*}
+and then rearranging to determine the threshold cost $c_p^{\tau}$:
+\begin{align}
+  c_p^{\tau} = \frac{b \left(\frac{1}{n} + \frac{\delta}{1-\delta} p_{obs}\right)}
+       {\left(1 + \frac{\delta}{1-\delta} p_{obs}\right)}
+\end{align}
+As long as there were sufficient low-cost fishers willing to be paid to take on the obligations of the high-cost fishers, defection could be avoided entirely.  
+
+In fact, tradeable obligations could be quite efficient if transaction costs were low and marginal participation costs (i.e. opportunity cost of taking on an extra patrol shift, presumably an increasing and convex function of the number of shifts) of low-cost fishers were sufficiently low, such that even fishers below the defection threshold could still find benefit in paying a lower-cost fisher to patrol while they reap the benefits of avoiding their participation cost.  Bilateral trades or a double auction mechanism (for example) could facilitate such a system, which would clearly be Pareto dominant over a strict non-tradeable obligation even ignoring the impacts of poaching.
+
+The policies discussed previously assume a pre-determined pool of fishers already established in the fishery, with their concomitant distribution of participation costs.  However, if attention were paid to participation costs at the initial establishment of the fishery, a pool of fishers could be selected that minimize participation costs in the first place and thus minimize or eliminate the possibility of defection.  One simple mechanism to achieve this would be a non-trivial buy-in price, determined for example as the market clearing price in a double auction that offers shares in the TURF.  Gibson and Koontz [-@gibson_1998] note the positive effect of a high buy-in price (coupled with limited recovery of investment upon exit) on sustained forest conservation in Indiana.  An auction of member shares in a TURF would ensure allocation of shares to those who place the highest value on membership, which would (all else equal) suggest those with the lowest participation costs.  Note this does not preclude the use of other management policies described above, such as tradeable obligations, but merely shifts the baseline of participation costs to a more favorable starting point from the standpoint of sustaining the fishery. 
+
+While here I have focused on a single established community with centralized management and internal profit sharing, Kaffine and Costello [-@kaffine_2011] point toward unitization, i.e. contractual profit sharing among decentralized harvesters with spatial externalities in a connected network of resource patches, as a potential mechanism by which cooperation may develop.  Unitization internalizes some or all of the spatial externalities of their harvest decisions, leading to better social outcomes which are then shared across the participants.  Their analysis of unitization with endogenous participation bears similarities to the model I have adapted from Bendor and Mookherjee [-@bendor_1987].  They conclude that voluntary coordination through profit sharing can arise organically, though in a system with spatial heterogeneity it may be challenging for participants to agree upon the redistribution of profits.
+
+
+## Community values in collective action 
+
+Certainly a reward/punishment scheme is helpful for sustaining cooperation in collective action, but trust is another critical component [@ostrom_1990; @heckathorn_1996; @poteete_2004].  What inferences about trust can we make from our model?  The original statement of the cooperation decision rule (eq. 6, restated here) assumed that the participant believes all others will cooperate, and that the current period benefit will otherwise continue into the future:  
+\begin{align}
+  p_{obs} \times \frac{\delta}{1 - \delta} (b_{it} - c_{pi}) > 
+      c_{pi} - \frac{b_{it}}{n}
+\end{align}
+Relaxing these assumptions, we can generalize the rule for cooperation:
+\begin{align}
+  p_{obs} \times \sum_{t=t_c+1}^{\infty} \delta^{t-t_c} (b_{it}(j) - c_{pi}) > 
+      c_{pi} - (j+1)\frac{b_{i,t_c}}{n}
+\end{align}
+where $t_c$ is the current time period.
+
+As noted previously, if the fisher believes $j$ others will defect (a lack of trust in others in the community), then the defection premium (right hand side) increases, adding $\frac{b_{it}}{n}$ for each additional presumed defector in this round.  In addition, if one believes others will defect, then it follows that the next-period benefit $b_{it_c+1}$ will be lower, reducing the expected value of benefit loss due to expulsion.  While the idea of lack of trust eroding cooperation is quite intuitive, this shows a mechanism by which this might occur, and potentially could be used to highlight the value of trust-building exercises within the community.
+
+Heterogeneity in costs and benefits can lead to perceptions of unfairness depending on how the community or institution account for it.  Literature on social preferences around inequality [e.g. @fehr_1999; @bolton_2000a; @charness_2002] suggests inequitable processes and outcomes potentially reduce utility of benefits, particularly for those on the receiving end of disadvantageous inequality.  Open, transparent, and representative institutions are critical to avoiding perceived inequity, making it easier to sustain long term cooperation. 
+
+Finally, social norms, while not generally sufficiently powerful on their own to sustain cooperation, can affect the costs associated with defection above and beyond the simple calculus of financial considerations.  For example, a fisher who defects may be expelled from the fishery yet still remain in the community, facing disapproval and disfavor in unrelated day to day interactions with community members.  This cost of social opprobrium adds to the potential financial loss for defection; intuitively, a tight-knit community thus promotes cooperation.
+
+<!-- Finally, it must be noted that institutions and the community are not isolated entities, but rather that institutions arise from and reflect the values of the community, and can in turn shape the preferences of the community members.  Gibson and Koontz [-@gibson_1998] studied the interplay between institutions and community in two similar forest management communities and found that institutions can reinforce particular values within the community that contribute to better social outcomes. -->

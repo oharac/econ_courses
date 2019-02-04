@@ -1,0 +1,67 @@
+---
+title: | 
+  | \hfill \Large{Course: Assignment}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+This site has plenty on using LaTeX in R Markdown: 
+
+* http://www.stat.cmu.edu/~cshalizi/rmarkdown/#math-in-r-markdown
+
+Mathematical displays are marked off with `\[` and `\]`, as in
+
+```
+\[
+e^{i \pi} = -1
+\]
+```
+
+\[
+e^{i \pi} = -1
+\]
+
+Note: seems like just typing the LaTeX into the doc works too, but these fences allow it to display live (with a hover) instead of having to wait for a knit.  Unfortunately seems like the brackets show up sometimes, or cause a failure when knitting to pdf; maybe set that up while writing, then delete the fences before knitting?
+
+In class we learned `\begin{align*}` but this page shows `\begin{eqnarray}` which seems equivalent? `align*` gets rid of equation numbers on the right hand side.
+
+\begin{enumerate}
+\item\textbf{this is bold text}
+    \begin{align*}
+        A &= \begin{bmatrix}
+            1 & 2 & 3\\
+            4 & 5 & 6
+          \end{bmatrix} 
+        \\[12pt]
+        B &= \begin{bmatrix}
+            1 & 2 & 3\\
+            4 & 5 & 6
+          \end{bmatrix} 
+          &\text{(first line)}
+    \end{align*}
+    
+\item\textbf{this is more bold text} this is some regular text 
+    \begin{align}
+        A &= \begin{bmatrix}
+            1 & 2 & 3\\
+            4 & 5 & 6
+          \end{bmatrix} 
+        \\[12pt]
+        B &= \begin{bmatrix}
+            1 & 2 & 3\\
+            4 & 5 & 6
+          \end{bmatrix} 
+          &\text{(first line)}
+    \end{align}
+\end{enumerate}
+
+Here's a site with info on PDFs from R Markdown using Pandoc: 
+
+* http://rmarkdown.rstudio.com/pdf_document_format.html

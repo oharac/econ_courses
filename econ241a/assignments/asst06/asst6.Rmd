@@ -1,0 +1,57 @@
+---
+title: "Econ241a assignment 6"
+author: "Casey O'Hara"
+output:
+  html_document:
+    toc: yes
+    number_sections: true
+    toc_float: false
+    code_folding: hide
+  pdf_document:
+    toc: no
+---
+
+# Prove the following theorem
+
+Theorem: If you want to minimize expected square error given the variable $x$,
+conditional expected value is right way to forecast. (Note that $\mathbb{E}[Y|X]$ is a function of $x$.) 
+
+$$y^e = argmin_{y^e} \mathbb{E}[(y − y^e)^2]$$
+
+$$y^e = \mathbb{E}[Y|X]$$
+
+Let us start with some arbitrary guess $g(X)$ as our estimator; we want to minimize $\mathbb{E}[(Y − g(X))^2]$:
+\begin{align*}
+  &\Rightarrow \mathbb{E}[(Y − \mathbb{E}[Y|X]) - 
+    (g(X) - \mathbb{E}[Y|X])^2]\\
+    &\hspace{40pt}\text{(add/subtract $\mathbb{E}[Y|X]$)}\\
+  &\Rightarrow \mathbb{E}[(Y − \mathbb{E}[Y|X])^2 + 
+    (g(X) - \mathbb{E}[Y|X])^2 - 2(g(X) - \mathbb{E}[Y|X])(Y - \mathbb{E}[Y|X])]\\
+    &\hspace{40pt}\text{(expand terms)}
+\end{align*}
+
+The last term drops out due to law of total probability: $\mathbb{E}[J] = \mathbb{E}[\mathbb{E}[J|K]]$
+
+\begin{align*}
+  &\mathbb{E}[Y - \mathbb{E}[Y|X]] = 
+    \mathbb{E}[(\mathbb{E}[Y - \mathbb{E}[Y|X])|X]\\
+    &\hspace{40pt}\text{(by law of total probability)}\\
+  &\Rightarrow \mathbb{E}[\mathbb{E}[Y|X] − \mathbb{E}[Y|X]] = 0
+\end{align*}
+
+Substituting back into our original work:
+
+\begin{align*}
+  &\mathbb{E}[(Y − \mathbb{E}[Y|X])^2 + 
+    (g(X) - \mathbb{E}[Y|X])^2 - 2(g(X) - \mathbb{E}[Y|X])(Y - \mathbb{E}[Y|X])]\\
+  &\Rightarrow \mathbb{E}[(Y − \mathbb{E}[Y|X])^2 + 
+    (g(X) - \mathbb{E}[Y|X])^2 - 2(g(X) - \mathbb{E}[Y|X])(0)]\\
+  &\Rightarrow \mathbb{E}[(Y − \mathbb{E}[Y|X])^2 + 
+    (g(X) - \mathbb{E}[Y|X])^2]\\
+\end{align*}
+
+Only the second term involves our estimator, so we can minimize that term by choosing our estimator to be the same as the conditional expected value: $g(X) = \mathbb{E}[Y|X]$.
+
+$$\blacksquare$$
+
+-----

@@ -1,0 +1,75 @@
+
+<!-- While this model may shed light on the dynamics of collective action in a generalized natural resource context with heterogeneous costs and benefits to users, it improves conceptual understanding to consider the problem in a specific context.  After developing the model in this context, I will show that the context-specific assumptions can be relaxed and generalized.   -->
+
+For concreteness, here I will consider a fishing community with an established Territorial User Rights Fishery (TURF) concession, a rights-based management system that assigns spatial property rights over an otherwise common pool resource to incentivize sustainable management of the resource and improve welfare for users [@cancino_2007; @wilen_2012; @costello_2015b].  To focus on the effects of participation cost heterogeneity, here I assume a simple situation in which users are all equal in ability to harvest a target shellfish species, with harvesting costs and profits shared across the community.  As a requirement for membership, are all expected to participate in collective action to benefit the TURF. The TURF is well-estabished, with a known optimal harvest policy and effective exclusion of poachers due to collective patrolling of the fishing grounds.  
+
+An external organization such as a governmental agency has to date supported the collective action via subsidies or direct payments for effort.  However, the organization has recently decided to invest elsewhere, leaving the fishing community responsible for the costs of maintaining the collective action patrols.  While the community continues to share the costs and benefits of harvest, individual participants may bear different costs related to the patrol aspect, such as real costs of fuel or boat maintenance, or opportunity costs such as inability to take on a night job for extra income.  If any community members decide to defect on their patrol duties, poachers will claim a portion of the stock, bringing the residual stock below the optimal escapement.
+
+## Fishery model
+
+The fishery model I adopt is essentially identical to the model used by Clark [-@clark_1973], though my notation differs and I apply it in a discrete-time dynamic model across $n$ patches managed by a community of $n$ fishers.  At the end of each period, the residual stock in patch $i \in 1, ..., n$ grows according to a density dependent growth function of the escapement 
+\begin{align}
+  x_{it+1} = G(e_{it}) = e_{it}(1 + r_i(1 - e_{it}/K_i)),
+\end{align}
+where $x_{it+1}$ is the next-period stock in the patch, $e_{it}$ is the escapement stock size in the patch, $r_i$ is intrinsic growth rate of the stock species in patch $i$, and $K_i$ is the carrying capacity of the species in the patch.
+
+Each patch is identical in productivity, each fisher is equally skilled at fishing, and all fishers share profits from the fishery, so all benefit equally from the harvest itself.  Each unit of harvest is sold at price $p$; fishers are price-takers as the level of harvest is not sufficient to affect the market price.  However, cost of harvest is dependent on stock size -- as stock density declines, more effort must be expended for each unit of harvest -- such that $c_h(x_i) = B_i/x_i$ where $B_i = B$ is a constant.  Profit for each patch in period $t$ is then
+\begin{align}
+  \pi_{it} = \pi_{it}(e_{it}, x_{it}) = p(x_{it} - e_{it}) -  
+    \int_{e_{it}}^{x_{it}}\frac{B_i}{s}ds
+\end{align}
+
+Each period, the fisher harvests down to the escapement $e_i$ determined based on an assumption of complete exclusion of outsiders from the fishing grounds; prior to $t=0$, enforcement effort is subsidized such that complete exclusion holds and participation cost for each fisher is zero.  Across all $n$ patches in the TURF, the dynamic programming equation would be set up as:
+\begin{align}
+  V_{t}(x_{t}) &= \sum_{i=1}^n\left(\max_{e_{it}}\left[p(x_{it} - e_{it}) - \int_{e_{it}}^{x_{it}}\frac{B}{s}ds 
+      + \delta V_{it+1}(G(e_{it}))\right]\right)
+\end{align}
+Using backward induction from time $t = T$ assuming $V_T(x_T) = 0$, and assuming all harvest generates profit for the TURF (i.e. no stock is taken by poachers), we can numerically determine a time-independent optimal escapement policy $e_i^* = x_{it} - h_{it}$ where $e$ is escapement and $h$ is harvest.  
+
+To determine the open access escapement $e_{iOA}$ for each patch $i$, we can simply find the stock size that, in steady state, equates the rent from harvest to the cost of harvest, driving profit to zero. Clark (1973) approximates open access equilibrium that dissipates rent $R$ against cost $C$, in other words where profit $\pi_{it}(e_{it}, x_{it}) = 0$.  However, solving numerically and using $C = \int_{e_{i}}^{x_{i}} \frac{B}{s}ds$, we can identify more accurately the escapement level for patch $i$ where $R_i - C_i = 0$ by solving an implicit function of stock size at open access equilibrium:
+\begin{align}
+  \pi_{it}(e_{it}, x_{it}) = p(x_{it} - e_{it}) 
+      - \int_{e_{it}}^{x_{it}}\frac{B}{s}ds = 0 \\
+  \Longrightarrow pG(x_{iOA}) = B\ln\frac{x_{iOA} + G(x_{iOA})}{x_{iOA}}
+\end{align}
+In the naive model, at time $t=0$, the enforcement subsidy vanishes, allowing for the possibility of defection and thus poaching.  Participants decide to defect in the current period $t$ based on the benefits and costs of harvest and participation in prior period $t-1$.  For a community with $n$ fishers across $n$ patches, each defection leaves one patch unprotected and thus exposed to poaching.  Assuming that poachers bear the same harvest cost as fishers and sell their ill-gotten harvest at the market price, they will reduce the stock in an exposed patch to the open access equilibrium for that patch, while protected patches will be harvested to the optimal escapement level.
+
+The timing of events within each period and each patch is thus: 
+
+* Period $t$
+    1) Each participant ($i$, corresponding to patch $i$) decides to defect in period $t$ based on personal participation cost $c_{pi}$ and individual benefit in prior period $b_{it-1}$.
+    2) stock level $x_{it}$ is observed.
+    3) harvest occurs to the optimal escapement such that $h_{it} = x_{it} - e_i^*$.
+    4) harvest is sold for profit $\pi_{it}(e_i^*, x_{it})$, generating overall benefit $b$, and summed and shared equally across all fishers.
+    5) if participant defects, poaching occurs in the unprotected patch such that $e_{it} = e_{iOA} \leq e_i^*$.
+    6) Total escapement from all patches, poached or protected, redistributes throughout the fishery such that $e_{it}$ is uniform in each patch.
+    7) For each patch $i$, escapement $e_{it}$ grows such that $x_{it+1} = G(e_{it})$.
+    8) participants observed defecting in this round are expelled and replaced with a new participant randomly drawn from the distribution.
+* Period $t+1$
+    1) each participant makes a decision to cooperate or defect in this period, based on per-capita benefits accrued in period $t$, i.e. $b_{it}$.
+    2) stock level $x_{it+1}$ is observed.
+    3) ...
+
+
+## Participation model
+
+Participation in the fishery includes responsibilities to participate in the collective action provision of public good.  But such cooperation, particularly ongoing cooperation, is made more difficult by the temptation to free ride if costs are high relative to benefits.
+
+There is a large literature on conditional cooperation, beginning with Friedman [-@friedman_1971], to maintain cooperation in a repeated game.  Several punishment schemes are often proposed, including a decentralized scheme in which if any defection is observed, all members agree to subsequently defect for one or more periods.  If the collective action is intended to exclude outsiders, clearly this is not a good outcome for natural resource management, as it immediately results in no exclusion at all, and a collapse to open access; in any case, many of the challenges of establishing initial cooperation will rear up again at the conclusion of the punishment period.  Instead I begin from an assumption of a centralized authority (e.g. a managing committee) with the ability to punish those observed defecting by expulsion from the group.
+
+While all members benefit equally from fishing (sharing harvest costs and profits), each member may bear a different cost $c_{pi}$ of participating in the collective action, e.g. differences in opportunity cost of time spent patrolling.  These costs to individual fishers are independent of harvest and stock, and are initially randomly drawn from some distribution $f$.
+
+Users whose participation costs are high might defect if their perceived one-shot benefit from defection exceeds the possible loss of a future stream of benefits if expelled from the community.  Defection of the highest-cost participant may lead to the degradation of the resource, leading to reduced total benefits in the future, potentially inducing the defection of the next-highest-cost participant, and so in in a feedback loop that leads to the total collapse of cooperation.  However, if defectors are expelled and replaced with sufficiently lower-cost participants, cooperation may be restored leading back to a collective action equilibrium.  Factors that significantly affect the rate of collapse are group size, the distribution (mean and variance) of the participation costs, and the likelihood of expulsion for defection.
+
+Each period, fishers will compare the long-term benefits from participating in the TURF with the costs of contributing to the public good.  If every fisher participates in collective enforcement, then the total benefit to the TURF in each period is simply the profit of the TURF over an open access situation, which is simply the profit of the TURF (since open access profits devolve to zero).  
+
+Following Bendor and Mookherjee [-@bendor_1987], I model the cooperation/defection choice as an $n$-person prisoner's dilemma.  Since plots and fishers are homogeneous, the per-participant contribution to the benefit is $b_{it} = \pi_t(e_i^*, x_{it}) = \frac{1}{n}\sum_{i=1}^n\pi_t(e_i^*, x_{it})$.  If all other members are cooperating, the benefit to the $i$th member of cooperation is $b_{it} - c_{pi}$; if the $i$th member chooses to defect, he will earn a one-time defection premium of $c_{pi} - b_{it}/n$ but risk expulsion and therefore loss of all future benefits.  To ensure a prisoner's dilemma, $b_{it} > c_{pi} > b_{it}/n$.  If participants are observed perfectly ($p_{obs} = 1 \Rightarrow$ 100% chance of punishment), then the future stream of benefits from cooperation must exceed the defection premium to ensure cooperation, otherwise the member will defect and not contribute to the public good; for imperfect observation ($p_{obs} \in (0, 1)$), the chance of expulsion decreases potential future benefits accordingly.  Therefore, the participant will cooperate as long as
+\begin{align}
+  p_{obs} \times \frac{\delta}{1 - \delta} (b_{it} - c_{pi}) > 
+      c_{pi} - \frac{b_{it}}{n}
+\end{align}
+This is consistent with a belief that all others will cooperate, but if the participant believes $j$ others will defect, the premium increases to $c_{pi} - (j+1)b_{it}/n$, making defection more likely.
+This also rests on the assumption that participants make their decision based on a belief that the benefit observed in period $t$ will continue forward.  If a participant believed the benefit would decrease in the future, it would reduce the left hand side and increase the righthand side, making defection more likely, and vice versa if the participant believed the benefit would increase.
+
+Defectors, if observed, are expelled from the fishery and replaced with a new member from outside the current fishery, whose cost of participation is also drawn from distribution $f$.  Over time, as higher-cost participants are expelled and often replaced with lower-cost participants, this will change the effective distribution of participation costs remaining within the fishery, driving down the mean and narrowing the spread.
+

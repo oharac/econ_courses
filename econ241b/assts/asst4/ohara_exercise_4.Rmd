@@ -1,0 +1,759 @@
+---
+title: | 
+  | \hfill \Large{Econ241b: PS 3}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{pgfplots}
+---
+
+\begin{enumerate}
+\item %%% 1
+  Asymptotic Normality to Consistency
+
+  You undertake a research project on carbon sequestration with a colleague 
+  from the geology department. He defers to you as the expert on statistics.
+  
+  \begin{enumerate}
+  \item %% a
+    In one discussion, you note that the estimator you are using is 
+    consistent and asymptotically normal. He then asks the natural question, 
+    "What are the advantages of using an estimator that is consistent and 
+    asymptotically normal?" Please respond.
+    
+    Consistency in a parameter estimator simply means that as you include 
+    more data points, you can be confident that the estimator more closely 
+    approaches the unknown population parameter.  The logical extreme is
+    when your $n$ encompasses the entire population, and your estimate becomes
+    the actual parameter.  
+    
+    Lack of consistency would imply that additional data will not improve
+    your estimate.  No matter how many samples we take, our estimator will
+    never provide a good understanding of the population parameter.  So
+    consistency in an estimator is very important.
+    
+    Asymptotically normal is less important, though convenient.  As we collect
+    more data, our sample distribution approaches a normal distribution, which
+    allows us to do straightforward statistical tests using critical values.
+    Other asymptotic distributions would probably still allow for statistical
+    testing, though perhaps not quite as conveniently.
+    
+  \item %% b
+    Several weeks later, the geologist proposes an estimator that is common 
+    in his field, but with which you are not familiar. He proudly notes 
+    that the estimator, $\hat\theta_n$, is asymptotically normal (a concept he learned 
+    from you) and displays an equation he copied down:
+    
+  $$\sqrt{n}(\hat\theta_n - \theta_0) \xrightarrow{d} N(0, \sigma^2)$$
+
+    He is puzzled, however, by the fact that he could not find out if the 
+    estimator is consistent for the population value $\theta_0$. Please show 
+    why the asymptotic normality result does, or does not, establish 
+    consistency.
+    
+    We know that $\sqrt{n}(\hat\theta_n - \theta_0)$ converges, in 
+    distribution, to a random variable $~ N(0, \sigma^2)$.  One part of
+    Slutsky's theorem tells us:
+    
+  $$(X_n \xrightarrow{d} X, \bar{Y}_n \xrightarrow{p} 0) \Rightarrow \bar{Y}_n'X_n  \xrightarrow{p} 0$$
+    Since $1/\sqrt{n} \rightarrow 0$ as $n$ increases, then 
+    
+    \begin{align*}
+      \frac{1}{\sqrt{n}} \times \sqrt{n}(\hat\theta_n - \theta_0) 
+          &\xrightarrow{p} 0\\
+      (\hat\theta_n - \theta_0) &\xrightarrow{p} 0\\
+      \hat\theta_n &\xrightarrow{p} \theta_0
+    \end{align*}
+  
+  Therefore, the asymptotic normality of this new estimator establishes its 
+  consistency.
+  
+  \item %% c
+    After you have obtained your results from $\hat\theta_n$, the geologist 
+    returns some time later with $\widetilde\theta_n$, which is another 
+    estimator of $\theta_0$. He also found that
+
+  $$n(\widetilde\theta_n - \theta_0) \xrightarrow{d} N(0, \sigma^2)$$
+  
+    Should the two of you present the results you have already obtained, or 
+    obtain new results from $\widetilde\theta_n$? Be sure to explain your 
+    answer clearly to your geologist coauthor.
+    
+    This new estimator is asymptotically normal, and consistent.  But in this
+    case, if we follow the same steps as for $\hat\theta_n$ above, our 
+    $(\widetilde\theta_n - \theta_0)$ term will converge to zero as $1/n$
+    instead of $1/\sqrt{n}$.  So for the same number of data points we have
+    presumably already gathered, $\widetilde\theta_n$ will provide a much
+    better estimate (much smaller variance) of $\theta_0$ than would 
+    $\hat\theta_n$.
+    
+  \end{enumerate}
+
+\item %2
+Asymptotic Convergence
+
+  You model the purchase of tickets in a lottery. There are $n$ tickets sold and 
+  the winning ticket is selected at random. The holder of the winning ticket 
+  receives $n^2$ dollars, all others receive nothing. It costs $n/2$ dollars to 
+  purchase one ticket.
+  
+  Let $p_n$ represent the random payoff to an individual and let 
+  $w_n = p_n - n/2$ represent the random winnings for an individual from the 
+  lottery.
+
+  \begin{enumerate}
+  \item %a
+    If individuals are risk neutral, would they elect to purchase a lottery ticket?
+    
+    Risk-neutral individuals will buy tickets if their expected payoff equals
+    or exceeds the cost of the ticket, i.e. expected net payoff is positive:
+    
+    $$\mathbb{E}[p_n] \geq n/2, \text{ or } \mathbb{E}[w_n] \geq 0$$
+    
+    In this case, the lottery results in a payoff $p_n$ of $n^2$ with probability 
+    $1/n$, and 0 with probability $(n-1)/n$.  Therefore,
+
+  \begin{align*}
+    \mathbb{E}[w_n] &= \frac{1}{n} n^2 + \frac{n-1}{n} 0 - \frac{n}{2}\\
+      &= n + 0 - \frac{n}{2}\\
+      &= \frac{n}{2} \geq 0
+  \end{align*}
+  
+    Therefore, a risk-neutral individual will definitely purchase a ticket.
+    
+  \item %b
+    As the number of tickets sold increases, what does an individual's payoff 
+    converge to in probability?
+    
+    We know that positive payout $P(p_n > 0) = \frac{1}{n}$, or 
+    $P(p_n > \epsilon) \leq \frac{1}{n}$.  To look at convergence in
+    probability, look at the limit of this as $n \rightarrow \infty$:
+    
+  $$\lim_{n\rightarrow\infty} P(|p_n| > \epsilon) \leq \lim_{n\rightarrow\infty}\frac{1}{n}$$
+    But $\lim_{n\rightarrow\infty}\frac{1}{n} = 0$, so
+    
+  $$\lim_{n\rightarrow\infty} P(|p_n| > \epsilon) = 0$$
+    The payoff converges to zero in probability.
+    
+  \item %c
+    As the number of tickets sold increases, what does an individual's expected
+    payoff converge to?
+    
+    The expected payoff $\mathbb{E}[p_n]= n$, so as $n \rightarrow \infty$, 
+    $\mathbb{E}[p_n] \rightarrow \infty$.  Expected payoff does not converge!
+    Instead it gets larger as more people purchase tickets.  In all cases,
+    the expected payoff $n$ exceeds the cost of the ticket $n/2$, i.e. 
+    $\mathbb{E}[w_n] > 0$.
+    
+  \item %d
+    In light of your answers to parts b and c, would you be able to conclude 
+    that for large enough values of $n$ individuals elect not to buy lottery 
+    tickets?
+    
+    From part $b$, and basic logic of lotteries, we know that as more people
+    buy tickets, the probability of actually winning decreases toward a
+    probability of zero.  
+    
+    But this would not deter a risk-neutral lotto buff, because from part 
+    $c$, the expected payoff of a win increases without convergence, at a 
+    rate that exceeds the diminishing chance of winning.  The positive
+    expected net payoff $\mathbb{E}[w_n] = n/2 > 0$ means that a risk-neutral 
+    customer will always buy a ticket.
+  \end{enumerate}
+
+
+\item %3
+  Let the estimator $B$ be $\sqrt{n}$-consistent and asymptotically normal 
+  for $\beta$: 
+  
+  $$\sqrt{n}(B - \beta) \xrightarrow{d} N(0, \sigma^2)$$
+  
+  where $\beta = 0$. Consider $G = 1/B$ as an estimator for $\gamma = 1/\beta$.
+
+  \begin{enumerate}
+  \item %a
+    Find the asymptotic distribution for $G$. Does it follow that $G$ is a 
+    consistent estimator for $\gamma$?
+    
+    Use the Delta method to determine the asymptotic distribution; from the
+    given formula above, and a function $g(\cdot)$ with a non-zero first
+    derivative $g'(\cdot)$ (NOTE: not using matrix formulation given in the 
+    notes, so $g'$ is derivative, not transpose):
+    
+  $$\sqrt{n}(g(B_n) - g(\beta)) \xrightarrow{d} N(0, g'(\beta)^2 \sigma^2)$$
+  \begin{align*}
+    g(B) &= 1/B = G; g(\beta) = 1/\beta = \gamma\\
+    g'(\beta) &= -1/\beta^2\\
+    \sqrt{n}(G - \gamma) &\xrightarrow{d} N(0, \left(-\frac{1}{\beta^2}\right)^2\sigma^2)\\
+      &\xrightarrow{d} N(0, \frac{\sigma^2}{\beta^4})\\
+  \end{align*}
+  
+    Since $\sqrt{n}(G - \gamma)$ is asymptotically normal, by the same
+    steps in question 1, we can show that $G \xrightarrow{p} \gamma$, therefore
+    $G$ is a consistent estimator for $\gamma$.
+    
+  \item %b
+    From a sample of data with $n = 20$, the values $b = 6$ and $s^2 = 320$ 
+    are obtained. Find the associated estimate for $\gamma$ along with the 
+    estimated "asymptotic" standard errors for $B$ and $G$.
+    
+    $g(b) = 1/b = 1/6$ is our estimator for $\gamma$.  
+    
+    Asymptotically, $\sqrt{n}(B - \beta) \sim N(0, \sigma^2)$, which can
+    be rearranged as $(B - \beta) \sim N(0, \sigma^2/n)$.  Standard error 
+    formula is $\sqrt{\frac{\sigma^2}{n}}$, so for our sample, our
+    estimated standard error for $B$ is:
+  $$\sqrt{\frac{s^2}{n}} = \sqrt{\frac{320}{20}} = 4$$
+    and for $G$:
+  $$\sqrt{\frac{s^2}{nb^4}} = \sqrt{\frac{320}{20\times6^4}} = \frac{1}{9}$$
+    
+  \item %c
+    With the values from part $b$, test $H_0: \beta = 2$ against 
+    $H_1 : \beta \neq 2$.
+    
+    From our sample, $b = 6$, and standard error = 4.  If we choose critical
+    values within $6 \pm (1.96 \times 4)$, then 2 is within those bounds.
+    We can't reject the null in this case.
+    
+  \item %d
+    Recast the hypothesis test from part $c$ in terms of $\gamma$ and use the
+    values from part $b$ to test. Explain.
+    
+    Our null hypothesis will compare $H_0: \gamma = 1/2$ and 
+    $H_1: \gamma \neq 1/2$.  From our sample, our estimate of $\gamma = 1/6$, 
+    and standard error = $\frac{1}{9}$.
+    In this case, we would choose critical
+    values within $\frac{1}{6} \pm (1.96 \times \frac{1}{9})$.  This gives a
+    range of $[.0511, .3844]$, so we reject our null.  Thus, in this case
+    our estimator for $\gamma$ seems to be more precise than our estimator
+    for $\beta$ - seems like the standard error is proportionally smaller.
+
+  \end{enumerate}
+
+\newpage
+\item %4
+  Computational Exercise
+  
+  Return to the paper by Charness and Kuhn listed on the syllabus. Write 
+  programs in both Matlab and Stata (the results from each program should 
+  match) that estimate the models in columns (6) and (7) of Table 3 of 
+  Charness and Kuhn. Calculate classic standard errors (the authors report 
+  cluster-robust standard errors, so your estimated standard errors will not 
+  match those in the table). Test the hypothesis that all four slope 
+  coefficients are equal and provide the p-value for the estimated test 
+  statistic.
+  
+\end{enumerate}
+
+## Stata output:
+
+Note: manually deleted the 0.w1 rows for clarity... note also the discrepancy
+in column 7, worker type 2 wage == 1 (paper says .229, my calcs say .259).
+
+\begin{table}[htbp]\centering
+\caption{B: Type 1 workers}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}\\
+            &\multicolumn{1}{c}{e1}&\multicolumn{1}{c}{e1}\\
+\hline
+1.w1        &        .499&         .42\\
+            &     (.0843)&    (.07098)\\
+[1em]
+2.w1        &       1.278&       1.119\\
+            &     (.1116)&     (.0947)\\
+[1em]
+3.w1        &       1.544&       1.308\\
+            &     (.2936)&     (.2324)\\
+[1em]
+rel\_w1\_low  &     -.02431&      .01501\\
+            &    (.03485)&    (.02947)\\
+\hline
+\(N\)       &         555&         555\\
+\(R^{2}\)   &       0.295&       0.604\\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\end{tabular}
+\caption{B: Type 1 workers}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}\\
+            &\multicolumn{1}{c}{e2}&\multicolumn{1}{c}{e2}\\
+\hline
+1.w2        &       .3467&       .2594\\
+            &     (.1447)&     (.1151)\\
+[1em]
+2.w2        &       1.045&       .9421\\
+            &     (.1386)&     (.1118)\\
+[1em]
+3.w2        &       1.718&         1.5\\
+            &     (.1597)&     (.1303)\\
+[1em]
+4.w2        &       1.488&       1.575\\
+            &     (.2226)&      (.177)\\
+[1em]
+rel\_w2\_low  &      .05617&     .009565\\
+            &     (.1081)&    (.08327)\\
+\hline
+\(N\)       &         555&         555\\
+\(R^{2}\)   &       0.318&       0.654\\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\end{tabular}
+\end{table}
+
+#### Test if coefficients all equal: 
+
+##### column 6a: 
+```
+test _Iw1_1 = _Iw1_2 = _Iw1_3
+
+ ( 1)  _Iw2_1 - _Iw2_2 = 0
+ ( 2)  _Iw2_1 - _Iw2_3 = 0
+
+       F(  2,   521) =   39.25
+            Prob > F =    0.0000
+```
+
+##### column 7a: 
+```
+test _Iw1_1 = _Iw1_2 = _Iw1_3
+
+ ( 1)  _Iw2_1 - _Iw2_2 = 0
+ ( 2)  _Iw2_1 - _Iw2_3 = 0
+ 
+      F(  2,   486) =   45.90
+            Prob > F =    0.0000
+```
+
+##### column 6b: 
+```
+test _Iw2_1 = _Iw2_2 = _Iw2_3 = _Iw2_4
+
+ ( 1)  _Iw2_1 - _Iw2_2 = 0
+ ( 2)  _Iw2_1 - _Iw2_3 = 0
+ ( 3)  _Iw2_1 - _Iw2_4 = 0
+
+       F(  3,   520) =   39.23
+            Prob > F =    0.0000
+```
+
+##### column 7b: 
+```
+test _Iw2_1 = _Iw2_2 = _Iw2_3 = _Iw2_4
+
+ ( 1)  _Iw2_1 - _Iw2_2 = 0
+ ( 2)  _Iw2_1 - _Iw2_3 = 0
+ ( 3)  _Iw2_1 - _Iw2_4 = 0
+
+       F(  3,   485) =   58.28
+            Prob > F =    0.0000
+```
+
+
+\newpage
+### Stata code
+
+``` {r, eval = FALSE}
+
+set more off
+clear
+
+// Set working directory
+
+cd "~/github/econ_courses/econ241b/assts/asst4"
+
+/*
+The key variables:
+	e1 = effort of type 1 workers 
+	w1 = wage of type 1 workers 
+	w2 = wage of type 2 workers
+	pubwage = flag for public-wage regime
+*/
+clear all
+use "prob_set_4.dta"
+
+// drop non-public wages
+drop if pubwage != 1
+
+// drop unused columns
+keep wrk1id wrk2id period e1 e2 w1 w2
+
+///////////////////////////////////////////////
+// Part A: Type 1 Workers (low productivity)
+///////////////////////////////////////////////
+
+// create relative wage variable
+gen rel_w1 = w1 - w2
+
+// create indicator for wage 1 <= wage 2
+gen w1_low = (w1 <= w2)
+
+// calculate rel wage * dummy
+gen rel_w1_low = rel_w1 * w1_low
+
+
+// regress variables for public wages for low productivity workers (1).
+// Col 6: effort vs wage and relative wage (< 0, asymmetric model)
+//   with fixed effects of period
+// Col 7: effort vs wage and relative wage (< 0, asymmetric model)
+//   with fixed effects of worker and period
+eststo clear 
+
+// For fixed effects, we use xtreg instead of reg; use xtset to set the
+// panel variable(s)
+/*
+xtset period
+xtreg e1 i.w1 rel_w1_low, fe
+*/
+xi: reg e1 i.w1 rel_w1_low i.period
+eststo col_a6
+
+
+test _Iw1_1 = _Iw1_2 = _Iw1_3
+/*
+xtset wrk1id period
+xtreg e1 i.w1 rel_w1_low i.period, fe
+*/
+xi: reg e1 i.w1 rel_w1_low i.period i.wrk1id
+eststo col_a7
+test _Iw1_1 = _Iw1_2 = _Iw1_3
+
+
+esttab col_a6 col_a7 using table3a67.tex, ///
+	drop(*wrk1id* *period* *cons*) title(B: Type 1 workers) noconst b(%10.4g) ///
+	se r2 nostar replace
+	
+
+///////////////////////////////////////////////
+// Part B: Type 2 Workers (high productivity)
+///////////////////////////////////////////////
+
+// create relative wage variable
+gen rel_w2 = w2 - w1
+
+// create indicator for wage 1 <= wage 2
+gen w2_low = (w2 <= w1)
+
+// calculate rel wage * dummy
+gen rel_w2_low = rel_w2 * w2_low
+
+// regress variables for public wages, for high productivity workers (2).
+// Col 1: effort vs wage
+// Col 2: effort vs wage and relative wage (symmetric model)
+// Col 3: effort vs wage and relative wage (< 0, asymmetric model)
+eststo clear 
+
+xi: reg e2 i.w2 rel_w2_low i.period
+eststo col_b6
+test _Iw2_1 = _Iw2_2 = _Iw2_3 = _Iw2_4
+
+/*
+xtset wrk1id period
+xtreg e1 i.w1 rel_w1_low i.period, fe
+*/
+xi: reg e2 i.w2 rel_w2_low i.period i.wrk2id
+eststo col_b7
+test _Iw2_1 = _Iw2_2 = _Iw2_3 = _Iw2_4
+
+
+esttab col_b6 col_b7 using table3b67.tex, ///
+	drop(*wrk2id* *period* *cons*) title(B: Type 1 workers) noconst b(%10.4g) ///
+	se r2 nostar replace
+
+
+```
+
+\newpage
+## Matlab output:
+
+Note, all the regression coefficients match the table in the paper, with the
+same exception noted for the Stata outputs.  My F statistics are close but not
+identical to those output by Stata (my manual ones are slightly lower), though
+I can't see where the problem is being introduced.
+
+``` {r, eval = FALSE}
+
+Matrix calculated coefficients for table 3, column 6a
+    0.4990    1.2778    1.5445   -0.0243
+Regress() calculated coefficients for table 3, column 6a
+    0.4990    1.2778    1.5445   -0.0243
+Regress() calculated R^2, F, p val, error var
+    0.2949    6.6031    0.0000    0.5810
+wald_6a = 36.9544
+p_val = 9.9920e-16
+
+Matrix calculated coefficients for table 3, column 7a
+    0.4200    1.1188    1.3080    0.0150
+Regress() calculated coefficients for table 3, column 7a
+    0.4200    1.1188    1.3080    0.0150
+Regress() calculated R^2, F, p val, error var
+    0.6039   10.8984    0.0000    0.3498
+wald_7a = 44.4233
+p_val = 0
+
+Matrix calculated coefficients for table 3, column 6b
+    0.3467    1.0450    1.7184    1.4877    0.0562
+Regress() calculated coefficients for table 3, column 6b
+    0.3467    1.0450    1.7184    1.4877    0.0562
+Regress() calculated R^2, F, p val, error var
+    0.3178    7.1245    0.0000    0.8583
+wald_6b = 37.2247
+p_val = 0
+
+Matrix calculated coefficients for table 3, column 7b
+    0.2594    0.9421    1.5005    1.5753    0.0096
+Regress() calculated coefficients for table 3, column 7b
+    0.2594    0.9421    1.5005    1.5753    0.0096
+Regress() calculated R^2, F, p val, error var
+    0.6537   13.2698    0.0000    0.4671
+wald_7b = 53.7397
+p_val = 0
+
+```
+
+
+\newpage
+### Matlab code:
+
+``` {r, eval = FALSE}
+
+%% Import data from text file.
+clear all
+
+filename = '~/github/econ_courses/econ241b/assts/asst4/prob_set4.csv';
+
+raw = readtable(filename);
+% NOTE: this is the same data as for asst 3; I did not save the Stata 
+% edits made for assignment 4.
+
+%% set up data
+% keep just public wages and drop the pubwage column
+wage = raw(raw.pubwage == 1, :);
+wage.pubwage = [];
+
+% add in w11-w14, w21-w24 columns
+wage.w11 = wage.w1 == 1;
+wage.w12 = wage.w1 == 2;
+wage.w13 = wage.w1 == 3;
+wage.w14 = wage.w1 == 4;
+wage.w21 = wage.w2 == 1;
+wage.w22 = wage.w2 == 2;
+wage.w23 = wage.w2 == 3;
+wage.w24 = wage.w2 == 4;
+
+nrows = length(wage.w1);
+const = ones(nrows, 1);
+
+
+%% TYPE 1 WORKER
+%% Effort vs wages and rel wages, type 1 worker
+% set up X2 to be a constant plus own wage regressor plus relative wage
+wage.rel_w1 = wage.w1 - wage.w2;
+wage.rel_w1_low = wage.rel_w1 .* (wage.rel_w1 < 0);
+
+%% manual regression with period fixed effects
+
+% Dummy variable expansion for period variable, then cut one column to
+% avoid singular matrix at the end
+d_period = dummyvar(wage.period);
+d_period(:, 1) = [];
+
+% Set up X matrix including constant, regressors, and fixed effects matrix
+X6a = [const wage.w11 wage.w12 wage.w13 wage.rel_w1_low d_period];
+y  = wage.e1;
+
+disp('Matrix calculated coefficients for table 3, column 6a')
+b6a = (X6a' * X6a)^-1 * (X6a' * y);
+disp(b6a(2:5)') %%% these are the coefficients on wage 1, 2, 3, and difference
+% 0.4990    1.2778    1.5445   -0.0243
+
+disp('Regress() calculated coefficients for table 3, column 6a')
+[B6a, BINT, R, RINT, STATS] = regress(y, X6a);
+disp(B6a(2:5)') %%% regression coefficients in table 6a
+% 0.4990    1.2778    1.5445   -0.0243
+disp('Regress() calculated R^2, F, p val, error var')
+disp(STATS) %%% R-square statistic, the F statistic and p value for the full 
+      %%% model, and an estimate of the error variance
+%  0.2949    6.6031    0.0000    0.5810
+
+%% Try Wald test to check whether coefficients are equal
+% H_0: B1 - B2 = 0, B1 - B3 = 0
+
+R = [ones(2, 1) -eye(2) zeros(2, 31)];
+r = zeros(2, 1);
+
+e_i = y - X6a * B6a;
+
+ssr = sum(e_i.^2);
+dof = length(y) - length(B6a);
+s2 = ssr / dof;
+
+cov_mat = (X6a' * X6a)^(-1) * s2;
+
+[n, k] = size(X6a);
+
+% [h, pValue, stat, cValue] = waldtest(r,R,cov_mat) % throws an error
+wald_6a = (R*B6a - r)'*(R * cov_mat * R')^-1 * (R*B6a - r) / 2
+
+p_val = 1 - fcdf(wald_6a, 2, n - k)
+
+%% Manual regression: fixed effects on period and worker ID
+
+% Dummy variable expansion for worker 1 variable, then cut two columns to
+% avoid singular matrix at the end.
+d_wrk1id = dummyvar(wage.wrk1id);
+sum_test = sum(d_wrk1id) ~= 0;
+d_wrk1id = d_wrk1id(:, sum_test);
+d_wrk1id(:, 37) = [];
+d_wrk1id(:, 1) = [];
+%%
+% Set up X matrix including constant, regressors, and fixed effects matrix
+X7a = [const wage.w11 wage.w12 wage.w13 wage.rel_w1_low d_period d_wrk1id];
+y  = wage.e1;
+
+disp('Matrix calculated coefficients for table 3, column 7a')
+b7a = (X7a' * X7a)^-1 * (X7a' * y);
+disp(b7a(2:5)') %%% these are the coefficients on wage 1, 2, 3, and difference
+% 0.4990    1.2778    1.5445   -0.0243
+
+disp('Regress() calculated coefficients for table 3, column 7a')
+[B7a, BINT, R, RINT, STATS] = regress(y, X7a);
+disp(B7a(2:5)') %%% regression coefficients in table 6
+%    0.4200    1.1188    1.3080    0.0150
+disp('Regress() calculated R^2, F, p val, error var')
+disp(STATS) %%% R-square statistic, the F statistic and p value for the full 
+      %%% model, and an estimate of the error variance
+%    0.6039   10.8984    0.0000    0.3498
+
+
+%% Try Wald test to check whether coefficients are equal
+% H_0: B1 - B2 = 0, B1 - B3 = 0
+
+R = [ones(2, 1) -eye(2) zeros(2, 66)];
+r = zeros(2, 1);
+
+e_i = y - X7a * B7a;
+
+ssr = sum(e_i.^2);
+dof = length(y) - length(B7a);
+s2 = ssr / dof;
+
+cov_mat = (X7a' * X7a)^(-1) * s2;
+
+[n, k] = size(X7a);
+
+% [h, pValue, stat, cValue] = waldtest(r,R,cov_mat) % throws an error
+wald_7a = (R*B7a - r)'*(R * cov_mat * R')^-1 * (R*B7a - r) / 2
+
+p_val = 1-fcdf(wald_7a, 2, n - k)
+
+
+
+%% TYPE 2 WORKER
+%% Effort vs wages and rel wages, type 1 worker
+% set up X2 to be a constant plus own wage regressor plus relative wage
+wage.rel_w2 = wage.w2 - wage.w1;
+wage.rel_w2_low = wage.rel_w2 .* (wage.rel_w2 < 0);
+
+%% manual regression
+
+% Set up X matrix including constant, regressors, and fixed effects matrix
+X6b = [const wage.w21 wage.w22 wage.w23 wage.w24 wage.rel_w2_low d_period];
+y  = wage.e2;
+
+disp('Matrix calculated coefficients for table 3, column 6b')
+b6b = (X6b' * X6b)^-1 * (X6b' * y);
+disp(b6b(2:6)') %%% these are the coefficients on wage 1, 2, 3, and difference
+%  0.3467    1.0450    1.7184    1.4877    0.0562
+
+disp('Regress() calculated coefficients for table 3, column 6b')
+[B6b, BINT, R, RINT, STATS] = regress(y, X6b);
+disp(B6b(2:6)') %%% regression coefficients in table 6
+%  0.3467    1.0450    1.7184    1.4877    0.0562
+disp('Regress() calculated R^2, F, p val, error var')
+disp(STATS) %%% R-square statistic, the F statistic and p value for the full 
+      %%% model, and an estimate of the error variance
+%  0.3178    7.1245    0.0000    0.8583
+
+
+%% Try Wald test to check whether coefficients are equal
+% H_0: B1 - B2 = 0, B1 - B3 = 0, B1 - B4 = 0
+
+R = [ones(3, 1) -eye(3) zeros(3, 31)];
+r = zeros(3, 1);
+
+e_i = y - X6b * B6b;
+
+ssr = sum(e_i.^2);
+dof = length(y) - length(B6b);
+s2 = ssr / dof;
+
+cov_mat = (X6b' * X6b)^(-1) * s2;
+
+[n, k] = size(X6b);
+
+% [h, pValue, stat, cValue] = waldtest(r,R,cov_mat) % throws an error
+wald_6b = (R * B6b - r)'*(R * cov_mat * R')^-1 * (R*B6b - r) / 3
+
+p_val = 1-fcdf(wald_6b, 3, n - k)
+
+
+%% Manual regression: fixed effects on period and worker ID
+
+% Dummy variable expansion for worker 2 variable, then cut two columns to
+% avoid singular matrix at the end.
+d_wrk2id = dummyvar(wage.wrk2id);
+sum_test = sum(d_wrk2id) ~= 0;
+d_wrk2id = d_wrk2id(:, sum_test);
+d_wrk2id(:, 37) = [];
+d_wrk2id(:, 1) = [];
+%
+% Set up X matrix including constant, regressors, and fixed effects matrix
+X7b = [const wage.w21 wage.w22 wage.w23 wage.w24 wage.rel_w2_low d_period d_wrk2id];
+y  = wage.e2;
+
+disp('Matrix calculated coefficients for table 3, column 7b')
+b7b = (X7b' * X7b)^-1 * (X7b' * y);
+disp(b7b(2:6)') %%% these are the coefficients on wage 1, 2, 3, and difference
+%    0.2594    0.9421    1.5005    1.5753    0.0096
+
+disp('Regress() calculated coefficients for table 3, column 7b')
+[B7b, BINT, R, RINT, STATS] = regress(y, X7b);
+disp(B7b(2:6)') %%% regression coefficients in table 6
+%    0.2594    0.9421    1.5005    1.5753    0.0096
+disp('Regress() calculated R^2, F, p val, error var')
+disp(STATS) %%% R-square statistic, the F statistic and p value for the full 
+      %%% model, and an estimate of the error variance
+%    0.6537   13.2698    0.0000    0.4671
+
+%% Try Wald test to check whether coefficients are equal
+% H_0: B1 - B2 = 0, B1 - B3 = 0, B1 - B4 = 0
+
+R = [ones(3, 1) -eye(3) zeros(3, 66)];
+r = zeros(3, 1);
+
+e_i = y - X7b * B7b;
+
+ssr = sum(e_i.^2);
+dof = length(y) - length(B7b);
+s2 = ssr / dof;
+
+cov_mat = (X7b' * X7b)^(-1) * s2;
+
+[n, k] = size(X7b);
+
+% [h, pValue, stat, cValue] = waldtest(r,R,cov_mat) % throws an error
+wald_7b = (R * B7b - r)'*(R * cov_mat * R')^-1 * (R*B7b - r) / 3
+
+p_val = 1-fcdf(wald_7b, 3, n - k)
+
+```

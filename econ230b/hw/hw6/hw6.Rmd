@@ -1,0 +1,147 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\dd}{\partial}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises Lecture 6
+
+### 6.1 George’s utility function is
+$$U_G(x, y) = 48x - x^2 + z_G$$
+and Hazel’s utility function is 
+$$U_H(x, y) = 60y - y^2 - xy + z_H$$
+where $x$ is the amount of $X$ing that George does and $y$ is the amount of $Y$ing that Hazel does and where $z_G$ and $z_H$ are the amounts of bread that George and Hazel consume, respectively. When George does $x$ units of $X$ing and Hazel does $y$ units of $Y$ing, the amount of damage that George does to Hazel is equal to $xy$. George and Hazel each have fixed incomes $W_G$ and $W_H$. The set of feasible allocations consists of all vectors $(x, y, z_G, z_H) \geq 0$ such that $z_G + z_H = W_G + W_H$.
+
+a) Find all of the Pareto optimal allocations in which George and Hazel each consume positive amounts of bread. How much $X$ is there and how much $Y$ ?
+    * Pareto optimal outcomes will maximize the sum of utilities of George and Hazel:
+    \begin{align*}
+      \sum U = U_G + U_H &= 48x - x^2 + z_G + 60y - y^2 - xy + z_H\\
+      \frac{\dd \sum U}{\dd y} &= 60 - 2y - x = 0 \\
+      \Longrightarrow x &= 60 - 2y\\
+      \frac{\dd \sum U}{\dd x} &= 48 - 2x - y = 0\\
+      \Longrightarrow y &= 48 - 2x = 48 - 120 + 4y\\
+      \Longrightarrow y &= 24; x = 12
+    \end{align*}
+b) Suppose that George and Hazel are not able to communicate with each other and that there is no government interference either with $X$ing or with $Y$ing. In consequence, the outcome is a (non-cooperative) Nash equilibrium in which the payoff functions are $U_G(x, y) = 48x - x^2 +z_G$ for George and $U_H(x, y) = 60y - y^2 - xy + z_H$ for Hazel. In equilibrium, how much $X$ing is there and how much $Y$?
+    * Here each maximizes their own utility. George is unaffected by the externality so does not reduce his $X$ing accordingly; Hazel bears the full cost of the externality and has to adjust her $Y$ing to maximize her utility based on George's $X$ing.
+    \begin{align*}
+      \frac{\dd U_G}{\dd x} &= 48 - 2x = 0       & \Longrightarrow x &= 24\\
+      \frac{\dd U_H}{\dd y} &= 60 - 2y - x = 0   & \Longrightarrow y &= 18
+    \end{align*}
+c) Suppose that there is strict legal liability, so that George has to pay Hazel for all damage that he does to her. Suppose also that transaction costs are so high that no deals are struck between George and Hazel. In equilibrium, how much $X$ is there and how much $Y$?
+    * Under strict liability, now George bears the full cost of the externality caused by his $X$ing, and Hazel is fully compensated.  Now, George will adjust his $X$ing to account for the additional cost of the externality to himself, while Hazel will simply do her thing without a care.
+$$U_G = 48x - x^2 -xy + z_G; \hspace{6pt} U_H = 60y - y^2 + z_H$$
+    \begin{align*}
+      \frac{\dd U_H}{\dd y} &= 60 - 2y = 0     & \Longrightarrow y = 30\\
+      \frac{\dd U_G}{\dd x} &= 48 - 2x - y = 0 & \Longrightarrow x = \frac{1}{2}(48 - 30) = 9
+    \end{align*}
+
+### 6.2 Suppose that George and Hazel of the previous problem are still unable to communicate or make deals between them.
+The government decides to impose a tax of $tx$ on George where $x$ is the amount of activity $X$ that he does. The government seeks a tax rate that will induce George and Hazel to perform Pareto optimal amounts of activities $X$ and $Y$.
+
+a) If the government gives all of the tax revenue to Isolde, whom you haven’t yet met, what tax rate $t$ must it use to induce George and Hazel to perform Pareto optimal amounts of activities $X$ and $Y$.
+    * To reach the Pareto optimal amount of $X$ and $Y$ (i.e. (12, 24), from 6.1a), tax George but Hazel gets no benefit (i.e. taxing the harm but not compensating the victim):
+    $$U_G = 48x - x^2 + z_G - tx; \hspace{6pt} U_H = 60y - y^2 + z_H$$
+    \begin{align*}
+      \frac{\dd U_G}{\dd x} &= 48 - 2x - t = 0\\
+      \Longrightarrow t &= 48 - 2\times 12 = 24
+    \end{align*}
+    * The tax on George to reach Pareto optimality is $t = 24$.
+b) If the government gives all of the tax revenue to Hazel, what tax rate $t$ must it use to induce George and Hazel to perform Pareto optimal amounts of activities $X$ and $Y$.
+    * In this case, now the tax on George is distributed to Hazel.
+    $$U_G = 48x - x^2 + z_G - tx; \hspace{6pt} U_H = 60y - y^2 + z_H + tx$$
+    \begin{align*}
+      \frac{\dd U_G}{\dd x} &= 48 - 2x - t = 0\\
+      \Longrightarrow t &= 48 - 2\times 12 = 24\\
+      \frac{\dd U_H}{\dd y} &= 60 - 2y - x = 0\\
+      \Rightarrow &\text{ $t$ is unaffected by Hazel's actions}
+    \end{align*}
+    * Since the tax is on $x$ but Hazel only controls $y$, the revenue to her does not affect the amount of $X$ing that George does.  Hazel may want _more_ $X$ing now, since she earns utility from the revenue, but she has no say in the matter.  Therefore, compensating the victim does not change the tax needed to bring the system into Pareto optimality (i.e. $t = 24$).
+c) If the government gives half of the tax revenue to Hazel and half to George, what tax rate $t$ must it use to induce George and Hazel to perform Pareto optimal amounts of activities $X$ and $Y$.
+    * In this case, George actually gets a little kickback from his taxes.  This reduces the effective impact of the tax on his decision about $X$ing, so the tax must be higher to bring the situation into Pareto optimality.
+      $$U_G = 48x - x^2 + z_G - tx + \frac{1}{2}tx; \hspace{6pt} U_H = 60y - y^2 + z_H + \frac{1}{2}tx$$
+      \begin{align*}
+      \frac{\dd U_G}{\dd x} &= 48 - 2x - .5t = 0\\
+      \Longrightarrow .5t &= 48 - 2\times 12 \Rightarrow t = 48\\
+      \frac{\dd U_H}{\dd y} &= 60 - 2y - x = 0\\
+      \Rightarrow &\text{ $t$ is still unaffected by Hazel's actions}
+    \end{align*}
+    * As in 6.2b, the compensation (partial, in this case) to Hazel does not change the necessary tax rate.  But the partial reimbursement to George _does_ change the necessary tax rate.  When George bears a tax of $t = 24$ (from 6.2a), he abates his $X$ing to the Pareto optimal level; by reimbursing him half the tax, we must now double the tax rate so that he again has to pay a total of $t_{effective} = 24$ to change his behavior. 
+
+### 6.3 Suppose that the government introduces a market for the right to perform activity X. 
+In this market, demand and supply curves are defined as follows: At any price $p$, $D(p)$ is the amount of $X$ing that George would choose to do if each unit of $X$ cost him $p$. At price $p$, $S(p)$ is the amount of $X$ing that Hazel would want George to do if she is paid $p$ for each unit of $X$ing that George does. Find the equilibrium price at which $D(p) = S(p)$ and the amount of $X$ing and of $Y$ing that would take place when the price of $X$ing is set at the equilibrium level.
+
+* In a competitive market, supply and demand of $X$ must be equal at equilibrium.  According to the way Schweizer sets up the problem (assuming $X$ is desirable, not problematic as in this case) George's utility will be increased by the price of supplying $X$ and Hazel's utility would be decreased by the same amount.  If $p$ ends up being negative, then George will have to pay out of his pocket to continue to do $X$, limited by his personal wealth $z_G$.
+$$U_G = 48x - x^2 + z_G + px; \hspace{6pt} U_H = 60y - y^2 + z_H - px$$
+\begin{align*}
+  S(p) &= \text{argmax}_{x,y} (60x - y^2 - px)\\
+  \frac{\dd U_H}{\dd x} &= - y - p = 0        &\Rightarrow p = - y\\
+  \frac{\dd U_H}{\dd y} &= 60 - 2y - x  = 0   &\Rightarrow x = 60 - 2y\\
+  D(p) &= \text{argmax}_x (48x - x^2 + px)\\
+  \frac{\dd U_G}{\dd x} &= 48 - 2x + p = 0\\
+    &= 48 - 2(60 - 2y) - y = 0                &\Rightarrow y = 24\\
+  \Rightarrow x &= 12\\
+  \Rightarrow p &= -24
+\end{align*} 
+* A price of $p = -24$ means George has to pay 24 slices of bread for each unit of $X$ he performs; Hazel receives this much for each unit of George's $X$ing.  
+* Note this is subject to a budget constraint: $px \leq z_G$, otherwise George can't afford as much $X$ as he would prefer.
+
+### 6.4 Suppose that George and Hazel of the previous problems are able to communicate cheaply and easily. 
+Whenever there are possible gains from a deal between them, they will make a deal. The outcome of the deal always turns out to be the Nash bargaining solution (sometimes called the “cooperative” Nash solution). In any situation, they recognize a “threat point”, which is the distribution of utility $(\bar U_G, \bar U_H)$ that they would achieve if they make no deal. The result of bargaining is that they find the point on the utility possibility frontier that maximizes the product $(U_G - \bar U_G)(U_H - \bar U_H)$ over all possible utility distributions in their utility possibility set. Prove that in doing so, Hazel and George will choose the point on the utility possibility frontier such that $U_G - \bar U_G = U_H - \bar U_H$. Would this be true regardless of the shape of the utility possibility frontier? Explain.
+
+### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
+
+a) Assuming that there is no government interference, so that the threat point is the noncooperative Nash equilibrium, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+b) Assuming that the government imposes strict liability and that the threat point is the noncooperative Nash equilibrium that would obtain under these rules, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+
+### 6.6 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution. The government imposes the tax rate $t$ that induced George to perform a Pareto optimal amount of activity $X$ when George and Hazel were unable to bargain and the money was given to Isolde.
+
+a) If the government gives the taxrevenue to Isolde, what levels of activities $X$ and $Y$ will George and Hazel choose?
+b) If the government splits the taxrevenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
+
+### 6.7 Hazel and George have one and only chance to make a deal. 
+The chance works like this. Hazel offers George an all-or-nothing proposition. If George reduces his $X$ing to a level $x^*$, Hazel will give him a lump sum payment of $z^*$ dollars. If George rejects this deal, then the outcome will revert to the noncooperative Nash equilibrium in which there is no government interference. After George has either accepted or rejected the deal that he is offered, Hazel can decide on the amount of $Y$ing that she will do. Hazel knows George’s utility function. Assuming that George will accept any deal that is as good or better for him than the Nash equilibrium outcome, what combination of $x^*$ and $z^*$ should Hazel make in order to maximize her utility?
+
+### 6.8 This problem is like the previous one except for one thing. Hazel does not know George’s utility function. 
+Hazel knows that George’s utility function is of the functional form: $UG(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
+
+a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he reduces his amount of $X$ing to $x^*$. What choice of $z^*$ and $x^*$ would maximize Hazel’s expected utility.
+
+> _Hint: There are only two interesting strategies for Hazel. She might choose $x^*$ and $z^*$ so that George is sure to accept her offer, whether $A = 60$ or $A = 36$. Alternatively, she might choose $x^*$ and $z^*$ so that George will accept her offer if and only if $A = 36$. For each of these two strategies there is a best choice of $x^*$ and $z^*$. Find these two solutions. Then compare Hazel’s utility under each solution._
+
+b) Show that for any offer that Hazel makes, there is a probability of at least 1/2 that the amount of $X$ selected by George is not Pareto optimal.

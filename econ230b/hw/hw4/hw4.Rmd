@@ -1,0 +1,202 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises Lecture 4
+
+### 4.1 Las Venales, Nevada has $N$ people, each of whom consumes a single private good, "bread". There is also a public good, "circus". 
+Everybody in Las Venales has preferences representable by a utility function of the form
+$$U^i(X_i, Y) = X_i^{1-\alpha}Y^{\alpha}$$
+where $X_i$ is $i$’s own consumption of bread per year and $Y$ is the number of circus acts performed in Las Venales per year. (There is no congestion at the circus.) Bread is the numeraire. Circus acts can be purchased at a cost of p per unit. Although preferences don’t differ, incomes do. Person $i$ has an income of $W_i$.
+
+a) Find the Pareto optimal amount of circus for Las Venales as a function of the parameters $N, p, \alpha$, and $\sum W_i$.
+    * Find the Samuelson conditions for this situation:
+\begin{align*}
+  \sum MRS_i = \sum_{i=1}^N\frac{\partial U_i/\partial Y}{\partial U_i/\partial X_i} &= p
+    &\text{(Samuelson condition)}\\
+  \Rightarrow \sum_{i=1}^N\frac{X_i^{1-\alpha} \cdot \alpha Y^{\alpha - 1}}{(1 - \alpha) X_i^{-\alpha} \cdot Y^\alpha} &= p\\
+  \Rightarrow \sum_{i=1}^N\frac{\alpha X_i}{(1 - \alpha) Y} &= p\\
+  \sum_{i=1}^N W_i &= \sum_i X_i + pY
+    &\text{(total budget constraint)}\\
+  \Rightarrow \frac{\alpha}{(1 - \alpha) Y} (\sum_{i=1}^N W_i - pY) &= p
+    &\text{(budget + Samuelson)}\\
+  \Rightarrow pY\left(1 + \frac{\alpha}{1 - \alpha}\right) &= \frac{\alpha}{1 - \alpha} \sum_{i=1}^N W_i\\  
+  \Rightarrow \frac{1}{1 - \alpha}pY &= \frac{\alpha}{1 - \alpha} \sum_{i=1}^N W_i\\  
+  \Rightarrow Y^* &= \frac{\alpha}{p} \sum_{i=1}^N W_i
+\end{align*}
+b) Find the Lindahl equilibrium prices and quantities for Las Venales.
+    * Each person will maximize their personal utility $X_i^{1-\alpha}Y^{\alpha}$ subject to their personal budget constraint $W_i = p_x X_i + q_i Y$ (these can be vectors of goods but here we only have one good each).
+    * Optimal provision for Cobb-Douglas results in:
+$$X_i^* = \frac{W_i}{p_x (=1)}(1 - \alpha); Y_i^* = \frac{W_i}{q_i}\alpha$$
+    * Noting that $Y_i^* = $Y^*$ (public good same provision for all), $q_i$ for each person can be found:
+\begin{align*}
+  Y_i^* = Y^* &= \frac{W_i}{q_i}\alpha = \frac{\alpha}{p} \sum_{j=1}^N W_j\\
+  \Rightarrow q_i &= \frac{W_i}{\sum_{j=1}^N W_j} p
+\end{align*}
+    * The Lindahl quantities then are $(\bar X_1, ..., \bar X_N, Y^*)$ where 
+    $$\bar X_i = W_i(1 - \alpha); Y^* = \frac{alpha}{p}\sum_{j=1}^N W_j$$
+    * at prices $(\bar p, \bar q_1, ..., \bar q_N)$, where
+    $$\bar q_i = p\frac{W_i}{\sum_{j=1}^N W_j}$$
+    
+
+### 4.2 On the Isle of Glutton, there are two agricultural products, corn and pigs. 
+There are $N$ people. Each person likes a different cut of meat from the pig and has no use for any other part. Conveniently, on the isle of Glutton, the parts of a pig are named after the people who like them. Person $i$’s utility function is 
+$$U^i(X_i, Y_i) = X_i^{1-\alpha} Y_i^{\alpha}$$
+where $X_i$ is the amount of corn that $i$ consumes and $Y_i$ is the amount of the $i^{th}$ cut of pork that person $i$ gets to consume. Person $i$ initially owns $W_i$ units of corn. There are constant returns to scale in raising pigs. 
+To raise a pig, you need to feed him $p$ units of corn. One pig yields one unit of each cut of pork. Ignore the labor cost of growing pigs, the cost of baby pigs, the cost of other foods, housing and entertainment for the pigs. Also ignore any costs of butchering and retailing. 
+Find competitive equilibrium prices of each cut of the pig and the competitive equilibrium number of pigs as a function of the parameters of the problem.
+
+* Since each person consumes $Y_i$ units of pork products, and the number of units of pork products is identical to the number of pigs, then each farmer's contribution of corn toward buying his or her product is essentially paying for the pig as a public good.
+* As such, we can rewrite the utility function with a public good $Y$ instead of individual private goods $Y_i$:
+    $$U^i(X_i, Y_i) = X_i^{1-\alpha} Y^{\alpha}$$
+* At this point, the problem becomes identical to 4.1, with pigs instead of circuses and corn instead of bread.  Therefore:
+* The Lindahl quantities then are $(\bar X_1, ..., \bar X_N, Y^*)$ where 
+    $$\bar X_i = W_i(1 - \alpha); Y^* = \frac{alpha}{p}\sum_{j=1}^N W_j$$
+* at prices $(\bar p, \bar q_1, ..., \bar q_N)$, where
+    $$\bar q_i = p\frac{W_i}{\sum_{j=1}^N W_j}$$
+
+### 4.3 Los Locos, California has $N$ people, each of whom consumes a single private good, "grass", and a single public good, beach. 
+A developer is interested in building condominiums along the beachfront. But he has offered to sell part of his holdings of beachfront land to the city of Los Locos at $p$ per foot of beach front. There are three types of people in Los Locos, the $\alpha$s, the $\beta$s and the $\gamma$s. 
+
+The $\alpha$s all have utility functions $U(X_i, Y) = X^{1 - \alpha}Y^{\alpha}$ and incomes $W_{\alpha}$. The $\beta$s all have utility functions $U(X_i, Y) = X^{1 - \beta}Y^{\beta}$ and incomes $W_{\beta}$. The $\gamma$s all have utility functions $U(X_i, Y) = X^{1 - \gamma}Y^{\gamma}$ and incomes $W_{\gamma}$. 
+
+a) Find the Lindahl equilibrium prices and quantities.
+    * First let's find the Samuelson conditions, noting that since these Cobb-Douglas utilities are similar to those in 4.1 we can elide some of the details shown above.  Let's also set the price of grass as numeraire, so $p_x = 1$, and assume the population is divided as   $N_{total} = N_\alpha + N_\beta + N_\gamma$:
+\begin{align*}
+  x^*_{\alpha} &= (1 - \alpha) W_{\alpha}; 
+  x^*_{\beta} = (1 - \beta) W_{\beta}; 
+  x^*_{\gamma} = (1 - \gamma) W_{\gamma}
+    &\text{(C-D utilities)}\\
+  \sum MRS_i &= \frac{1}{Y} \left[\frac{\alpha}{(1-\alpha)}\sum_{i=1}^{N_\alpha} X_{\alpha i} +
+      \frac{\beta}{(1-\beta)} \sum_{j=1}^{N_\beta} X_{\beta j} +
+      \frac{\gamma}{(1-\gamma)} \sum_{k=1}^{N_\gamma} X_{\gamma k}\right] = p\\
+  \Rightarrow Y^* &= \frac{1}{p}\left[\frac{\alpha}{(1-\alpha)Y}\sum_{i=1}^{N_\alpha} X_{\alpha i} +
+      \frac{\beta}{(1-\beta)Y} \sum_{j=1}^{N_\beta} X_{\beta j} +
+      \frac{\gamma}{(1-\gamma)Y} \sum_{k=1}^{N_\gamma} X_{\gamma k}\right]
+\end{align*}
+    * Noting that each person's budget constraint is $X_{i\alpha} + q_{i\alpha}Y = W_\alpha$, and using similar process as in 4.1(a), we can find the portions of $Y^*$ provided by each group: 
+\begin{align*}
+  Y^*_\alpha &= \frac{1}{p}\frac{\alpha}{(1-\alpha)Y}\sum_{i=1}^{N_\alpha} X_{\alpha i} = 
+      \frac{1}{p}{\alpha}\sum_{i=1}^{N_\alpha} W_\alpha = \frac{1}{p}{\alpha} N_\alpha W_\alpha
+      \text{ (similar for $\beta, \gamma$)}\\
+  \Rightarrow Y^* &= \frac{1}{p}\left[{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma \right]\\
+\end{align*}
+    * For each group, applying $X^*, Y^*$ to the budget constraint, we can find $q_i$ for that group.  For $i \in 1:N_\alpha$; similar for $j \in 1:N_\beta$ and $k \in 1:N_\gamma$:
+\begin{align*}
+  X_{i\alpha} &+ q_{i\alpha}Y = W_\alpha\\
+  \Rightarrow (1 - \alpha) W_{\alpha} + q_{i\alpha}\frac{1}{p}\left[{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma \right] = W_\alpha\\
+  \Rightarrow q_{i\alpha} &= \frac{p \alpha W_{\alpha}}{{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma}
+\end{align*}
+    * The Lindahl quantities and prices then are 
+    $$(\bar x_{1\alpha}, ..., \bar x_{N_\alpha \alpha}, 
+      \bar x_{1\beta}, ..., \bar x_{N_\beta \beta}, 
+      \bar x_{1\gamma}, ..., \bar x_{N_\gamma \gamma},Y^*); \hspace{6pt} 
+      (\bar p, \bar q_\alpha, \bar q_\beta, \bar q_\gamma)$$
+    * where:
+\begin{align*}
+  x^*_{\alpha} &= (1 - \alpha) W_{\alpha}  \text{ for $i \in 1:N_\alpha$}\\
+  x^*_{\beta}  &= (1 - \beta) W_{\beta}    \text{ for $j \in 1:N_\beta$}\\
+  x^*_{\gamma} &= (1 - \gamma) W_{\gamma}  \text{ for $k \in 1:N_\gamma$}\\
+  Y^* &= \frac{1}{p} (\alpha N_\alpha W_\alpha + 
+      \beta N_\beta W_\beta + \gamma N_\gamma W_\gamma )\\
+  q_{\alpha} &= \frac{p \alpha W_{\alpha}}{{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma}\\
+  q_{\beta} &= \frac{p \beta W_{\beta}}{{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma}\\
+  q_{\gamma} &= \frac{p \gamma W_{\gamma}}{{\alpha} N_\alpha W_\alpha + 
+      {\beta} N_\beta W_\beta + {\gamma} N_\gamma W_\gamma}
+\end{align*}
+
+b) Find the Pareto optimal allocation in which all consumers in Los Locos get to consume the same amount of grass. How much beach would be purchased. Under what conditions would this amount of beach be greater than the amount provided in Lindahl equilibrium.
+    * In this situation, $x_{i\alpha} = x_{j\beta} = x_{k\gamma}$.
+\begin{align*}
+  x_{i\alpha} &= x_{j\beta} = x_{k\gamma}\\
+  \Rightarrow (1 - \alpha) W_{\alpha} &= (1 - \beta) W_{\beta} = (1 - \gamma) W_{\gamma}\\
+  \Rightarrow W_{\beta} &= \frac{1 - \alpha}{1 - \beta} W_{\alpha} \text { and }
+    W_{\gamma} = \frac{1 - \alpha}{1 - \gamma} W_{\alpha}\\
+  \Rightarrow Y^g &= \frac{1}{p} W_\alpha (\alpha N_\alpha  + 
+      \beta N_\beta \frac{1 - \alpha}{1 - \beta} + 
+      \gamma N_\gamma \frac{1 - \alpha}{1 - \gamma} )\\
+\end{align*}
+
+### 4.4 Brass Monkey, Ontario has 1000 citizens and each citizen $i$ has a utility function 
+$$U^i(X_i, Y) = Y^{\alpha}(X_i + k_i)$$
+where $Y$ is the size of the town skating rink, measured in square inches, and $X_i$ is then number of doughnuts that $i$ consumes per year. Doughnuts are the numeraire in Brass Monkey, so the price of a doughnut is always one unit of the natural currency. The cost of building and maintaining one square inch of skating rink is also one doughnut. Different people have different incomes. Person $i$ has income $W_i$.
+
+Find a Lindahl equilibrium for Brass Monkey. What quantity of public goods
+is supplied? In Lindahl equilibrium, how much money does the government
+collect from Person $i$?
+
+* Note that this utility function can be rewritten into Bergstrom-Cornes form:
+$$U^i(X_i, Y) = Y^{\alpha}(X_i + k_i) =  Y^{\alpha} X_i + k_iY^{\alpha}$$
+where $A(Y) = Y^{\alpha}$ and $B_i(Y) = k_iY^{\alpha}$.
+* The shortcut Samuelson conditions are then:
+\begin{align*}
+  \frac{\alpha Y^{\alpha - 1}}{Y^\alpha}(\sum_{i=1}^N W_i - pY) &+ \sum_{i=1}^N (\frac{k_i \alpha Y^{\alpha - 1}}{Y^\alpha}) = p (= 1)\\
+  \Rightarrow \frac{\alpha}{Y} (\sum_{i=1}^N W_i - Y) &+ \frac{\alpha}{Y} \sum_{i=1}^N k_i  = 1\\
+  \Rightarrow Y^* =  \alpha \sum_{i=1}^N W_i &- \alpha Y + \alpha \sum_{i=1}^N k_i\\
+  \Rightarrow Y^* =  \frac{\alpha}{\alpha + 1} \sum_{i}^N (W_i + k_i)
+\end{align*}
+* Next optimize each person's utility $Y^{\alpha} X_i + k_iY^{\alpha}$ given $Y^*$ and individual budget constraint $W_i = x_i + q_i Y^*$ to find his or her donut consumption.
+\begin{align*}
+  \frac{\alpha Y^{\alpha - 1} (x_i + k_i)}{Y^\alpha} &= \frac{q_i}{p}\\
+  \Rightarrow q_i &= \frac{\alpha}{Y} (x_i + k_i)\\
+  \Rightarrow x_i &=  \frac{Y}{\alpha} q_i - k_i &\text{(private consumption)}\\
+  \Rightarrow \frac{Y}{\alpha} q_i &- k_i + q_i Y = W_i &\text{(budget constraint)}\\
+  \Rightarrow q_i &= \frac{W_i - k_i}{(1 + 1/\alpha)Y} = \frac{\alpha}{Y(1 + \alpha)}(W_i - k_i)\\
+  \Rightarrow q_i &= \frac{\alpha}{\frac{\alpha}{\alpha + 1} \sum_{i}^N (W_i + k_i)(1 + \alpha)}(W_i - k_i)\\
+  \Rightarrow q_i &= \frac{W_i - k_i}{\sum_{i}^N (W_i + k_i)}\\
+\end{align*}
+* Now get $x_i$ in terms of $W$, using budget constraint:
+\begin{align*}
+  W_i &= x_i + q_i Y^* = x_i + \frac{W_i - k_i}{\sum_{i}^N (W_i + k_i)}\frac{\alpha}{\alpha + 1} \sum_{i}^N (W_i + k_i)\\
+  \Rightarrow x_i &= W_i - \frac{\alpha}{\alpha + 1}(W_i - k_i)\\
+  \Rightarrow x_i &= \frac{W_i - \alpha k_i}{\alpha + 1}
+\end{align*}
+* Lindahl quantities and prices: 
+\begin{align*}
+  x_i &= \frac{W_i - \alpha k_i}{\alpha + 1}\\
+  Y^* &=  \frac{\alpha}{\alpha + 1} \sum_{i}^N (W_i + k_i)\\
+  q_i &= \frac{W_i - k_i}{\sum_{i}^N (W_i + k_i)}
+\end{align*}
+* Each person pays their portion of $Y^*$: $\frac{\alpha}{\alpha + 1} (W_i + k_i)$.
+
+  
+  

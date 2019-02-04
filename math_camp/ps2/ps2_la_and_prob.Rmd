@@ -1,0 +1,140 @@
+---
+title: | 
+  | \hfill \Large{Math Camp: PS 2 Linear Algebra and Probability}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+\begin{enumerate} %item numbers
+\item \textbf{Determine the definiteness of the following symmetric matrices:}
+  \begin{enumerate} % a and b within item 1
+  \item
+		A =  $\begin{bmatrix} 
+		  2 & -1 \\ -1 & 1
+		\end{bmatrix}$\\
+		Inspect the leading principle minors:
+		$| A_1 |$ = 2; 
+		$| A_2 | = \begin{vmatrix} 2 & -1 \\ -1 & 1 \end{vmatrix} = 1$.  \\
+		Both LPMs > 0, thus A is positive definite.
+	\item
+		B =  $\begin{bmatrix} 
+			1 & 0 & 3 & 0\\
+			0 & 2 & 0 & 5\\
+			3 & 0 & 4 & 0\\
+			0 & 5 & 0 & 6
+		\end{bmatrix}$\\
+		Inspect the leading principle minors:
+		\begin{itemize}
+		  \item $| B_1 |$ = 1 
+		  \item $| B_2 | = \begin{vmatrix} 1 & 0 \\ 0 & 2 \end{vmatrix} = 2$
+		  \item $| B_3 | = \begin{vmatrix} 1 & 0 & 3 \\ 0 & 2 & 0 \\ 3 & 0 & 4\end{vmatrix} = 
+  		1 * 8 - 0 * 0 + 3 * -6 = -10$.
+  	\end{itemize}
+  	No need for further calculations... we can already see:
+		\begin{itemize}
+		  \item B is NOT positive (semi-)definite: not all leading PMs $|A_i| > (\geq) 0$.
+  		\item B is NOT negative (semi-)definite: leading PMs do not meet $(-1)^i|A_i| > (\geq) 0$.
+  		\item so B is indefinite.
+		\end{itemize}
+	\end{enumerate}
+	
+\item 
+  \textbf{Find the least squares solution to $X\mathbf{b} = \mathbf{y}$, i.e. 
+    by finding the estimate $\hat{\mathbf{b}}$ such that $X\hat{\mathbf{b}} = 
+    \hat{\mathbf{y}}$ using the following information:}
+  \begin{align*}
+    X = \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+    \hspace{20pt}
+    \mathbf{y} = \begin{bmatrix} 4 \\ 1 \\ 2 \end{bmatrix}
+  \end{align*}
+  $\mathbf{\hat{b}} = (X^TX)^{-1}X^T\mathbf{y}$; and $\mathbf{\hat{y}} = X\mathbf{\hat{b}}$.\\
+  \begin{align*}
+    \mathbf{\hat{b}} &= 
+      \left(\begin{bmatrix} -1 & 2 & -1 \\ 2 & -3 & -2 \end{bmatrix}
+      \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+      \right)^{-1}
+      \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+      \mathbf{y}\\
+    &= \begin{bmatrix} 6 & -11 \\ -11 & 22 \end{bmatrix}^{-1}
+      \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+      \mathbf{y}\\
+    &= \begin{bmatrix} 2 & 1 \\ 1 & \frac{6}{11} \end{bmatrix}
+      \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+      \mathbf{y}\\
+    &= \begin{bmatrix} 0 & 1 & 1 \\
+      \frac{1}{11} & \frac{4}{11} & \frac{7}{11}\end{bmatrix}
+      \begin{bmatrix} 4 \\ 1 \\ 2 \end{bmatrix} =
+      \begin{bmatrix} 0*4 + 1*1 + 1*2 \\ 
+         \frac{1}{11}*4 + \frac{4}{11}*1 + \frac{7}{11}*2 \end{bmatrix} =
+      \begin{bmatrix} 3 \\ 2 \end{bmatrix}
+  \end{align*}
+  Then $\mathbf{\hat{y}} = X\mathbf{\hat{b}}$: \\
+  \begin{align*}
+    \mathbf{\hat{y}} &= 
+      \begin{bmatrix} -1 & 2 \\ 2 & -3 \\ -1 & 3 \end{bmatrix}
+      \begin{bmatrix} 3 \\ 2 \end{bmatrix} =
+      \begin{bmatrix} -1*3 + 2*2 \\ 2*3 + -3*2 \\ -1*3 + 3*2 \end{bmatrix} =
+      \begin{bmatrix} 1 \\ 0 \\ 3 \end{bmatrix}
+  \end{align*}
+  
+\item
+  \textbf{Dominoes: how many different pieces can be formed using the numbers 1, 2, ..., $n$?}\\
+  Choosing $r = 2$ numbers out of $n$, with replacement (since doubles are allowed), we can find the number of unique combinations using:
+  \begin{align*}
+    N &= \frac{(n + r - 1)!}{(n-1)!r!} \\
+      &= \frac{(n+1)!}{(n-1)!2!}\\
+      &= \frac{n(n+1)}{2}
+  \end{align*}
+  More intuitively for me, it can also be thought of as choosing $r = 2$ numbers out of $n$, without replacement, and then adding n tiles with doubled numbers.  This results in:
+  \begin{align*}
+    N &= \frac{n!}{(n-r)!r!} + n\\
+      &= \frac{n!}{(n-2)!2!} + n\\
+      &= \frac{n(n-1)}{2} + n\\
+      &= \frac{n(n+1)}{2}
+  \end{align*}
+  
+\item
+  \textbf{Suppose 5\% of men and 0.25\% of women are colorblind.  A person is chosen at random and that person is colorblind.  What is the probability that the person is male (assuming males and females are equal in numbers)?}\\
+  \begin{align*}
+  \mathbb{P}(male|colorblind) &= 
+    \mathbb{P}(colorblind|male)\frac{\mathbb{P}(male)}{\mathbb{P}(colorblind)}\\
+  \mathbb{P}(colorblind|male) &= 0.05\\
+  \mathbb{P}(male) &= 0.50\\
+  \mathbb{P}(colorblind) &= 0.50*0.05 + 0.50 * 0.0025 = 0.02625\\
+  \mathbb{P}(male|colorblind) &= 
+    0.05 * \frac{0.50}{0.02625}\\
+    &= 0.9524 = 95.24\%
+  \end{align*}
+  Alternatively, we can consider the problem in terms of frequencies 
+    rather than probabilities:  In a group of men, 1 in 20 will be colorblind,
+    but in a group of women, only 1 in $\frac{1}{0.0025} = 400$ will be 
+    colorblind.  So in a group of 800 people (400 men and 400 women), we'd 
+    find 20 colorblind men and 1 colorblind woman.  Our sample is chosen at 
+    random and found to be in this group; so out of 21 colorblind people, 20 
+    are men, so the probability is $\frac{20}{21} = 0.9524 = 95.24\%$.
+  
+\item
+  \textbf{If the random variable $X$ follows a geometric distribution, its PMF is given by}
+  \begin{align*}
+    f_X(x) = (1-p)^xp, \hspace{10pt} x\in\{0, 1, 2, 3, ...\}
+  \end{align*}
+  where the parameter $p \in (0, 1)$.  Find the CDF of $X$.\\
+  For a discrete function, $f_X(x) = \mathbb{P}(X = x)$ gives the probability
+  of realizing a specific value $x$ of the random variable $X$.  A CDF is, by 
+  its very name, cumulative, so CDF $F_X(x) = \mathbb{P}(X \leq x)$, or the 
+  probability of any value of $x$ up to that point.  Thus, $F_X(x)$ is just the 
+  sum of the PMF for $x$ and the PMF for all lower values of $x$, across the 
+  entire support for $x$.
+  \begin{align*}
+    \text{CDF}(X) = F_X(x) = \sum_{x=0}^\infty f_X(x) = \sum_{x=0}^\infty p(1-p)^x
+  \end{align*}
+
+\end{enumerate}
+

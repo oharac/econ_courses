@@ -1,0 +1,108 @@
+---
+title: | 
+  | \hfill \Large{Math Camp: PS 1 Logic and Sets}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'Figs/',
+                      echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+\begin{enumerate}
+	\item\textbf{Using truth tables, prove both of DeMorgan's Laws for logical connectives.}
+		\begin{enumerate}
+		\item\textbf{$\neg(P\wedge Q)$ is logically equivalent to $\neg P\vee \neg Q$}
+			\begin{center}
+				\begin{tabular}{c c c c c c}
+					$P$ & $Q$ & $\neg P$ & $\neg Q$ & $\neg(P\wedge Q)$ & $\neg P\vee \neg Q$	\\
+					\hline
+					 T  &  T  &     F    &     F    &     \textbf{F}    &      \textbf{F} \\
+				 	 T  &  F  &     F    &     T    &     \textbf{T}    &      \textbf{T} \\
+					 F  &  T  &     F    &     F    &     \textbf{T}    &      \textbf{T} \\
+					 F  &  F  &     F    &     T    &     \textbf{T}    &      \textbf{T}
+				\end{tabular}
+			\end{center}
+			The bolded columns are identical, thus $\neg(P\wedge Q)$ is logically equivalent to $\neg P\vee \neg Q$.
+
+		\item\textbf{$\neg(P\vee Q)$ is logically equivalent to $\neg P\wedge \neg Q$}
+			\begin{center}
+				\begin{tabular}{c c c c c c}
+					$P$ & $Q$ & $\neg P$ & $\neg Q$ & $\neg(P\vee Q)$ & $\neg P\wedge \neg Q$	\\
+					\hline
+					 T  &  T  &     F    &     F    &     \textbf{F}    &      \textbf{F} \\
+				 	 T  &  F  &     F    &     T    &     \textbf{F}    &      \textbf{F} \\
+					 F  &  T  &     F    &     F    &     \textbf{F}    &      \textbf{F} \\
+					 F  &  F  &     F    &     T    &     \textbf{T}    &      \textbf{T}
+				\end{tabular}
+			\end{center}
+			The bolded columns are identical, thus $\neg(P\vee Q)$ is logically equivalent to $\neg P\wedge \neg Q$.
+		\end{enumerate}
+
+\item\textbf{Find the contrapositive and converse of each of the following statements:}
+	\begin{enumerate}
+	\item\textbf{"If squares have four sides, then triangles have four sides."}
+		\begin{itemize}
+		\item Contrapositive: "If triangles do not have four sides, then squares do not have four sides."
+		\item Converse: "If triangles have four sides, then squares have four sides."
+		\end{itemize}
+
+	\item\textbf{"A sequence $a$ is bounded whenever $a$ is convergent."}
+		\begin{itemize}
+		\item Rewritten in $p \Rightarrow q$ form: "If a sequence $a$ is convergent, then $a$ is bounded."
+		\item Contrapositive: "If sequence $a$ is not bounded, then $a$ is not convergent."
+		\item Converse: "If sequence $a$ is bounded, then $a$ is convergent."
+		\end{itemize}
+
+	\item\textbf{"The differentiability of a function $f$ is sufficient for $f$ to be continuous."}
+		\begin{itemize}
+		\item Rewritten in $p \Rightarrow q$ form: "If function $f$ is differentiable, then $f$ is continuous."
+		\item Contrapositive: "If function $f$ is not continuous, then $f$ is not differentiable."
+		\item Converse: "If function $f$ is continuous, then $f$ is differentiable."
+		\end{itemize}
+	\end{enumerate}
+
+  \item\textbf{Let $x$ and $y$ be integers.  Prove that if $x$ and $y$ are even, then $x+y$ is even.}\\
+    To show: $x + y$ is even.\\
+    \textbf{Proof:}
+    \begin{align*}
+      &\text{Let $x$ and $y$ be even integers.} 
+        & \text{(by hypothesis)}\\
+      & \Rightarrow \exists i, j \in \mathbb{Z} \ni x = 2i \wedge y = 2j
+        & \text{(by definition of even)}\\
+      & \Rightarrow x + y = 2i + 2j
+        & \text{(substitution)}\\
+      & \Rightarrow x + y = 2(i + j)
+        & \text{(distributivity)}\\
+      & \Rightarrow \exists k \in \mathbb{Z} \ni k = i+j
+        & \text{(closure of integer addition)}\\
+      & \Rightarrow x + y = 2k
+        & \text{(substitution)}\\
+      & \Rightarrow x + y \text{ is even } \blacksquare
+        & \text{(by definition of even)}
+    \end{align*}
+    
+  \item\textbf{Let $A$ and $B$ be sets.  Prove that $A \subset B$ if and only if $A - B = \emptyset$}.  By contrapositive, $A - B \neq \emptyset  \Longleftrightarrow A \not\subset B$\\
+    Proof by contraposition, to show: $A \not\subset B$, and then back to $A - B \neq \emptyset$.\\
+    \textbf{Proof:}
+    \begin{align*}
+      &\text{Let $A$ and $B$ be sets such that $A - B \neq \emptyset$} 
+        & \text{(toward contrapositive)}\\
+      & \Longleftrightarrow \exists C \neq \emptyset \ni A - B = C
+        & \text{(definition of not empty set)}\\
+      & \Longleftrightarrow \exists x \in C \ni x \in A \wedge x \notin B
+        & \text{(definition of set subtraction)}\\
+      & \Longleftrightarrow A \not\subset B \blacksquare
+        & \text{(by definition of subset)}
+    \end{align*}
+    While I believe each of these steps should be biconditional, it seems like by creating a set $C$ to contain an element $x$ (on the way toward $A \not\subset B$) may not be so reversible, since moving upward I would invoke $\exists x \in C$ before $\exists C$.  Maybe I can skip invoking set $C$ entirely?  Looking forward to the answer key!
+\end{enumerate}

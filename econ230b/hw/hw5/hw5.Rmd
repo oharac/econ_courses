@@ -1,0 +1,347 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\LL}{\mathscr{L}}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises Lecture 5
+
+### 5.1 Suppose that Ed’s utility function is $U_E(B_E,S) = B_ES$ for $0 \leq S \leq 4$, and $U_E(B_E,S) = 0$ for $S > 4$. 
+
+Suppose that Fiona’s utility function is $U_F(B_F, S) = B_F - S^2$. Assume that the initial allocations of beans are $W_E$ and $W_F$, where $W_E + W_F = 16$.
+
+a) Sketch an Edgeworth diagram, showing Ed’s and Fiona’s preferences over possible allocations (Fig. 1)
+```{r}
+w_tot <- 16
+b_e <- seq(0, w_tot, .1)
+s <- c(seq(0, 4, .1), 4.01, seq(4.1, 5, .1))
+
+df <- crossing(b_e, s) %>%
+  mutate(b_f   = w_tot - b_e,
+         Ed    = b_e * s,
+         Ed = ifelse(s > 4, 0, Ed),
+         Fiona = b_f - s^2,
+         s_star = sqrt(b_e / 2)) %>%
+  gather(name, U, Ed:Fiona)
+
+fig_plot <- ggplot(df, aes(x = b_e, y = s)) +
+  ggtheme_plot(base_size = 7) +
+  geom_contour(aes(z = U, color = name), binwidth = 3) +
+  geom_line(aes(y = s_star), linetype = 'dotted', size = .5, color = 'grey40') +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  scale_color_manual(values = c('lightblue', 'pink3')) +
+  labs(x = 'Beans (for Ed -->, for Fiona <--)', y = 'Smokes', color = '')
+
+ggsave('fig5_1a.png', height = 2, width = 4, dpi = 300)
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig5_1a.png}
+  \caption{Edgeworth box for Ed and Fiona}
+\end{figure}
+
+b) Write algebraic expression(s) to describe all of the Pareto optimal allocations for Ed and Fiona.
+    * Start with Samuelson conditions:
+    \begin{align*}
+      \frac{\partial U_E/\partial S}{\partial U_E/\partial B_E} &+ \frac{\partial U_F/\partial S}{\partial U_F/\partial B_F} = p_S (= 0)\\
+      \frac{B_E}{S} &+ \frac{-2S}{1} = 0\\
+      \Longrightarrow S^* &= \sqrt{\frac{B_E}{2}}
+    \end{align*}
+    * See dotted line on Fig. 1.  Since the utility functions cannot be written in Bergstrom-Cornes form, the allocation of public good $S$ is dependent on the distribution of private goods $B_E, B_F$.  
+    * This represents the maximized _total_ utility; however, there are additional Pareto optimal cases where Ed or Fiona may, upon taking all the beans, continue to maximize their own utility.  
+        * Fiona's maximum utility is when she has all the beans and there is no smoking, leaving Ed with zero utility (which is also on the $S^*$ curve).  
+        * Ed's maximum utility (at Fiona's expense) occurs when he has all the beans and smokes more than $S^*$, i.e. $S^* < S \leq 4$.  In this region, $U_E = 16 S$ and $U_F = -S^2$.
+
+c) Write an equation for the utility possibility frontier and sketch it.
+    * Maximizing total utility (such that $S = S^*$), the utility possibility frontier equation (solid red on frontier plot) is:
+\begin{align*}
+  U_E &= B_E S = \sqrt{\frac{B_E^3}{2}}\\
+  U_F &= B_F - S^2 = W - B_E - \frac{B_E}{2} = W - \frac{3}{2}B_E\\
+  \Longrightarrow U_F &= W - \frac{3}{2}(2U_E^2)^{1/3}
+\end{align*}
+    * and for the portion where Ed maximizes his own utility at Fiona's expense ($S^* < S \leq 4$) (dotted blue on frontier plot):
+\begin{align*}
+  U_E &= 16S; \hspace{12pt} U_F = - S^2\\
+  \Longrightarrow U_F &= - \left(\frac{U_E}{16}\right)^2
+\end{align*}
+  
+```{r}
+w_tot <- 16
+b_e <- seq(0, w_tot, .1)
+s <- c(seq(0, 4, .1), 4.01, seq(4.1, 5, .1))
+
+df <- crossing(b_e, s) %>%
+  mutate(b_f = w_tot - b_e,
+         U_e = b_e * s,
+         U_e = ifelse(s > 4, 0, U_e),
+         U_f = b_f - s^2)
+
+df_pareto <- data.frame(U_e = seq(0, w_tot * sqrt(w_tot/2), .1)) %>%
+  mutate(U_f = w_tot - 1.5 * (2 * U_e^2)^(1/3))
+df_pareto2 <- data.frame(b_e = 16, b_f = 0, s = seq(sqrt(16/2), 4, .1)) %>%
+  mutate(U_f = -s^2, 
+         U_e = b_e * s)
+
+fig_plot <- ggplot(df, aes(x = U_e, y = U_f)) +
+  ggtheme_plot(base_size = 7) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(size = .1, alpha = .01) +
+  # geom_point(data = df_zeros, aes(color = name), size = .1) +
+  geom_path(data = df_pareto, color = 'red', size = .25) +
+  geom_path(data = df_pareto2, color = 'blue', linetype = 'dotted', size = .5) +
+  labs(x = TeX('$U_E$'), y = TeX('$U_F$'))
+
+ggsave('fig5_1c.png', height = 2, width = 4, dpi = 300)
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig5_1c.png}
+  \caption{Utility possibility frontier for Ed and Fiona}
+\end{figure}
+
+d) Find the Lindahl equilibrium prices and quantities as a function of $W_E$ where initial property rights forbid smoking.
+    * We know that the price must be equal to the marginal rates of substitution of each person, and $p_E = -p_F$.  Find these and plug into budget constraint $B_E + p_E S \leq W_E$ to find the price as a function of $W_E$.
+\begin{align*}
+  \frac{\partial U_E / \partial S}{\partial U_E / \partial B_E} &= \frac{B_E}{S} = p_E\\
+  B_E + p_E S &\leq W_E \Rightarrow 2 p_E S \leq W_E\\
+  \Rightarrow S &\leq \frac{W_E}{2p_E}\\
+  \frac{\partial U_F / \partial S}{\partial U_F / \partial B_F} &= \frac{-2S}{1} = p_F = -p_E\\
+  \Rightarrow S &= \frac{p_E}{2}\\
+  \Rightarrow \frac{W_E}{2p_E} &= \frac{p_E}{2} &\text{(set $S$ terms equal)}\\
+  \Rightarrow p_E &= \sqrt{W_E}
+\end{align*}
+    * Lindahl equilibrium price is $p_E = \sqrt{W_E} (= -p_F)$.
+    * Lindahl equilibrium quantities are $\{S, B_E, B_F\} = \{\frac{\sqrt{W_E}}{2}, \frac{W_E}{2}, 16 - \frac{W_E}{2}\}$.
+    * Note, could also maximize each person's utility with respect to a budget that includes a $p_E S$ term.
+e) Find the Lindahl equilibrium prices and quantities as a function of $W_E$ where initial property rights allow one to smoke as much as one wishes.
+    * Here, account for Ed's property rights as additional wealth, i.e. $B_E + p_E S \leq W_E + p_E \bar S$ where in this case, $\bar S = 4$.  The marginal rates of substitution are identical to above.
+\begin{align*}
+  p_E &= \frac{B_E}{S} = 2S &\text{(MRS from above)}\\
+  \max_{B_E, s} B_E S &- \lambda[B_E + p_E S - W_E - p_E \bar S]\\
+  \Rightarrow B_E^* &= \frac{W_E}{2} + 2 p_E, S_E^* = \frac{W_E}{2 p_E} + 2\\
+  \max_{B_F, s} B_F - S^2 &- \lambda[B_F + p_F S - W_F]\\
+  \Rightarrow B_F^* &= W_F - \frac{p_F^2}{2}, S_F^* = \frac{p_E}{2}\\
+  \Rightarrow \frac{W_E}{2p_E} + 2 &= \frac{p_E}{2} &\text{(set $S$ terms equal)}\\
+  \Rightarrow p_E^2 - 4p_E - W_E &= 0 \text{(rearrange)}\\
+  \Rightarrow p_E &= \frac{4 + \sqrt{16 + 4 W_E}}{2} = 2 + 2\sqrt{1 + \frac{W_E}{4}}
+\end{align*}
+
+### 5.2 Jim and Tammy are partners in business and in Life.  As is all too common in this imperfect world, each has a little habit that annoys the other. 
+
+Jim’s habit, we will call Activity $X$ and Tammy’s habit, activity $Y$. Let $x$ be the amount of activity $X$ that Jim pursues and $y$ be the amount of activity $Y$ that Tammy pursues. Jim must choose an amount of activity $X$ between 0 and 50. Tammy must choose an amount of activity $Y$ between 0 and 100. Let $c_J$ be the amount of money that Jim spends on consumption goods and let $c_T$ be the amount that Tammy spends on consumption goods. Jim and Tammy have only \$1,000,000 per year to spend on consumption goods. Jim’s habit costs \$40 per unit. Tammy’s habit also costs \$100 per unit. Jim’s utility function is
+
+$$U_J =c_J + 500\ln x - 20y$$
+and Tammy’s utility function is
+$$U_T = c_T + 500 \ln y - 10x$$
+
+a) Find the set of Pareto optimal allocations of money and activities in this partnership.
+    * Start with Lagrangian: $$\LL = c_J + 500 \ln x - 20 y - \lambda_1 [\bar U_T - (c_T + 500 \ln y - 10x)] - \lambda_2(c_J + c_T + 40x + 100y - \$1,000,000)$$
+\begin{align*}
+  \partial \LL / \partial c_J &= 1 - \lambda_2 = 0 \Rightarrow \lambda_2 = 1\\
+  \partial \LL / \partial c_T &= 1 - \lambda_1 = 0 \Rightarrow \lambda_1 = 1\\
+  \partial \LL / \partial x &= 500/x - 10 \lambda_1 - 40 \lambda_2 = 0 \Rightarrow x = 10\\
+  \partial \LL / \partial y &= 500/y - 20 \lambda_1 - 100 \lambda_2 = 0 \Rightarrow y = 500/120 = 25/6\\
+  c_J + c_T &= \$1,000,000 - 40 \times 10 - 100 \times 25/6 = \$999,183
+\end{align*}
+    * Jim buys 10 units of his habit, Tammy buys 4.167 units of hers, and the remaining \$999,183 is shared between the two.
+    * If Jim were to control the entire fortune, there would be Pareto optimal but not socially optimal cases in which Jim would increase consumption of $x$ to maximize his own utility at Tammy's expense, and likewise if Tammy were to control the fortune.
+b) Suppose that Jim has a contractual right to half of the family income and Tammy has a contractual right to the other half. Find a Pareto optimal outcome in which each spends the same total amount.
+    * The Pareto optimal outcome in which $W_J = W_T = \$500,000$ will result in the same consumption of habits (x = 10, y = 25/6) but then fixes $c_J = W_J - 40x = \$499,600$ and $c_T = W_T - 100y = \$499,583$.
+c) If they make no bargains about how much of the externality generating activities to perform, how much $x$ will Jim choose and how much $y$ will Tammy choose?
+    * In this case, they will each choose to maximize their own utilities and annoy their partner.
+\begin{align*}
+  \text{For Jim: }U_J &= c_J + 500\ln x - 20y - \lambda(c_J + 40x - W_J)
+  \partial U_J/\partial c_J &= 1 - \lambda = 0 \Rightarrow \lambda = 1\\
+  \partial U_J/\partial x &= 500/x - 40 \lambda = 0\\
+  \Rightarrow x &= 12.5\\
+  \text{For Tammy: }U_T &= c_T + 500\ln y - 10x - \lambda(c_T + 100y - W_T)
+  \partial U_T/\partial c_T &= 1 - \lambda = 0 \Rightarrow \lambda = 1\\
+  \partial U_T/\partial y &= 500/y - 100 \lambda = 0\\
+  \Rightarrow y &= 5
+\end{align*}
+    * Jim chooses $x = 12.5$ and Tammy chooses $y = 5$.  This is not a Pareto optimal outcome.
+d) Find Lindahl equilibrium prices and quantities if the initial property rights specify that neither activity $X$ nor activity $Y$ can be performed without ones partner’s consent.
+   * For Jim: Start with Lagrangian: $$\LL = c_J + 500 \ln x - 20 y - \lambda(c_J + c_T + p_{x_J}x + p_{y_J}y - \$1,000,000)$$
+\begin{align*}
+  \partial \LL / \partial c_J &= 1 - \lambda = 0 \Rightarrow \lambda = 1\\
+  \partial \LL / \partial x &= 500/x - p_{x_J} \lambda = 0 \Rightarrow x^* = 500/p_{x_J} \\
+  \partial \LL / \partial y &= -20 - p_{y_J} \lambda = 0 \Rightarrow p_{y_J} = -20\\
+\end{align*}
+   * For Tammy: Start with Lagrangian: $$\LL = c_T + 500 \ln y - 10 x - \lambda(c_J + c_T + p_{x_T}x + p_{y_T}y - \$1,000,000)$$
+\begin{align*}
+  \partial \LL / \partial c_T &= 1 - \lambda = 0 \Rightarrow \lambda = 1\\
+  \partial \LL / \partial y &= 500/y - p_{y_T} \lambda = 0 \Rightarrow y^* = 500/p_{y_T} \\
+  \partial \LL / \partial y &= -10 - p_{x_T} \lambda = 0 \Rightarrow p_{x_T} = -10\\
+\end{align*}
+    * In equilibrium:
+        * $p_x = 40 = p_{x_J} + p_{x_T} = p_{x_J} - 10 \Rightarrow p_{x_J} = 50$
+        * $p_y = 100 = p_{y_J} + p_{y_T} = -20 - p_{y_T} \Rightarrow p_{y_T} = 120$
+        * $x^* = 500 / p_{x_J} = 10; y^* = 500 / p_{y_T} = 25/6$
+e) Find Lindahl equilibrium prices and quantities if Jim has a right to perform $X$ as much as he is able to and Tammy has a right to perform activity $Y$ as much as she is able to.
+
+### 5.3 The cottagers on the shores of Lake Invidious are an unsavoury bunch. There are 100 of them and they live in a circle around the lake. 
+
+Each cottager has two neighbors, one on his right and one on his left. There is only one commodity and they all consume it on their front lawns in full view of their two neighbors. Each cottager likes to consume the commodity, but is envious of consumption by the neighbor on his left. Nobody cares what the neighbor on his right is doing. Every consumer has a utility function $U(c,l) = c - l^2$, where $c$ is her own consumption and $l$ is consumption by her neighbor on the left.
+
+a) Suppose that every consumer owns 1 unit of the consumption good and consumes it. Calculate the utility of each individual.
+$$U_i = c - l^2 = 1 - 1^2 = 0$$
+    * Each individual gets zero utility from this arrangement.
+
+b) Suppose that every consumer consumes only 3/4 of a unit. What will be the utility of each of them?
+$$U_i = c - l^2 = \frac{3}{4} - \left(\frac{3}{4}\right)^2 = \frac{3}{16}$$
+    * Each consumer receives $\frac{3}{16}$ worth of utility from this situation.
+c) What is the best possible consumption if all are to consume the same amount?
+    * Maximize $U_i$ with respect to $c = l$:
+$$\max_c U_i = c - c^2 \Rightarrow 1 - 2c = 0 \Rightarrow c = \frac{1}{2}$$
+    * At $c = 1/2$, $U_i = \frac{1}{2} - \frac{1}{4} = \frac{1}{4}$
+d) Suppose that everybody around the lake is consuming 1 unit, can any two persons make themselves both better off either by redistributing consumption between them or by throwing something away?
+    * Starting with person $i$ and their neighbor, person $i+1$, adjusting to $l < 1$, assume the person to their left $i+2$ does not adjust, and consumes 1: utility of the neighbor = $U_{i+1} = l - 1^2 < 0$ for all $0 \leq l < 1$.
+    * Therefore, assuming $n > 2$, a redistribution between any two neighboring members cannot make _both_ better off since the left person will always be worse off than the utility of original consumption of $c = 1$.
+e) How about a group of three persons?
+    * Similar - assuming $n > 3$, the leftmost person of any triad will be worse off than they would be just consuming 1 unit since their leftward neighbor will not reduce consumption, and will consume $c = 1$.
+    * $\Rightarrow$ no group of three persons can _all_ be better off (or even equal).
+f) How large is the smallest group that could cooperate to benefit all of its members.
+    * Status quo ($c_i = 1$ for all $i$) indicates zero utility for all members.  If _all_ members threw away some portion (e.g. $c_i = \frac{1}{2}$) then we can increase $U_i$ for all members - the benefit loops around the entire group ($n = 100$), making it worthwhile for the first member ("leftmost" member) to decrease consumption.
+    
+### 5.4 The town of Puuey has 10 firms and 1000 people. 
+
+The profits of firm $i$’s manufacturing operations are given by $A_iS-\frac{1}{2}S^2$ where $S$ is the amount of smoke that $i$ produces. The people of Puuey have identical linear utility functions $U(x,S) = x-dS$, where $x$ is private consumption and where $d > 0$ is the marginal (and average cost) of smoke to one individual. It happens that $A_i > 1000d$ for every firm $i$ in Puuey and that $\sum A_i$ = 100,000.
+
+a) If there are no penalties for pollution and the firms choose their amount of smoke to maximize profits, how much smoke will there be in Puuey?
+    * Each firm $i$ will produce the amount of smoke $S_i$ to maximize its profits, i.e. $A_iS_i-\frac{1}{2}S_i^2$.
+    * $\partial \pi/\partial S_i = 0 = A_i - S_i \Rightarrow A_i = S_i$ for each firm.
+    * Since each firm's smoke production $S_i = A_i$, and $\sum_{i=1}^{10} A_i$ = 100,000, then $S = \sum S_i$ = 100,000 units of smoke.
+b) At a Pareto optimum, how many units of smoke should firm $i$ produce? How many units of smoke should be produced in total?
+    * Maximize both the firms' profits and the citizens' utilities with respect to smoke production: $\sum_{i=1}^{10}(A_i S_i - \frac{1}{2} S_i^2) + \sum_{j=1}^{1000} (x - dS)$.
+    * $\sum_i (A_i - S_i) - \sum_j d = \sum_i (A_i - S_i) - 1000 d = 0$
+    * $\sum_i (A_i) - 1000 d = \sum_i S_i$ so each firm produces $A_i - 100d$ units of smoke.
+c) Suppose that the city council of Puuey requires that every firm have a permit for each unit of smoke that it emits. The council issues 100,000 permits and gives 100 of them to every citizen. A permit market opens where firms purchase permits in order to be able to produce smoke. In competitive equilibrium, what is the price of a ticket? How much smoke is produced in total? In equilibrium, how much revenue does each citizen get from selling permits to firms and what is the total cost of smoke to each citizen?
+    * Each firm's profit is now reduced by $pS_i$ (where $p$ is permit price): $A_iS_i - \frac{1}{2}S_i^2 - pS_i$.
+    * Maximizing this with respect to S we find $A_i - S_i - p = 0 \Rightarrow A_i - p = S_i$.
+    * Each citizen maximizes utility with respect to S as well: $U_j = x - dS + pS \Rightarrow d = p$, or the selling price of permits will just equal the marginal willingness to pay for reduced smoke (which is equal to damages).
+    * Total smoke produced by each firm becomes $A_i - d = S_i$, so for all ten firms, $\sum_i (A_i - d) = \sum_i A_i - 10d = \sum_i S_i =$ total smoke production.
+    * Total revenue is price times total permits sold (= total smoke produced), i.e. $d \times (100000 - 10d)$.  This is divided among all citizens, so revenue per citizen is $100d - .01d^2$.
+    * Total cost to each citizen is total smoke times damages = $d \times (100000 - 10d) = 100000d - 10d^2$.
+d) Suppose that each citizen is given 100,000 personalized permits with his name on each one. For each unit of smoke that a firm produces it must have a personalized permit from each of the 1000 citizens. Markets are opened for each of the 1000 types of permit. If each citizen sets a price at which he will sell permits and believes that his actions have no effect on the prices set by the others, in equilibrium, what price would we expect each citizen to set? What would be the total amount of smoke produced in Puuey?
+    * As before, each citizen maximizes utility with respect to S: $U_j = x - dS + pS \Rightarrow d = p$, or the selling price of permits will again just equal the marginal willingness to pay for reduced smoke.
+    * But since each firm now needs permission from _all_ citizens, they must maximize profit according to: $A_iS_i - \frac{1}{2}S_i^2 - 1000pS_i$.
+    * Maximizing this with respect to S we find $A_i - S_i - 1000p = 0 \Rightarrow A_i - 1000p = S_i$.
+    * So total smoke is $\sum_i (A_i - 1000d) = 100,000 - 10,000d$.
+
+### 5.5 Romeo loves Juliet and Juliet loves Romeo. Besides love, they consume only one good, spaghetti.
+
+Romeo likes spaghetti, but he also likes Juliet to be happy and he knows that spaghetti makes her happy. Juliet likes spaghetti, but she also likes Romeo to be happy and she knows that spaghetti makes Romeo happy. Romeo’s utility function is $U_R(S_R, S_J) = S_R^a S_J^{1-a}$ and Juliet’s utility function is $U_J(S_J, S_R) = S_J^a S_R^{1-a}$, where $S_J$ and $S_R$ are the amount of spaghetti for Romeo and the amount of spaghetti for Juliet respectively. There is a total of 24 units of spaghetti to be divided between Romeo and Juliet.
+
+a) Suppose that $a = \frac{2}{3}$. If Romeo got to allocate the 24 units of spaghetti exactly as he wanted to, how much would he give himself and how much would he give Juliet? If Juliet got to allocate the spaghetti exactly as she wanted to, how much would she take for herself and how much would she give Romeo?
+    * Romeo optimizes $\LL = S_R^a S_J^{1-a} - \lambda[S_R + S_J - 24]$.
+\begin{align*}
+  \max_{S_R, S_J} S_R^a S_J^{1-a} &- \lambda[S_R + S_J - 24]\\
+  \Rightarrow \frac{2 S_J^{1/3}}{3 S_R^{1/3}} &= \lambda\\
+  \Rightarrow \frac{1 S_R^{2/3}}{3 S_J^{2/3}} &= \lambda\\
+  \Rightarrow \frac{1 S_R^{2/3}}{3 S_J^{2/3}} &= \frac{2 S_J^{1/3}}{3 S_R^{1/3}}\\
+  \Rightarrow S_R &= 2 S_J
+\end{align*}
+        * Therefore, when Romeo controls the allocation, he takes 16 units of spaghetti and gives Juliet 8.
+    * Juliet optimizes $\LL = S_R^{1-a} S_J^{a} - \lambda[S_R + S_J - 24]$.
+\begin{align*}
+  \max_{S_R, S_J} S_R^{1-a} S_J^{a} &- \lambda[S_R + S_J - 24]\\
+  \text{by symmetry,} \\
+  \Rightarrow S_R &= 2 S_J
+\end{align*}
+        * Therefore, when Juliet controls the allocation, she takes 16 units of spaghetti and gives Romeo 8.
+b) What are the Pareto optimal allocations?
+    * Allocations between these two extremes will be Pareto optimal, i.e. Juliet takes between 8 and 16 units and gives the rest to Romeo.  Any particular combination will be Pareto efficient.
+c) When we have to allocate two goods between two people, we draw an Edgeworth box with indifference curves in it. When we have just one good to allocate between two people, all we need is an “Edgeworth line” and instead of indifference curves, we will just have indifference dots. Draw an Edgeworth line. Let the distance from left to right denote spaghetti for Romeo and the distance from right to left denote spaghetti for Juliet. On the Edgeworth line, show Romeo’s favorite point and Juliet’s favorite point. Also show the locus of Pareto optimal points.
+```{r, eval = FALSE}
+df <- data.frame(x = c(8, 16),
+                 y = 0,
+                 lbl = c('J*', 'R*'))
+fig5_5c <- ggplot(df) +
+  geom_line(size = 2) +
+  geom_point()
+```
+    * 
+    \begin{align*}
+    \end{align*}
+d) Suppose that $a = \frac{1}{3}$. If Romeo got to allocate the spaghetti, how much would he choose for himself? If Juliet got to allocate the spaghetti, how much would she choose for herself? Draw another “Edgeworth line” below, showing the two people’s favorite points and the locus of Pareto optimal points. When $a = \frac{1}{3}$, describe the nature of disagreements between Romeo and Juliet at the Pareto optimal allocations.
+    * By symmetry with the prior problems, their preferred allocations would simply reverse: Romeo prefers (8, 16) and Juliet prefers (16, 8).
+    * 
+    \begin{align*}
+    \end{align*}
+
+### 5.6 If we treat “spaghetti for Romeo” and “spaghetti for Juliet” as public goods, we would have an economy with two public goods and no private goods. 
+
+We can find a Lindahl equilibria by finding personalized Lindahl prices where $p_{ij}$ is the price that person $i$ pays per unit of $j$’s consumption. In Lindahl equilibrium the Lindahl prices must be chosen in such a way that given their personalized prices, consumers all agree on the quantity that should be consumed by every consumer and such that for each $j$, the sum of the prices $p_{ij}$ over all consumers $i$ is one.
+
+a) Suppose that Romeo in the previous problem has an initial endowment of 18 units of spaghetti and Juliet has an initial endowment of 6 units. Find the Lindahl equilibrium prices and the Lindahl equilibrium quantities of spaghetti for Romeo and Juliet.
+\begin{align*}
+  MRS_R &= \frac{\partial U_R/\partial S_R}{\partial U_R/\partial S_J} = \frac{p_{RR}}{p_{RJ}}\\
+  \Rightarrow \frac{aS_J}{(1-a) S_R} &= \frac{p_{RR}}{p_{RJ}} &(1)\\
+  MRS_J &= \frac{\partial U_J/\partial S_R}{\partial U_J/\partial S_J} = \frac{p_{JR}}{p_{JJ}}\\
+  \Rightarrow \frac{(1-a)S_J}{a S_R} &= \frac{p_{JR}}{p_{JJ}} &(2)\\
+  \text{Budgets: }\\
+  \text{R: } p_{RR} S_R &+ p_{RJ} S_J = 18 &(3)\\
+  \text{J: } p_{JJ} S_J &+ p_{JR} S_R = 6  &(4)\\
+  18a &- p_{RR}S_R =0 &\text{(combine 1 and 3)}\\
+  6a &- p_{JJ}S_J = 0  &\text{(combine 2 and 4)}
+\end{align*}
+    * Choose a Pareto optimal point to evaluate: (R, J) = (12, 12).
+\begin{align*}
+  18a - 12 p_{RR} &=0 \Rightarrow p_{RR} = \frac{3}{2}a\\
+  12 p_{RR} + 12 p_{RJ} &= 18 \Rightarrow p_{RR} + p_{RJ} = 3/2\\
+  \Rightarrow \frac{3}{2}a + p_{RJ} &= 3/2 \Rightarrow P_{RJ} = 3/2 (1-a)\\
+  6a - 12 p_{JJ} &= 0 \Rightarrow p_{JJ} = \frac{1}{2}a\\
+  12 p_{JJ} + 12 p_{JR} &= 6 \Rightarrow p_{JJ} + p_{JR} = 1/2\\
+  \Rightarrow \frac{1}{2}a + p_{JR} &= 1/2 \Rightarrow P_{JR} = 1/2 (1-a)\\
+\end{align*}
+    * So Lindahl prices are: 
+    $$\{p_{RR}, p_{RJ}, p_{JJ}, p_{JR}\} = \{\frac{3}{2}a, \frac{3}{2} (1-a), \frac{1}{2}a, \frac{1}{2} (1-a)\}$$
+b) Suppose there are $n$ consumers and one commodity. Consumer $i$ has an initial endowment of $W_i$ units of this commodity and consumer $i$’s utility function is given by
+$$U_i(X_1,...,X_n) = \sum_{j=1}^n \alpha_{ij} \ln X_j$$
+Find the Lindahl equilibrium prices and quantities for this economy, expressed as a function of $\alpha_{ij}$s and the $W_i$s.
+    * We can express these utilities in Cobb-Douglas form with a monotone transformation:
+$$U_i(X_1,...,X_n) = \prod_{j=1}^n X_j^{\alpha_{ij}}$$
+    * Let $\sum_j \alpha_{ij} = 1$ for all $i$, and $\sum_i p_{ij} = 1$.
+\begin{align*}
+  X_{j} &= \frac{\alpha_{ij} w_i}{p_{ij}} \\
+  \Rightarrow p_{ij} &= \frac{\alpha_{ij} w_i}{X_{j}}\\
+  \Rightarrow \sum_i p_{ij} &= 1 = \frac{1}{X_{j}}\sum_i \alpha_{ij} w_i\\
+  \Rightarrow X_j &= \sum_i \alpha_{ij} w_i \text{ for all $j$}\\
+  \Rightarrow p_{ij} &= \frac{\alpha_{ij} w_i}{\sum_i \alpha_{ij} w_i} \text{ for all $i$}
+\end{align*}

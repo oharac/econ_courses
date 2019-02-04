@@ -1,0 +1,179 @@
+---
+title: | 
+  | \hfill \Large{Math Camp: PS 1 Linear Algebra}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'Figs/',
+                      echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+
+\begin{enumerate}
+\item \textbf{Consider the following matrices:}
+	\begin{align*}
+		A =  \begin{bmatrix} 
+			2 & 8 \\ 3 & 0 \\ 5 & 1
+		\end{bmatrix}
+		\hspace{10mm}
+		B =  \begin{bmatrix} 
+			2 & 0 \\ 3 & 8
+		\end{bmatrix}
+		\hspace{10mm}
+		C =  \begin{bmatrix} 
+			7 & 2 \\ 6 & 3
+		\end{bmatrix}\\
+	\end{align*}
+	\begin{enumerate}
+		\item\textbf{Calculate $AB$.}
+			\begin{align*}
+				AB & = \begin{bmatrix}
+				  2*2+8*3 & 2*0+8*8 \\
+				  3*2+0*3 & 3*0+0*8 \\
+				  5*2+1*3 & 5*0+1*8
+				\end{bmatrix}\\
+				AB & = \begin{bmatrix}
+				  28 & 64 \\
+				   6 &  0 \\
+				  13 &  8
+				\end{bmatrix}
+			\end{align*}
+		\item\textbf{Calculate $CB$.}
+			\begin{align*}
+				CB & = \begin{bmatrix}
+				  7*2+2*3 & 7*0+2*8\\
+				  6*2+3*3 & 6*0+3*8
+				\end{bmatrix}\\
+				CB & = \begin{bmatrix}
+				  20 & 16 \\ 18 & 24
+				\end{bmatrix}
+			\end{align*}
+		\item\textbf{Is it true that $CB=BC$? Justify your response.}\\
+		No, $BC \neq CB$; matrix multiplication is not commutative.  For a generalized example, consider the generic matrices:
+			\begin{align*}
+  			 B_g = \begin{bmatrix}b_{11} & b_{12} \\ b_{21} & b_{22}\end{bmatrix}
+  			 \hspace{10mm}
+  			 C_g = \begin{bmatrix}c_{11} & c_{12} \\ c_{21} & c_{22}\end{bmatrix}
+			\end{align*}
+			Comparing the first elements of $B_gC_g$ and $C_gB_g$, we see that 
+  			$BC_{11} = b_{11}*c_{11} + b_{12}*c_{21}$ while 
+  			$CB_{11} = b_{11}*c_{11} + b_{21}*c_{12}$.\\[6pt]
+      For the specific matrices $B$ and $C$, this results in  
+  			$BC_{11} = 2*7 + 0*6 = 14$ while 
+  			$CB_{11} = 7*2 + 2*3 = 20$.\\
+	\end{enumerate}
+
+\item\textbf{Find the determinant of each of the following matrices:}
+  \begin{enumerate}
+  \item $D = \begin{bmatrix}2 & 3 \\ 1 & -1\end{bmatrix}$
+    \\[6pt]
+    $|D| = 2 * -1 - (1 * 3) = -5$
+    \\[12pt]
+  \item $E = \begin{bmatrix}8 & 1 & 3 \\ 4 & 0 & 1 \\ 6 & 0 & 3\end{bmatrix}$
+    \\[6pt]
+    Performing a Laplace expansion along the 2nd column, to take advantage of multiple zeros:
+    \\[6pt]
+    $|E| = -\left(1 * \begin{vmatrix}4 & 1 \\ 6 & 3\end{vmatrix}\right) + 
+      0 * \begin{vmatrix}8 & 3 \\ 6 & 3\end{vmatrix} + 
+      -\left(0 * \begin{vmatrix}8 & 3 \\ 4 & 1\end{vmatrix}\right) = -6 + 0 - 0 = -6$
+  \end{enumerate}
+
+\item\textbf{Find the inverse of the following matrix:}
+  \begin{align*}
+    F = \begin{bmatrix}5 & 2 \\ 0 & 1\end{bmatrix}
+  \end{align*}
+  First, find the determinant.
+  \begin{align*}
+    |F| = 5 * 1 - 0 * 2 = 5
+  \end{align*}
+  Next, find the adjoint matrix as the transpose of the cofactor matrix: 
+  $\text{Adj}(F) = \boldsymbol{C}_F^T$.
+  \begin{align*}
+    \text{Adj}(F) = \begin{bmatrix} 1 & -2 \\ 0 & 5\end{bmatrix}
+  \end{align*}
+  Then the inverse $F^{-1}$ is calculated as:
+  \begin{align*}
+    F^{-1} &= \frac{1}{|F|}\text{Adj}(F)\\[6pt]
+    F^{-1} &= \begin{bmatrix} \frac{1}{5} & -\frac{2}{5} \\ 0 & 1\end{bmatrix}
+  \end{align*}
+  Alternate method - row operations:
+  \begin{align*}
+    [F | I_2] &= \left[\begin{array}{cc|cc} 
+      5 & 2 & 1 & 0  \\ 0 & 1 & 0 & 1
+    \end{array}\right]\\
+    &= \left[\begin{array}{cc|cc} 
+      5 & 0 & 1 & -2 \\ 0 & 1 & 0 & 1
+    \end{array}\right] & Row1 = Row1 - 2*Row2\\
+    &= \left[\begin{array}{cc|cc} 
+      1 & 0 & \frac{1}{5} & -\frac{2}{5} \\ 0 & 1 & 0 & 1
+    \end{array}\right] & Row1 = Row1 / 5\\
+    F^{-1} &= \begin{bmatrix}\frac{1}{5} & -\frac{2}{5} \\ 0 & 1
+    \end{bmatrix}
+  \end{align*}
+
+\item\textbf{Find eigenvalues and eigenvectors associated with the matrix:}
+  \begin{align*}
+    G = \begin{bmatrix}4 & 2 \\ 2 & 3\end{bmatrix}
+  \end{align*}
+  Find $\vec{x}$ and $\lambda$ such that $G\vec{x} = \lambda\vec{x}$ 
+  or $(G - I_n\lambda)\vec{x} = \vec{0}$.\\[6pt]
+  The characteristic equation is $|G - I_n\lambda| = 0$ which results in the quadratic form:
+  \begin{align*}
+    \lambda^2 - (g_{11} + g_{22})\lambda + g_{11}g_{22} - g_{12}g_{21} = 0\\[6pt]
+    \lambda^2 - 7\lambda + 12 - 4 = 0\\[6pt]
+    \lambda^2 - 7\lambda + 8 = 0\\
+  \end{align*}
+  Using the quadratic formula to factor this quadratic form, we get two eigenvalues:
+  \begin{align*}
+    \lambda_1 & = \frac{7 - \sqrt{49 - 4*1*8}}{2} = \frac{7 - \sqrt{17}}{2}\\[6pt]
+    \lambda_2 & = \frac{7 + \sqrt{49 - 4*1*8}}{2} = \frac{7 + \sqrt{17}}{2}
+  \end{align*}
+  Substituting $\lambda = \lambda_1$ into $(G - I_n\lambda)\vec{x} = \vec{0}$:
+  \begin{align*}
+    \begin{bmatrix}
+      4 - \frac{7 - \sqrt{17}}{2} & 2 \\ 
+      2 & 3 - \frac{7 - \sqrt{17}}{2}
+    \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+  \end{align*}
+  Simplify and multiply by 2:\\
+  \begin{align*}
+    \begin{bmatrix}
+      1 + \sqrt{17} & 4 \\ 
+      4 & -1 + \sqrt{17}
+    \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+  \end{align*}
+  Multiply row 1 by $(1 - \sqrt{17})$; note that $(1 + \sqrt{17})(1 - \sqrt{17}) = 1 - 17 = -16$\\
+  \begin{align*}
+    \begin{bmatrix}
+      -16 & 4(1 - \sqrt{17}) \\ 
+        4 & -(1 - \sqrt{17})
+    \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+  \end{align*}
+  Row 1 is simply -4 * row 2; no unique solution for singular matrix.  
+  $x_1 = \frac{1 - \sqrt{17}}{4}x_2$ for $\lambda_1 = \frac{7 - \sqrt{17}}{2}$, so:
+  \begin{align*}
+    vec{x} = \begin{bmatrix}\frac{1 - \sqrt{17}}{4}x_2 \\ x_2 \end{bmatrix}
+  \end{align*}
+  By a similar process, we find 
+  $x_1 = \frac{1 + \sqrt{17}}{4}x_2$ for $\lambda_2 = \frac{7 + \sqrt{17}}{2}$, and:
+    \begin{align*}
+    vec{x} = \begin{bmatrix}\frac{1 + \sqrt{17}}{4}x_2 \\ x_2 \end{bmatrix}
+  \end{align*}
+
+
+\end{enumerate}

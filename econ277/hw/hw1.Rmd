@@ -1,0 +1,47 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 277
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+### 1.  Do the Rabin calibration theorem argument for someone who rejects a 50-50 win 550, lose 500 bet from every wealth level. Find the smallest $x$ you can such that the person rejects a 50-50 lose $x$ win infinity bet.
+
+### 2.  Assume Kahneman-Tversky loss-aversion with piecewise linear utility. Suppose that a person always rejects a 50-50 win 1.00 lose 0.95 bet, from any wealth level. Find the largest $x$ such that you know that the person also rejects a 50-50 win $x$ lose 20 bet.
+
+### 3.  Assume KT loss aversion.
+
+a) Assuming piecewise linear utility, find a lottery with negative expected value that a person with reference point 0 accepts, or show that this is impossible.
+
+b) Without assuming piecewise linear utility, find a lottery with negative expected value that a person with reference point 0 accepts, or show that this is impossible.
+
+### 4.  In the Koszegi-Rabin model, find an example of $L, L'$ such that $U(L|L') > U(L'|L')$ and $U(L'|L) > U(L|L)$, or show that this is impossible.

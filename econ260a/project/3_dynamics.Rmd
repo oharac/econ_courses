@@ -1,0 +1,128 @@
+
+In the model as presented to this point, two possible equilibrium outcomes can be observed, given sufficient time to converge.  On the one hand, if participants defect at a rate sufficient to reduce the benefit faster than defectors can be expelled and replaced, then the decline in benefits will ensure other defections, further decline in benefits, and so on until 100% of the community defects, and the TURF collapses into an open access condition.  On the other hand, if initial defection rates are small and defectors are expelled and replaced quickly before large declines in benefits are incurred, then given sufficient time, all fishers with high participation costs will be forced out of the system and replaced with low-cost participants.  This will result in a stable equilibrium at 100% participation, maximizing benefits.
+
+
+## Naive model outcomes
+
+The distribution of participation costs $c_{pi}$ will have a profound impact on the rate at which defections occur and thus the rate at which the TURF collapses into open access. Here I show outcomes for four different distributions, using a Monte Carlo method of 400 simulations across a fifteen year period, with initial cost vectors randomly drawn from the distribution for each simulation.
+
+The following parameter values were used across all simulations:
+\begin{align*}
+  \delta &= .95      &\text{discount factor}\\ 
+  r  &= 0.3; K = 100 &\text{intrinsic growth rate; carrying capacity}\\
+  p &= 20; B = 200   &\text{unit price; harvest cost coefficient}\\
+  n_{fishers} &= 50  &\text{number of fishers in TURF}\\
+  obs\_rate  &= .7   &\text{probability of getting caught defecting}\\
+\end{align*}
+
+Using these values we can calculate an open access equilibrium stock $x_{iOA} = 11.62$ (Fig. 1), and using backwards induction from $T = 30$ we can determine optimal escapement policy $e_i^* = 47.40$ and starting stock $x_i^* = 54.88$.  Note that since the cost distributions are independent of stock and harvest, changes to the cost distribution has no effect on optimal escapement policy.  
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \begin{minipage}{12 cm}
+    \centering
+    \includegraphics[width=\linewidth]{figs/oa_plot.png}
+    \caption{Rent, profit, harvest cost.  Dashed vertical line represents 
+      open access equilibrium at which rents are dissipated; dotted vertical
+      line represents optimal escapement to maximize long-term value.}
+    \end{minipage}
+  }
+\end{figure}
+
+Using these values, we can also calculate the per-period per-capita benefit of the TURF based on the profit at starting stock $x_i^*$ and optimal escapement $e_i^*$ relative to profit at open access (= 0):
+\begin{align}
+  \pi(e_i^*, x_i^*) = p(x_i^* - e_i^*) - \int_{e_i^*}^{x_i^*}\frac{B}{s}ds = 120
+\end{align}
+
+Per Bendor and Mookherjee [-@bendor_1987] and the requirements of a prisoner's dilemma, $b_{it} > c_{pi} > b_{it}/n$. 
+Defining the overall range $\lambda \equiv b_{it} - \frac{b_{it}}{n_{fishers}}$ and 
+$c_{min} \equiv \frac{b_{it}}{n_{fishers}}$, the four distributions in Fig. 2 correspond to:
+
+A) Uniform: $C_{p} \sim U(\frac{b}{n}, b)$
+B) Low-mean truncated normal:  $C_{p} \sim N_t (\mu = .35\lambda + \frac{b}{n}, \sigma = .25\lambda)$
+C) Mid-mean truncated normal:  $C_{p} \sim N_t (\mu = .50\lambda + \frac{b}{n}, \sigma = .25\lambda)$
+D) High-mean truncated normal: $C_{p} \sim N_t (\mu = .75\lambda + \frac{b}{n}, \sigma = .25\lambda)$
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \begin{minipage}{16 cm}
+    \centering
+    \includegraphics[width=\linewidth]{figs/compare_dists.png}
+    \caption{Initial distribution of participation costs, trajectories of simulated 
+      harvests, distribution of simulated net present values, for (A) uniform, 
+      (B) low-mean truncated normal, (C) mid-mean truncated normal, and (D) high-mean
+      truncated normal distributions. Vertical bars on present value plots show 
+      present value for stable fishery (i.e. no poaching) ignoring participation 
+      costs (blue) and accounting for participation costs (orange) by assigning all
+      fishers $c_p = \EE[C_p]$}
+    \end{minipage}
+  }
+\end{figure}
+
+The results shown in Fig. 2 are fairly intuitive:  uniformly distributed participation costs and high-mean normally distributed costs, with a large number of high-cost fishers who are likely to defect in early rounds, both demonstrate a high probability of collapse to open access conditions.   As the mean of the normally-distributed costs drops, fewer high-cost fishers drives fewer defections, resulting in lower probabilities of collapse.
+
+Similarly, examining the mean time to collapse for each of these distributions (Table 1) shows that lower-mean distributions are not only less likely to collapse, but (for those simulations that result in collapse) the time to collapse is prolonged, potentially allowing more time to assess and address the problem:
+
+`r knitr::kable(read_csv('data/years_to_crash.csv') %>% setNames(c('Distribution', 'Years to crash')), caption = 'Mean years to crash')`
+
+Clearly, even a single period in which poaching occurs will reduce the present value of the fishery relative to the no-poaching condition.  A crash will drastically reduce the present value, as once a crash occurs, all future values are reduced to zero.  This can be seen in the right-hand column of Fig. 2 (present value plots), which shows a bimodal distribution: low-PV simulations in which a crash occurred, and high-PV simulations in which the fishery stabilized before collapse.
+
+## Comparative statics
+
+Examining the decision rule by which fishers will decide to defect from participating in the collective enforcement of the TURF
+$$p_{obs} \times \frac{\delta}{1 - \delta} (b_{it} - c_{pi}) > c_{pi} - \frac{b_{it}}{n}$$
+it is clear that several environmental factors will affect the likelihood of defection (as well as the net benefit provided by the harvest): the discount factor, observation rate, number of fishers, and the distribution of participation cost.  We have already explored the effects of the mean participation cost in the previous section, but we have not yet explored the effects of the variance within the distribution.  
+
+The subsequent figures are based on simulations holding all parameters but one constant at the values defined in Section 3.1, and using a low-mean truncated normal distribution to define the starting participation costs.  For each figure, only the parameter of interest changes.  It must be noted that while each figure is based on a specific parameterization, the discussion of each is easily generalizable.
+
+The effect of discount factor is intuitive: a decrease in $\delta$ indicates a heavier discounting of future profits, reducing the value of the future stream of benefits of remaining in the fishery.  This makes each fisher more likely to defect on enforcement duties, exposing the fishery to poaching, reducing next-period benefits, and more likely resulting in a crash to open access.
+
+Also quite intuitive is the effect of observation rate (Fig. 3).  The higher likelihood that a potential defector will be observed and removed from the fishery, the higher the expected value of the lost future stream of benefits.  This results in fewer defections, lower crash rate, and higher general expected present value of remaining in the fishery.  Importantly, the non-linear relationship suggests that investments in improving observation rate should be carefully weighed against the benefits: above an observation rate of 50%, marginal gains in present value and marginal reductions in likelihood of a crash are quite small.
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \begin{minipage}{16 cm}
+    \centering
+    \includegraphics[width=\linewidth]{figs/obs_plot.png}
+    \caption{Effect of observation rate on (A) probability of collapse, 
+    (B) years to collapse, (C) net present value.  Lines show mean value 
+    across 400 simulations; shaded areas show 0.05 and 0.95 quantile 
+    across 400 simulations.}
+    \end{minipage}
+  }
+\end{figure}
+
+Theory and empirical evidence [@agrawal_2001; @poteete_2004] predict that a larger pool of participants will face more difficulty in maintaining collective action.  This is generally attributed to the difficulty of effectively observing a large group, as well as the perceived lower impact of individual contribution to the success of the collective action, resulting in higher incentives to free ride.  The model presented here assumes that observation rate is inversely proportional to the number of fishers, such that when $n = 50$, $obs\_rate = 0.70$ as in the previous section; obviously the observation rate reaches a maximum at 1.0.  In this instantiation, while the mean participation cost decreases with $n$ (since $C_{p} \sim N_t (\mu = .35\lambda + \frac{b}{n}, \sigma = .25\lambda)$, as $n$ increases, $\frac{b}{n}$ decreases faster than $.35\lambda = .35(b - \frac{b}{n})$, therefore $\mu$ decreases), this effect is overwhelmed by the decrease in observation rate (Fig. 4).
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \begin{minipage}{16 cm}
+    \centering
+    \includegraphics[width=\linewidth]{figs/n_plot.png}
+    \caption{Effect of number of fishers on (A) probability of collapse, 
+    (B) years to collapse, (C) net present value.  Lines show mean value 
+    across 400 simulations; shaded areas show 0.05 and 0.95 quantile 
+    across 400 simulations.}
+    \end{minipage}
+  }
+\end{figure}
+
+The variance or spread of participation costs within the fishery community also has a fairly intuitive effect on the dynamics of the collective enforcement.  Fig. 1B-D explored the changes due to a shift in the mean of a truncated normal distribution while holding the variance constant.  However, for any given mean, increasing the variance effectively spreads out the distribution around the mean, approaching a uniform distribution in the limit.  As seen in Fig. 1A, a uniform distribution has a fairly high defection rate almost guaranteeing collapse of the fishery.  Fig. 5 plots metrics against relative standard deviation, as a proportion of potential cost range $\lambda \equiv b_{it} - \frac{b_{it}}{n_{fishers}}$, for a fixed number of fishers ($n = 50$) and fixed mean participation cost $\mu = .35\lambda + \frac{b}{n}$.
+
+\begin{figure}[h!]
+  \centering
+  \fbox{
+    \begin{minipage}{16 cm}
+    \centering
+    \includegraphics[width=\linewidth]{figs/sd_plot.png}
+    \caption{Effect of relative standard deviation of participation cost on 
+    (A) probability of collapse, (B) years to collapse, (C) net present value.  
+    Lines show mean value across 400 simulations; shaded areas show 0.05 and 
+    0.95 quantile across 400 simulations.}
+    \end{minipage}
+  }
+\end{figure}

@@ -1,0 +1,277 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 260A
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+### Consider the following two-period investment opportunity. 
+
+_The cost of the investment is $I = 400$ and the revenues generated in year 
+one are $V_1 = 200$. In year two, the investment will generate revenues of 
+$V_2 = 600$ with probability $p$ and $V_2 = 100$ with probability $1 - p$.
+The investment is irreversible once made, and the value of $V_2$ is revealed 
+at the start of year two. Assume, for now, that the discount factor $\delta$
+is equal to one._
+
+\tikzset{
+  % Two node styles for game trees: solid and hollow
+  solid node/.style={circle,draw,inner sep=2,fill=black},
+  hollow node/.style={circle,draw,inner sep=2},
+  empty node/.style={circle,draw,inner sep=0,fill=black}
+}
+
+% macro for entering payoffs
+\newcommand\payoff[1]{
+  $\begin{pmatrix} #1 \end{pmatrix}$
+}
+
+\begin{figure}[!h]
+  \centering
+  \begin{tikzpicture}
+    [every level 0 node/.style={draw,solid node},
+     every level 1 node/.style={draw,solid node},
+     every level 2 node/.style={draw,solid node},
+     every level 3 node/.style={draw, solid node},
+     grow=right,
+     level distance=1.1in,
+     sibling distance=.1in,
+     edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}]
+    \tikzstyle{edge from parent}=[draw,black,very thick]
+    
+  \Tree [.\node[label=left:{{}}]{};  
+          \edge node [red, sloped, below] {I = -400}; 
+            [.\node[label=below left:{{$V_1(1) = +200$}}]{};
+              \edge node [sloped, below] {$p$}; 
+                [.\node [label=below:  {}, style={draw,empty node}] {}; 
+                \edge node [red, sloped, below] {I = -0}; 
+                  [.\node [label=right:{{f: $V_2(1, 1, 1) = +600$}}] {}; ]]
+              \edge node [sloped, above] {$(1-p)$}; 
+                [.\node [label=right:{{}}, style={draw,empty node}] {};  
+                  \edge node [red, sloped, below] {I = -0}; 
+                  [.\node [label=right:{{e: $V_2(1, 1, 0) = +100$}}] {}; ]]
+            ] 
+          \edge node [blue, sloped, above] {not I}; 
+            [.\node[label=above left:{{$V_1(0) = +0$}}]{};
+              \edge node [sloped, above] {$p$}; 
+                [.\node [label=left:  {}] {}; 
+                \edge node [red, sloped, below] {I = -400}; 
+                  [.\node [label=right:{{d: $V_2(0, 1, 1) = +600$}}] {}; ]
+                \edge node [blue, sloped, above] {not I}; 
+                  [.\node [label=right:{{c: $V_2(0, 0, 1) = +0$}}] {}; ]]
+              \edge node [sloped, above] {$(1-p)$}; 
+                [.\node [label=right:{{}}] {};  
+                  \edge node [red, sloped, below] {I = -400}; 
+                  [.\node [label=right:{{b: $V_2(0, 1, 0) = +100$}}] {}; ]
+                \edge node [blue, sloped, above] {not I}; 
+                  [.\node [label=right:{{a: $V_2(0, 0, 0) = +0$}}] {}; ]]
+            ] 
+          ]]
+  \end{tikzpicture}
+  \caption{Structure of two-period investment opportunity}
+\end{figure}
+
+a.  ___Derive an expression for the Dixit-Pindyck option value in terms of $p$.___
+    _Display this graphically and interpret._
+
+\begin{align*}
+  DPOV &= \max\{V^l(1), V^l(0)\} - \max\{V^n(1), V^n(0)\}\\
+    &\text{where:}\\
+  V^l(1) &= V^p(1) = V^n(1) = u_1(1) + \EE [u_2(1, 1, \tilde\theta)]\\
+    &= -400 + 200 + 600p + 100 (1-p) = 500p - 100\\
+  V^l(0) &= u_1(0) + \EE [\max_{x_2 \in 0, 1} (u_2(0, x_2, \tilde\theta) - 400 x_2)]\\
+    &= 0 + (600 - 400)p + (0 - 0)(1 - p) = 200p\\
+  V^n(0) &= 0\\
+  \Longrightarrow DPOV &= \max\{500p - 100, 200p\} - \max\{500p - 100, 0\}\\
+  \Longrightarrow DPOV &= 
+    \begin{cases}
+      0                              &\text{for } p \geq 1/3\\
+      300 - 500p \hspace{6pt} (> 0)  &\text{for } 0.2 < p < 1/3\\
+      200p                           &\text{for } p \leq 0.2
+    \end{cases}
+\end{align*}
+
+Dixit-Pindyck option value $DPOV$ tells us the value of postponing our investment conditional on being able to learn the value of $\tilde\theta$ in the later period.  A $DPOV$ of zero means the additional information later does not improve upon the value of foregone earlier investment.
+
+In this case, for $p \geq 1/3$, $DPOV = 0$, otherwise $DPOV > 0$.  Figure 2 shows the value of $DPOV$ for values of $p$.  For $p \geq 1/3$, we gain nothing in postponing our investment, and should invest now, having a decent shot at high payoff branch _f_.  For $p < 1/3$, the probability of a high outcome in the later period is small enough that it would be optimal to postpone (avoiding negative payoff branch _e_), observe the value of $\tilde \theta$ in period 2, and decide at that point whether our investment will be worthwhile (branch _a_ if $\tilde \theta=0$, branch _d_ otherwise). 
+``` {r}
+
+a_df <- expand.grid(p = seq(0, 1, 0.003)) %>%
+  rowwise() %>%
+  mutate(DPOV = max(500 * p - 100, 200 * p) -
+                  max(500 * p - 100, 0))
+
+a_plot <- ggplot(a_df, aes(x = p, y = DPOV)) +
+  ggtheme_plot() +
+  geom_line()
+
+ggsave('a_plot.png', height = 1.2, width = 4, dpi = 300)
+
+```
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{a_plot.png}
+    \caption{Variation of Dixit-Pindyck value option with $p$}
+  \end{figure}
+
+-----
+
+\newpage
+
+b.  ___Suppose there is a spread in the distribution of year two revenues.___
+    _Specifically, $V_2 = 600 + 100u$ with probability $p$ and $V_2 = 100 - 100u$ 
+    with probability $1 - p$ where $0 \leq u \leq 1$.
+    Derive an expression for the Dixit-Pindyck option value in terms of $p$ and 
+    $u$. How does the option value change as $u$ gets larger? Explain. 
+    How does the option value vary across $p - u$ space?_
+
+\begin{align*}
+  DPOV &= \max\{V^l(1), V^l(0)\} - \max\{V^n(1), V^n(0)\}\\
+    &\text{where:}\\
+  V^l(1) &= u_1(1) + \EE [u_2(1, 1, \tilde\theta)]\\
+    &= -400 + 200 + (600 + 100u) p + (100 - 100u) (1-p)\\
+    &= 500p - 100 + 200up - 100u\\
+  V^l(0) &= u_1(0) + \EE [\max_{x_2 \in 0, 1} (u_2(0, x_2, \tilde\theta) - 400 x_2)]\\
+    &= 0 + ((600 + 100u) - 400) p = 200p + 100up\\
+  V^n(0) &= 0\\
+  \Longrightarrow DPOV &= \max\{500p + 200up - 100u - 100, 200p + 100up\}\\
+    &\hspace{12pt} - \max\{500p + 200up - 100u - 100, 0\}\\
+  \Longrightarrow DPOV &=
+    \begin{cases}
+      0                &\text{for } p \geq \frac{u + 1}{u + 3}\\
+      200p + 100up     &\text{for } p \leq \frac{u + 1}{2u + 5}\\
+      300 - 500p + 200u - 200up \hspace{6pt} (> 0)  &\text{else}
+    \end{cases}
+\end{align*}
+
+When $u = 0$, this scenario is identical to that in part a.  As $u$ increases, the $V_2$ payoff both increases the value of the $p$ payoff and decreases the value of the $(1-p)$ payoff, so now the expected value of $V_2$ depends on both $p$ and $u$.  In order to make a period 1 investment optimal, we need to be confident that the probability of the high future payoff is high enough to ensure that $u_1(1) + \EE[u_2(1, 1, \tilde\theta)] > \EE[\max_{x_2 \in 0, 1} (u_2(0, x_2, \tilde\theta) - 400 x_2)]$.
+
+Figure 3 shows the values of $DPOV$ with respect to both $p$ and $u$.  The red curve indicates the values of $p$ and $v$ at which the $DPOV$ transitions from 0 (invest in period 1, right side of plot) to positive (wait until period 2, observe $\tilde\theta$, and then decide whether to invest, left side of plot).
+
+
+``` {r}
+
+if(!file.exists('b_plot.png')) {
+  b_df <- expand.grid(p = seq(0, 1, 0.003),
+                      u = seq(0, 1, 0.003)) %>%
+    rowwise() %>%
+    mutate(DPOV = max(500*p + 200*u*p - 100*u - 100, 200*p + 100*u*p) -
+                  max(500*p + 200*u*p - 100*u - 100, 0))
+  
+  zero_line <- b_df %>%
+    filter(DPOV == 0) %>%
+    group_by(u) %>%
+    filter(p != 0) %>%
+    filter(p == min(p)) %>%
+    ungroup()
+  
+  b_plot <- ggplot(b_df, aes(x = p, y = u, fill = DPOV)) +
+    ggtheme_plot() +
+    geom_raster() +
+    scale_fill_viridis_c() +
+    geom_line(data = zero_line, color = 'red')
+  
+  ggsave('b_plot.png', height = 3, width = 6, dpi = 300)
+}
+```
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{b_plot.png}
+    \caption{Variation of Dixit-Pindyck value option with $p$ and $u$}
+  \end{figure}
+
+
+-----
+
+\newpage
+
+c.  ___Now suppose that $\delta \leq 1$ and $u = 0$.___ _Derive an expression for the 
+    option value in terms of $p$ and $\delta$. How does the Dixit-Pindyck option 
+    value change as $\delta$ gets larger? Explain. 
+    How does the option value vary across $p - \delta$ space?_
+
+\begin{align*}
+  DPOV &= \max\{V^l(1), V^l(0)\} - \max\{V^n(1), V^n(0)\}\\
+    &\text{where:}\\
+  V^l(1) &= V^p(1) = V^n(1) = u_1(1) + \delta \EE [u_2(1, 1, \tilde\theta)]\\
+    &= -400 + 200 + \delta[600p + 100 (1-p)] = 500p\delta + 100\delta - 200\\
+  V^l(0) &= u_1(0) + \delta \EE [\max_{x_2 \in 0, 1} (u_2(0, x_2, \tilde\theta) - 400 x_2)]\\
+    &= 0 + \delta(600 - 400)p = 200\delta p\\
+  V^n(0) &= 0\\
+  \Longrightarrow DPOV &= \max\{500p\delta + 100\delta - 200, 200\delta p\} - 
+      \max\{500p\delta + 100\delta - 200, 0\}\\
+  \Longrightarrow DPOV &= 
+    \begin{cases}
+      0              &\text{for } p \geq \frac{2 - \delta}{3\delta}\\
+      200\delta      &\text{for } p \leq \frac{2 - \delta}{5\delta}\\
+      200 - 500\delta p + 100\delta  \hspace{6pt} (> 0)  &\text{else }
+    \end{cases}
+\end{align*}
+
+As the discount rate increases (assuming $\delta = \frac{1}{1 + r}$), or effectively as the time scale between periods 1 and 2 increases, $\delta$ decreases, reducing the present value of future investment.  
+
+As $\delta$ decreases, the $p$ threshold at which a period 1 investment is optimal (i.e. $DPOV = 0$) shifts according to $p_{period1} = \frac{2 - \delta}{3\delta}$, i.e. the probability of the high return must increase to ensure a better result than simply postponing.  When $\delta = 0.5$ (i.e. $r = 1$), $p$ must be 1 to make investment in period 1 optimal, and for any $\delta < 0.5$ (i.e. $r > 1$ which is a pretty usurious interest rate), then the investment should always be postponed.  
+
+As $\delta$ increases from 0.5 toward 1, the discounting of future values becomes less severe, and this scenario approaches the scenario in part a.  
+
+Figure 4 shows the relationship among $DPOV$, $p$, and $\delta$.  The upper right corner, above the red line indicating $DPOV = 0$, indicates the parameter space in which investment in period 1 is optimal.
+
+``` {r}
+
+if(!file.exists('c_plot.png')) {
+  c_df <- expand.grid(p = seq( 0, 1, 0.003),
+                      d = seq(.4, 1, 0.003)) %>%
+    rowwise() %>%
+    mutate(DPOV = max(500*p*d + 100*d - 200, 200*d*p) -
+                  max(500*p*d + 100*d - 200, 0))
+  
+  zero_line <- c_df %>%
+    filter(DPOV == 0) %>%
+    group_by(d) %>%
+    filter(p != 0) %>%
+    filter(p == min(p)) %>%
+    ungroup()
+  
+  c_plot <- ggplot(c_df, aes(x = p, y = d, fill = DPOV)) +
+    ggtheme_plot() +
+    geom_raster() +
+    scale_fill_viridis_c() +
+    geom_line(data = zero_line, color = 'red') +
+    labs(y = 'δ')
+  
+  ggsave('c_plot.png', height = 3, width = 6, dpi = 300)
+}
+```
+
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{c_plot.png}
+    \caption{Variation of Dixit-Pindyck value option with $p$ and $\delta$}
+  \end{figure}

@@ -1,0 +1,42 @@
+---
+title: "Econ241a assignment 7"
+author: "Casey O'Hara"
+output:
+  html_document:
+    toc: yes
+    number_sections: true
+  pdf_document:
+    toc: no
+---
+
+Suppose that employers observe a signal of productivity, $mp_i$, with error.
+
+$$s_i = mp_i + \varepsilon_i$$
+
+where marginal product and the error are joint normal, and uncorrelated, and the mean error is zero. So the error is pure noise. 
+
+If employers observe the signal for individuals and pay expected marginal product, what does the wage schedule look like, and in particular what happens to an individual’s wage if they increase their productivity by 1.0?
+
+$mp_i$ and $\varepsilon_i$ are normal, incorrelated, so $s_i$ is distributed normally, with sum of the mean and variances
+
+$$s_i \sim N(\mu_{mp} + \mu_{\epsilon}, \sigma^2_{mp} + \sigma^2_{\epsilon})$$
+
+From notes on conditional normals, 
+
+\begin{align*}
+  E(mp_i | s_i) &= \mu_{mp} + \frac{\sigma_{xy}}{\sigma^2_x}(s_i - \mu_s)\\
+    &= \mu_{mp} + \beta(s_i - \mu_s)
+\end{align*}
+
+where 
+
+\begin{align*}
+  \beta &= \frac{\sigma_{xy}}{\sigma^2_x}\\
+    &= \frac{E(mp_i \cdot s_i) - E(mp_i)E(s_i)}{\sigma^2_mp + \sigma^2_\epsilon}\\
+    &= \frac{E(mp_i \cdot (mp_i + \epsilon_i)) - 
+      \mu_{mp}\mu{s}}{\sigma^2_mp + \sigma^2_\epsilon}\\
+    &= \frac{E(mp_i^2) - \mu_{mp^2}}{\sigma^2_mp + \sigma^2_\epsilon}
+\end{align*}
+
+
+

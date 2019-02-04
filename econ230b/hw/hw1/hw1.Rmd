@@ -1,0 +1,362 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: true
+  html_document:
+    toc: no
+    number_sections: true
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises lecture 1
+
+## Suppose that Anne’s preferences are represented by the utility function $U^A(C, T) = -[(C - 20)^2+(T - 25)^2]$ and Bruce’s preferences are represented by the utility function $U^B(C, T) = -[(C - 10)^2 + (T - 15)^2]$.
+
+``` {r plot indifference curves for Anne and Bruce}
+
+reload <- FALSE
+
+if(!file.exists('fig1.png') | reload) {
+  df <-  crossing(c = seq(0, 30, .1),
+                   t = seq(0, 30, .1)) %>%
+    mutate(Anne  = -((c - 20)^2 + (t - 25)^2),
+           Bruce = -((c - 10)^2 + (t - 15)^2)) %>%
+    gather(name, U, Anne, Bruce) %>%
+    mutate(z = sqrt(-U))
+  
+  df_pareto_opt <- df %>%
+    filter(name == 'Bruce' & z <= 1.8)
+  
+  fig_plot <- ggplot(df, aes(x = c, y = t)) +
+    ggtheme_plot() +
+    ### manually plot segment pareto superior to (9, 14)
+    # ggforce::geom_circle(aes(x0 = 10, y0 = 15, r = sqrt(2)),
+    #                      fill = 'grey70', color = 'grey50', linetype = 'dashed') +
+    ### plot contours
+    geom_tile(data = df_pareto_opt %>% filter(z < sqrt(2)),
+                 aes(z = z), fill = 'grey90') +
+    geom_contour(data = df_pareto_opt,
+                 aes(z = z), color = 'grey70', binwidth = sqrt(2)) +
+    geom_contour(aes(z = z, color = name), binwidth = 2.5*sqrt(2)) +
+    ### pareto optimal line
+    geom_line(data = data.frame(x = c(10, 20), y = c(15, 25)), aes(x = x, y = y), 
+              color = 'green4') +
+    ### bliss points
+    geom_point(data = df %>% filter(U == 0), aes(color = name), size = 2) +
+    annotate('text', label = 'A*', x = 21, y = 25, color = 'grey20') +
+    annotate('text', label = 'B*', x = 9.5, y = 16, color = 'grey20') +
+    coord_cartesian(xlim = c(0, 30), ylim = c(0, 30), expand = c(0, 0)) +
+    ### plot points mentioned in problems
+    geom_point(x = 9, y = 14, color = 'black', size = 2) +
+    annotate('text', label = '(9, 14)', 
+             x = 8, y = 12.5, color = 'grey20') +
+    geom_point(x = 13.5, y = 17.5, color = 'black', size = 2) +
+    annotate('text', label = TeX('$\\beta$'),
+             x = 14.5, y = 16.5, color = 'grey20') +
+    geom_point(x = 17, y = 22, color = 'black', size = 2) +
+    annotate('text', label = TeX('$\\alpha$'), 
+             x = 18, y = 21, color = 'grey20') +
+    geom_hline(yintercept = 0) +
+    geom_vline(xintercept = 0) +
+    scale_color_manual(values = c('lightblue', 'pink3')) +
+    labs(x = 'Cribbage', y = 'Temperature', color = '', linetype = '')
+  
+  ggsave('fig1.png', height = 3, width = 6, dpi = 300)
+}
+```
+
+a. Sketch their indifference curves on a diagram.  
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{fig1.png}
+    \caption{Indifference curves for Anne and Bruce}
+  \end{figure}
+b. Is the situation (10, 15) Pareto optimal?
+    * Yes, (10, 15) is Pareto optimal - it is point at which Bruce has maximum utility; any movement away from this point will make Bruce worse off (even if it improves Anne's utility).
+c. Find the set of all Pareto optimal situations. _Hint: While Lagrangean analysis solves this problem nicely, it could also be solved by plain plane geometry._
+    * The set of all Pareto optimal solutions will occur on a straight line between (10, 15) and (20, 25).  At these points, Anne's and Bruce's utility curves are tangent, and the gradients are in opposite directions.
+d. Find the set of situations that is Pareto superior to (9, 14).
+    * See grey circle on plot. Anything "uphill" from here relative to Bruce's indifference curves will also be "uphill" according to Anne's indifference curves.  Thus every point on or within a circle of radius $\sqrt{2}$ around (10, 15) will be Pareto superior:
+    $$-[(C - 10)^2 + (T - 15)^2] \geq -\sqrt{2}$$
+e. Find a situation in which Anne’s indifference curve is tangent to Bruce’s
+but which is not Pareto optimal. Explain what is going on.
+    * This is exactly the situation at (9, 14).  At this point, both people's indifference curves are tangent, but the gradients for both are the same direction; i.e. moving "uphill" upwards and rightwards would make both Anne and Bruce better off.
+f. If situation $\alpha$ is Pareto optimal and situation $\beta$ is not Pareto optimal,
+must $\alpha$ be Pareto superior to $\beta$? Explain.
+    * No. Consider a point on the line of Pareto optimal situations, near A* (e.g. $(17, 22)$, labeled "a"), and a point just off the line but near B* (e.g. $(13 + \epsilon, 18 - epsilon)$, labeled "b").  To move from $\beta$ to $\alpha$ would make Anne better off, but make Bruce worse off; thus while $\alpha$ is a Pareto optimal situation, it is not Pareto superior to $\beta$.
+
+## Find and draw the utility possibility frontier for Anne and Bruce in the previous problem.
+
+_Hint: You know that all of the Pareto efficient allocations lie on
+a line. You should be able to trace out the distribution of utility
+as you move along this line._
+
+``` {r define utility possibility frontier for Anne and Bruce}
+
+if(!file.exists('fig2.png') | !file.exists('fig3.png') | reload) {
+
+  df <- data.frame(C = seq(8, 22, .1)) %>%
+    mutate(T = C + 5,
+           U_A = -((C - 20)^2 + (T - 25)^2),
+           U_B = -((C - 10)^2 + (T - 15)^2),
+           u_a_log = -log(-U_A + 1),
+           u_b_log = -log(-U_B + 1),
+           u_a_3r  = -(-U_A)^(1/3),
+           u_b_3r  = -(-U_B)^(1/3))
+  
+  df2 <- df %>%
+    bind_rows(data.frame(U_A = min(df$U_A),
+                         U_B = min(df$U_B),
+                         u_a_3r = min(df$u_a_3r),
+                         u_b_3r = min(df$u_b_3r)))
+              
+  fig_plot <- ggplot(df, aes(x = U_A, y = U_B)) +
+    ggtheme_plot() +
+    geom_path() +
+    geom_polygon(data = df2, fill = 'grey70', alpha = .3) +
+    geom_point(x = -200, y = 0) +
+    annotate('text', label = 'B*', x = -200, y = -20, color = 'grey20') +
+    geom_point(x = 0, y = -200) +
+    annotate('text', label = 'A*', x = -20, y = -200, color = 'grey20') +
+    coord_cartesian(xlim = c(-250, 0), ylim = c(-250, 0)) +
+    labs(x = TeX('$U_A$'), y = TeX('$U_B$'))
+
+  ggsave('fig2.png', height = 3, width = 3, dpi = 300)
+
+  fig_plot_3r <- ggplot(df, aes(x = u_a_3r, y = u_b_3r)) +
+    ggtheme_plot() +
+    geom_path() +
+    geom_polygon(data = df2, fill = 'grey70', alpha = .3) +
+    geom_point(x = -(200^(1/3)), y = 0) +
+    annotate('text', label = 'B*', x = -(200^(1/3)) + .5, y = 0, color = 'grey20') +
+    geom_point(x = 0, y = -(200^(1/3))) +
+    annotate('text', label = 'A*', x = 0, y = -(200^(1/3)) + .5, color = 'grey20') +
+    coord_cartesian(xlim = c(-250^(1/3), 0), ylim = c(-250^(1/3), 0)) +
+    labs(x = TeX('$U_A$'), y = TeX('$U_B$'))
+
+  ggsave('fig3.png', height = 3, width = 3, dpi = 300)
+  
+}
+
+```
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig2.png}
+  \caption{Utility possibility frontier for Anne and Bruce}
+\end{figure}
+
+## Suppose that the utility functions proposed in Problem 1.1 are the von Neuman-Morgenstern representations of both peoples’ preferences.
+
+a. Can they improve on any of the sure thing Pareto optimal allocations
+by gambling?
+    * No.  Improvements via gambling can occur if a section of the contract curve (i.e. utility possibility frontier between $A^*$ and $B^*$) is concave upward (i.e. dented in).  In such a case, the expected value of utility for both Anne and Bruce could fall outside the (dented-in portion) of the contract curve resulting in an improvement over sure-thing Pareto optimal allocations.
+b. Suppose that the utility functions in problem 1.1 represent sure-thing preferences but in order to get the von Neuman-Morgenstern representation you have to make non-affine monotone increasing transformations of these utility functions. Give an example of a von Neuman Morgenstern utility function that represents the same sure thing preferences as that in Problem 1 but where the answer to the question "Can you improve on sure thing Pareto optimal allocations by gambling?" is different from the answer you gave in Part a.
+    * To ensure that there is some way to improve on the sure-thing Pareto optimal allocation, we must find a non-affine monotone increasing transformation that results in a concave (from above) utility frontier.  
+    * One possible such transformation is a cube root transformation (see Figure 3). In this case, a 50/50 gamble between $A^*$ and $B^*$ will have an expected value directly between the two points, well outside the transformed utility frontier.  
+    * Any odd-numbered root (greater than 1) should also fit this condition.  
+    * I believe a log transformation along the lines of $-\ln(-U^A + 1), -\ln(-U^B + 1)$ (to avoid log of negative or zero) would also be non-affine, monotonically increasing, and would result in concavity of the frontier.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3.png}
+  \caption{Utility possibility frontier, with cube-root transformation}
+\end{figure}
+
+
+
+## In Figure 1.1, the "elliptical" indifference curves that are drawn are "sloped" rather than having their major and minor axes parallel to the vertical and horizontal axes. What does this signify about Anne’s and Bruce’s preferences?
+
+If the major and minor axes are parallel to the axes (as is the case in our situation with the circles, or with non-sloped ellipses), then the preferences of Anne and Bruce for one good are independent of the state of the other good - e.g. their preference for Cribbage games does not change as the temperature changes.  Sloped elliptical indifference curves, on the other hand, indicate that the preferences for each good is dependent upon the state of the other good - e.g. if Anne's indifference curves were represented by northwest/southeast sloping ellipses, as temperature increases, she would prefer to play fewer Cribbage games. 
+
+## In Figure 1.2, the boundary of the utility possibility set slopes uphill to the west of point B. Explain why this is so.
+
+Starting from point $B^*$ and moving westward (in the direction of _decreasing_ Anne's utility), we move downward on the curve, indicating that Bruce's utility is also decreasing.  Points on this part of the curve are increasingly worse off for both Bruce and Anne, and moving eastward toward $B^*$ improves utility for both.  These are the points (such as $V$ on Figure 1.1 or (9, 14) above) at which Anne's and Bruce's indifference curves are tangent, but with a gradient in the same direction rather than in opposite direction necessary for Pareto optimality, indicating _least_ preferred outcome for one given the utility of the other.
+
+## Suppose that Anne and Bruce lose interest in cribbage, but are still concerned about two things: the room temperature and breakfast time.
+
+__In principle, breakfast could be served at any time on a 24 hour clock.__
+
+``` {r plot indifference curves for Anne and Bruce breakfast vs temp}
+
+if(!file.exists('fig4.png') | reload) {
+
+  b_A <- 11; b_B <- 6; t_A <- 25; t_B <- 15
+  ### Anne prefers breakfast at 6 am; Bruce prefers it at 11 am.
+  bin_spacing <- .25 * sqrt((b_A - b_B)^2 + (t_A - t_B)^2)
+  mid_slope <- -(t_A - t_B) / (24 - (b_A - b_B))
+  mid_int   <- t_A - b_A * mid_slope
+  mid_pareto <- data.frame(b = c(b_A + 12, b_B + 12)) %>%
+    mutate(t = mid_slope * b + mid_int)
+    
+  df3 <-  crossing(b = seq(-12, 36, .1),
+                   t = seq(0, 30, .1)) %>%
+    mutate(Anne  = case_when(b < b_A - 12 ~ -((b + 24 - b_A)^2 + (t - t_A)^2),
+                             b > b_A + 12 ~ -((b - 24 - b_A)^2 + (t - t_A)^2),
+                             TRUE         ~ -((b - b_A)^2      + (t - t_A)^2)),
+           Bruce = case_when(b < b_B - 12 ~ -((b + 24 - b_B)^2     + (t - t_B)^2),
+                             b > b_B + 12 ~ -((b - 24 - b_B)^2 + (t - t_B)^2),
+                             TRUE         ~ -((b - b_B)^2      + (t - t_B)^2))) %>%
+    gather(name, U, Anne, Bruce) %>%
+    mutate(z = sqrt(-U),
+           name = fct_inorder(name))
+  
+  
+  fig_plot3 <- ggplot(df3, aes(x = b, y = t, color = name)) +
+    ggtheme_plot() +
+    geom_line(data = data.frame(x = c(6, 11), y = c(15, 25)),
+              aes(x = x, y = y),
+              color = 'green4') +
+    geom_line(data = mid_pareto, color = 'green4', linetype = 'dashed') +
+    geom_contour(aes(z = z), binwidth = bin_spacing) +
+    geom_point(data = df3 %>% filter(U == 0), size = 2) +
+    annotate('text', label = 'A*', x = 12, y = 25.5, color = 'grey20') +
+    annotate('text', label = 'B*', x = 7, y = 14.5, color = 'grey20') +
+    coord_cartesian(xlim = (c(0, 24)), ylim = (c(0, 30)), expand = FALSE) +
+    geom_hline(yintercept = 0) +
+    geom_vline(xintercept = 0) +
+    scale_color_manual(values = c('lightblue', 'pink3')) +
+    labs(x = 'Breakfast time', y = 'Temperature', color = '', linetype = '')
+  
+  ggsave('fig4.png', height = 3, width = 6, dpi = 300)
+
+}
+
+```
+
+a. On the tube from the center of a roll of toilet paper, or some similar
+material draw indifference curves for Anne and Bruce. (Use two colors
+of ink). Show the locus Pareto optimal situations.
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{fig4.png}
+    \caption{Indifference curves for Anne and Bruce}
+  \end{figure}
+    * The odd pattern of indifference curves occurs because once 12 hours have passed since their preferred breakfast time, they are so disappointed they'd rather save their waffles until the following day.
+    * Drawn on a cylinder, the temperature axis would be on the vertical part of the cylinder, while the breakfast time axis would point around the perimeter of the cylinder, with the circumference representing 24 hours.  
+    * The Pareto optimal solutions would be a section of line starting at Bruce's bliss point and moving to Anne's (spiraling around a cylinder), across the shortest interval between Anne's and Bruce's preferred breakfast times.  However, another set of Pareto optimal solutions occurs in the interval twelve hours later than the first interval, noted as a dashed line on the plot above.
+    * If Anne's and Bruce's preferred breakfast times were exactly 12 hours apart, the Pareto optimal points would draw a continuous zig-zagging line between $A^*$ and $B^*$.
+b. Suppose the only two issues of concern are breakfast time and dinner
+time. Explain how you could use a bagel (or a doughnut if you are
+Canadian) to diagram indifference curves and Pareto optimal points.
+What can you tell us about the set of Pareto optimal points?
+    * We could simply take our tube from part a) and bend it into a torus; moving around the torus from inside the ring to outside and back would remain the breakfast time axis; rotating around the central axis of the torus would represent the dinner time axis (one full rotation = 24 hours).
+    * Plotted on a 2-d surface, we would see the cyclic pattern of concentric rings both vertically and horizontally.  Assuming dinner times are not exactly 12 hours apart, the Pareto optimal points would draw a single diagonal between the shortest breakfast preference interval and shortest dinner preference interval; as in part a), additional Pareto optimal solutions would occur both horizontally (as in part a) and vertically.  If both breakfast and dinner preferences were exactly twelve hours apart, the pattern would resemble interconnected diamonds.  Mapped onto a torus, this would look like spiraled segments forming two partial complementary diamond shapes wrapped around the circumference (or for 12-hour differences for both breakfast and dinner, two complementary diamonds).
+    
+## Suppose that Charlie moves in with Anne and Bruce. The three of them learn three–handed cribbage and lose all interest in two–handed cribbage. 
+
+__Anne’s and Bruce’s utilities are as before, while Charlie’s utility function is:__
+$$U^C(C, T) = -[(C - 20)^2 + (T - 15)^2]$$
+__Find the new set of Pareto optimal situations.__
+
+``` {r plot indifference curves for Anne-Bruce-Charlie}
+
+reload <- FALSE
+
+if(!file.exists('fig5.png') | reload) {
+  df <-  crossing(c = seq(0, 30, .1),
+                  t = seq(0, 30, .1)) %>%
+    mutate(Anne  = -((c - 20)^2 + (t - 25)^2),
+           Bruce = -((c - 10)^2 + (t - 15)^2),
+           Charlie = -((c - 20)^2 + (t - 15)^2)) %>%
+    gather(name, U, Anne, Bruce, Charlie) %>%
+    mutate(z = sqrt(-U))
+  
+  df_pareto_opt <- data.frame(c = c(20, 10, 20),
+                              t = c(25, 15, 15))
+  
+  fig_plot <- ggplot(df, aes(x = c, y = t)) +
+    ggtheme_plot() +
+    ### manually plot segment pareto superior to (9, 14)
+    # ggforce::geom_circle(aes(x0 = 10, y0 = 15, r = sqrt(2)),
+    #                      fill = 'grey70', color = 'grey50', linetype = 'dashed') +
+    ### plot contours
+    geom_polygon(data = df_pareto_opt, 
+                 fill = 'grey90', color = 'grey70') +
+    geom_contour(aes(z = z, color = name), binwidth = 2.5*sqrt(2)) +
+    # ### pareto optimal line
+    # geom_line(data = data.frame(x = c(10, 20), y = c(15, 25)), aes(x = x, y = y), 
+    #           color = 'green4') +
+    ### bliss points
+    geom_point(data = df %>% filter(U == 0), aes(color = name), size = 2) +
+    annotate('text', label = 'A*', x = 21,  y = 25, color = 'grey20') +
+    annotate('text', label = 'B*', x = 9.5, y = 16, color = 'grey20') +
+    annotate('text', label = 'C*', x = 21,  y = 15, color = 'grey20') +
+    coord_cartesian(xlim = c(0, 30), ylim = c(0, 30), expand = c(0, 0)) +
+    geom_hline(yintercept = 0) +
+    geom_vline(xintercept = 0) +
+    scale_color_manual(values = c('lightblue', 'pink3', 'palegreen4')) +
+    labs(x = 'Cribbage', y = 'Temperature', color = '', linetype = '')
+  
+  ggsave('fig5.png', height = 3, width = 6, dpi = 300)
+}
+```
+
+
+
+_Hint: It is easier to understand what is going on in this problem
+if you graph the situation and stare hard at it than if you go at
+with brute force Lagrangeans.
+After you have seen the graphical solution, show that your answer is consistent with the Kuhn-Tucker method. What is it about this problem that
+makes the Kuhn-Tucker solution work so "oddly"?_
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig5.png}
+  \caption{Indifference curves for Anne, Bruce, and Charlie}
+\end{figure}
+
+We can draw Pareto optimal loci for each pair of roommates - A-B, B-C, and C-A.  For a point on any of these lines, including the endpoints, it is impossible to improve utility for one member of the pair without making the other in the pair worse off; and in most cases, any motion also harms the utility of the third non-included roommate.  Inside the triangle, it may be possible to improve utility for two members in isolation (by moving toward the associated Pareto optimal locus for the pair) but doing so invariably harms the utility of the third roommate.  Thus the entire shaded triangle, and its borders, form the complete set of Pareto-optimal solutions.  Outside the triangle, however, it is possible to improve utility for all three simultaneously by moving in an appropriate direction (e.g. directly toward the closest border).
+
+Setting up a Lagrangian by choosing some minimum utility level for A and B $\bar U^A, \bar U^B$: 
+
+$$L(C, T, \lambda_A, \lambda_B) = U^C(C, T) - \lambda_A(\bar{U}^A - U^A(C, T)) - \lambda_B(\bar{U}^B - U^B(C, T))$$
+  
+Kuhn-Tucker first-order conditions with complementary slackness:
+\begin{align*}
+  L_C &= \frac{\partial U^C(C, T)}{\partial C} + \lambda_A \frac{\partial U^A(C, T)}{\partial C}
+      + \lambda_B \frac{\partial U^B(C, T)}{\partial C} = 0
+    & C \geq 0 ; \hspace{6pt} C L_{C} = 0\\
+  L_T &= \frac{\partial U^C(C, T)}{\partial T} + \lambda_A \frac{\partial U^A(C, T)}{\partial T}
+      + \lambda_B \frac{\partial U^B(C, T)}{\partial T} = 0
+    & T \geq 0 ; \hspace{6pt} T L_{T} = 0\\
+  L_{\lambda_A} &= \bar{U}^A - U^A(C, T) \leq 0
+    & \lambda_A \geq 0 ; \hspace{6pt} \lambda_A L_{\lambda_A} = 0\\
+  L_{\lambda_B} &= \bar{U}^B - U^B(C, T) \leq 0
+    & \lambda_B \geq 0; \hspace{6pt} \lambda_B L_{\lambda_B} = 0\\
+\end{align*}
+
+Let's dismiss circumstances in which C or T are zero.  
+If either $\lambda_A$ or $\lambda_B$ are equal to zero, then the first two conditions devolve to a locus connecting (and including) the remaining two bliss points.  If both $\lambda$ terms are zero, then the first two conditions devolve to Charlie's bliss point.
+
+However, if both $\lambda$ terms are greater than zero, then both $\bar{U}^A = U^A(C, T)$ and $\bar{U}^A = U^A(C, T)$, at their minimum allowed values, and since no tangency points exist that satisfy all three marginal rates of substitution simultaneously, the only way we can improve one person's utility without harming anyone else's is by approaching from outside the triangle.  Once inside the triangle, it is impossible to improve one person's utility without harming another's.
+      

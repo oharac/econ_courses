@@ -1,0 +1,133 @@
+---
+title: | 
+  | \hfill \Large{Math Camp: PS 2 Topology}
+author: |
+  | \hfill Casey O'Hara
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+---
+
+\begin{enumerate} %item numbers
+\item
+  \textbf{Let $A = \{1, 2, 3, 4\}$.  Describe a codomain $B$ and a function $f:A \rightarrow B$ such that $f$ is: }
+  \begin{enumerate}
+  \item onto $B$ but not one-to-one.\\
+    $f(x) = |x-2|, x \in A$ and $B = \{0, 1, 2\}$; $f(x)$ could be any function that ends up returning the same result for multiple elements of $A$ (e.g. $f(-1) = f(1) = 1$), and $B$ contains all the values of $f(x)$ for $x \in A$ and nothing else.
+  \item one-to-one but not onto $B$.\\
+    $f(x) = 2x$ and $B = \mathbb{R}$; for any value $x \in A$, there is a unique value of $f(x)$; however, $B$ might contain other values as well (e.g. rational numbers between each integer values for $x$ outside the domain of $A$).
+  \item both one-to-one and onto $B$.\\
+    $f(x) = 2x, x \in A$ and $B = \{2, 4, 6, 8\}$
+  \item neither one-to-one nor onto $B$.
+    $f(x) = |x-2|, x \in A$ and $B = \mathbb{R}$ 
+  \end{enumerate}
+  
+\item
+  \textbf{Consider the sequence $\{x_n\}_{n=1}^\infty$ such that}
+  \begin{align*}
+    x_n = \frac{n+1}{n}
+  \end{align*}
+  To what does this sequence converge?  Prove that this sequence converges to this limit.\\
+  \begin{itemize}
+    \item The sequence converges to 1.
+    \item To show:  $|x_n - 1| < \epsilon$, so $\{x_n\}_{n=1}^\infty \rightarrow 1$.
+    \item \textbf{Proof:}
+      \begin{align*}
+        &\text{Let $\epsilon>0$.}
+          &\text{(by hypothesis)}\\
+        &\text{Let $N = 1/\epsilon$.}
+          &\text{(by hypothesis)}\\
+        &\text{Let $n > N$.}
+          &\text{(by hypothesis)}\\
+        &\Rightarrow | x_n - 1 | = |\frac{n+1}{n} - 1|
+          &\text{(definition of $x_n$)}\\
+        &\Rightarrow \forall n \in [1, \infty), \frac{n+1}{n} > 1
+          &\text{(succession: $n+1 > n$)}\\
+        &\Rightarrow | x_n - 1 | = \frac{n+1}{n} - 1
+          &\text{(simplify absolute value: all values positive)}\\
+        &\Rightarrow | x_n - 1 | < \frac{N+1}{N} - 1
+          &(N < n, \frac{N+1}{N} > \frac{n+1}{n})\\
+        &\Rightarrow | x_n - 1 | < \frac{1/\epsilon+1}{1/\epsilon} - 1
+          &(N = 1/\epsilon)\\
+        &\Rightarrow | x_n - 1 | < \frac{(1 + \epsilon)/\epsilon}{1/\epsilon} - 1
+          &\text{(simplify)}\\
+        &\Rightarrow | x_n - 1 | < \frac{(1 + \epsilon)}{\epsilon}*\epsilon - 1
+          &\text{(simplify)}\\
+        &\Rightarrow | x_n - 1 | < \epsilon
+          &\text{(simplify)}\\
+        &&\blacksquare
+      \end{align*}
+  \end{itemize}
+  
+\item
+  \textbf{Let $S$ and $T$ be convex sets.  Prove that the intersection of $S$ and $T$ is also a convex set.}\\
+  To show: For $A = S \cap T, \hspace{10pt}
+    \forall (\vec{x}, \vec{y} \in A \wedge \alpha \in [0, 1]), \hspace{10pt}
+    \alpha \vec{x} + (1 - \alpha)\vec{y} \in A$.\\
+  \textbf{Proof:}
+  \begin{align*}
+    &\text{Let $A = S \cap T$.}
+      &\text{(by hypothesis)}\\
+    &\forall \vec{x}, \vec{y} \in A, \hspace{10pt}
+      \vec{x}, \vec{y} \in S \wedge \vec{x}, \vec{y} \in T 
+      &\text{(definition of intersection)}\\
+    &\forall (\vec{x}, \vec{y} \in A \wedge \alpha \in [0, 1]), \hspace{10pt}
+      \alpha \vec{x} + (1 - \alpha)\vec{y} \in S
+      &\text{(definition of convex)}\\
+    &\forall (\vec{x}, \vec{y} \in A \wedge \alpha \in [0, 1]), \hspace{10pt}
+      \alpha \vec{x} + (1 - \alpha)\vec{y} \in T
+      &\text{(definition of convex)}\\
+    &\forall (\vec{x}, \vec{y} \in A \wedge \alpha \in [0, 1]), \hspace{10pt}
+      \alpha \vec{x} + (1 - \alpha)\vec{y} \in A
+      &\text{(definition of intersection)}\\
+    & & \blacksquare
+  \end{align*}
+
+\item
+  \textbf{The set $S^{n-1} = \{\mathbf{x}|\sum_{i=1}^n x_i = 1, x_i \geq 0, i = 1, ..., n\}$
+    is called the $(n-1)$-dimensional unit simplex.}
+  \begin{itemize}
+    \item I had a hard time with this one, I think because I am having a hard time conceptualizing the $S^{n-1}$ definition.
+    \item Prove that $S^{n-1}$ is a convex set.\\
+      To show: 
+        $\forall x_i, x_j \in S^{n-1} \wedge \alpha \in [0, 1]), \hspace{10pt}
+        \alpha x_i + (1 - \alpha)x_j \in S^{n-1}$.\\
+      \textbf{Proof:}
+      \begin{align*}
+      \end{align*}
+    \item Prove that $S^{n-1}$ is a compact set.\\
+      To show: 
+        $\forall x_i \in S^{n-1}, \hspace{5pt} 0 \leq x_i \leq 1$ (closed and bounded).\\
+      \textbf{Proof:}
+      \begin{align*}
+        &\forall x_i \in S^{n-1}, \hspace{5pt} x_i \geq 0
+          &\text{(definition of $S^{n-1}$)}\\
+        &\sum_{i=1}^n x_i = 1
+          &\text{(definition of $S^{n-1}$)}\\
+        &\forall x_i \in S^{n-1}, \hspace{5pt} x_i \leq 1
+          &(\sum_{i=1}^n x_i = 1, \hspace{5pt} x_i \geq 0)\\
+        &\forall x_i \in S^{n-1}, \hspace{5pt} 0 \leq x_i \leq 1
+          &\text{(definition of compact)}\\
+        & & \blacksquare
+      \end{align*}
+    Trying by the notes method:\\
+    To show $S^{n-1}$ is bounded.
+      \begin{align*}
+        &\text{Let $M = 2$}.
+          &\text{(by hypothesis)}\\
+        &B_M = \{\mathbf{x}|\sum_{i=1}^n x_i < 2, x_i \geq 0, i = 1, ..., n\}
+          &\text{(define an M-ball)}\\
+        &S^{n-1} \subset B_M
+          &\text{(by inspection)}\\
+        &\text{$S^{n-1}$ is bounded.}
+          &\text{(definition of bounded)}\\
+        & & \blacksquare
+      \end{align*}
+
+  \end{itemize}
+\end{enumerate}
+

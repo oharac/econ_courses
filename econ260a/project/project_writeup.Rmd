@@ -1,0 +1,57 @@
+---
+title: "Modeling renewable natural resource management with heterogeneous collective action participation costs"
+author: "Casey O'Hara"
+date: "`r Sys.Date()`"
+csl: refs/apa-old-doi-prefix.csl
+bibliography: refs/proj_lib.bib
+output:
+  pdf_document:
+    toc: no
+    number_sections: yes
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{pgfplots}
+  - \usepackage{caption}
+---
+
+``` {r setup, echo = TRUE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('dpe_fxns.R')
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\captionsetup[figure]{font=small,labelfont=bf}
+
+# Introduction
+
+``` {r child = '1_intro.Rmd'}
+```
+
+# The model
+
+``` {r child = '2_model.Rmd'}
+```
+
+# Model outcomes
+
+``` {r child = '3_dynamics.Rmd'}
+```
+
+# Implications
+
+``` {r child = '4_implications.Rmd'}
+```
+
+# Conclusion
+
+``` {r child = '5_conclusion.Rmd'}
+```
+
+\newpage
+# References

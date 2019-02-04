@@ -1,0 +1,338 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises Lecture 2
+
+## 2.1 Muskrat, Ontario, has 1,000 people. Citizens of Muskrat consume only
+one private good, Labatt’s ale. There is one public good, the town skating
+rink. Although they may differ in other respects, inhabitants have the same
+utility function. This function is $U_i(X_i, Y) = X_i - 100/Y$ , where $X_i$ is the
+number of bottles of Labatt’s consumed by citizen $i$ and $Y$ is the size of
+the town skating rink, measured in square meters. The price of Labatt’s ale
+is \$1 per bottle and the price of the skating rink is \$10 per square meter.
+Everyone who lives in Muskrat has an income of \$1,000 per year.
+
+a) Write out the equation implied by the Samuelson conditions.
+    * The Samuelson conditions require that the sum of marginal rates of substitution between the public good and private goods must equal the marginal cost of public good relative to private goods.
+\begin{align*}
+  \sum_{i= 1}^N\frac{\frac{\partial U_i(X_i, Y)}{\partial Y}}
+      {\frac{\partial U_i(X_i, Y)}{\partial X_i}} = c\\
+  \sum_{i= 1}^N \frac{100/Y^2}{1} = c
+\end{align*}
+
+b) Show that this equation uniquely determines the efficient rink size for Muskrat. What is that size?
+\begin{align*}
+  \sum_{i=1}^{1000} \frac{100/Y^2}{1} &= 10\\
+  100,000/Y^2 &= 10\\
+  Y^2 &= 100,000 / 10\\
+  \Rightarrow Y &= 100 m^2
+\end{align*}
+That seems like not a very large skating rink; but plotting the utility (Figure 1; individual and total will have same maximum, since all utilities are identical) also shows this to maximize the utility.  However, the difference in utility between a 50 m^2^ rink or a 200 m^2^ rink and the "optimal" 100 m^2^ rink is only half a beer per person.
+``` {r}
+Y <- seq(50, 200, 1)
+N <- 1000
+W_i <- 1000
+c_Y <- 10
+c_X <- 1
+X_i <- (W_i - c_Y * Y / N) / c_X
+U_i <- X_i - 100 / Y
+
+df <- data.frame(Y, X_i, U_i)
+
+plot1 <- ggplot(df, aes(x = Y, y = U_i)) +
+  ggtheme_plot() +
+  geom_line() +
+  geom_vline(xintercept = 100, linetype = 'dashed') +
+  labs(x = TeX('Size of skating rink ($m^2$)'),
+       y = 'Individual utility')
+ggsave('fig1.png', width = 4, height = 2, dpi = 300)
+
+```
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig1.png}
+  \caption{Optimal skating rink size vs utility for Muskrat, Ontario}
+\end{figure}
+
+## 2.2 Cowflop, Wisconsin, has 1,100 people. Every year they have a fireworks show on the fourth of July. 
+
+The citizens are interested in only two things - drinking milk and watching fireworks. Fireworks cost 1 gallon of milk per unit. Everybody in town is named Johnson, so in order to be able to identify each other, the citizens have taken numbers 1 through 1,100. 
+
+The utility function of citizen $i$ is $$U_i(x_i, y) = x_i + \frac{a_i \sqrt{y}}{1000}$$
+where $x_i$ is the number of gallons of milk per year consumed by citizen $i$ and
+$y$ is the number of units of fireworks exploded in the town’s Fourth of July
+extravaganza. (Private use of fireworks is outlawed). Although Cowflop is
+quite unremarkable in most ways, there is one remarkable feature. For each
+$i$ from 1 to 1,000, Johnson number $i$ has parameter $a_i = i/10$. Johnsons
+with numbers bigger than 1,000 have $a_i = 0$. For each Johnson in town,
+Johnson $i$ has income of $10 + i/10$ units of milk.
+
+a) Find the Pareto optimal amount of fireworks for Cowflop. _Hint: It is true that you have to sum a series of numbers. But this is a series that Karl Friedrich Gauss is said to have solved when he was in second grade._
+    * Starting with the basic Samuelson condition:
+\begin{align*}
+  \sum_{i= 1}^N &\frac{\frac{\partial U_i(x_i, y)}{\partial y}}{\frac{\partial U_i(x_i, y)}{\partial X_i}} = c\\
+  \sum_{i=1}^{1000} &\frac{a_i}{2000 \sqrt y} + \sum_{i = 1001}^{1100} 0 = 1\\
+  \frac{1}{2000 \sqrt y} \sum_{i=1}^{1000} &\frac{i}{10} = \frac{1}{20000 \sqrt y} 1000 * 1001 / 2 = 1\\
+  \frac{1001}{40} &= \sqrt{y}\\
+  y &= 626.25
+\end{align*}
+``` {r}
+N = 1100
+i <- 1:N
+W_i <- 10 + i/10
+c_Y <- 1
+c_X <- 1
+a_i <- ifelse(i <= 1000, i/10, 0)
+
+y_vec <- 1:1000
+U_T_vec <- y_vec
+for(y in y_vec) {
+  ### y <- 1
+  x_i <- (W_i - c_Y * y / N) / c_X
+  U_i <- x_i + a_i * sqrt(y) / 1000
+  U_T_vec[y] <- sum(U_i)
+}
+
+df <- data.frame(y = y_vec, U_T = U_T_vec)
+
+plot2 <- ggplot(df, aes(x = y, y = U_T)) +
+  ggtheme_plot() +
+  geom_line() +
+  geom_vline(xintercept = 626.25, linetype = 'dashed') +
+  labs(x = 'Size of fireworks show',
+       y = 'Total utility')
+ggsave('fig2.png', width = 4, height = 2, dpi = 300)
+```
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{fig2.png}
+    \caption{Optimal fireworks display for Cowflop, WI}
+  \end{figure}
+
+## 2.3 Some miles west of Cowflop, Wisc. is the town of Heifer’s Breath.
+Heifer’s Breath, like Cowflop has 1000 people. As in Cowflop, the citizens
+are interested only in drinking milk and watching fireworks. Fireworks cost
+1 gallon of milk per unit. Heifer’s Breath has two kinds of people, Larsons and Olsens. The Larsons are numbered 1 through 500 and the Olsens are numbered 1 through 500. 
+The Larsons have all Cobb-Douglas utility functions $U_L(x_i, y) = x_i^{\alpha} y^{1-\alpha}$ 
+and the Olsons all have utility functions $U_O(x_i, y) = x_i^{\beta} y^{1-\beta}$.
+
+a) Write an expression for the optimal amount of public goods as a function of the parameters of the problem.
+    * Starting with the basic Samuelson condition:
+\begin{align*}
+  \sum_{i=1}^N \frac{\frac{\partial U_i(x_i, y)}{\partial y}}
+      {\frac{\partial U_i(x_i, y)}{\partial x_i}} &= c\\
+  \sum_{l=1}^{500} \frac{\frac{\partial U_L(x_l, y)}{\partial y}}
+      {\frac{\partial U_L(x_l, y)}{\partial x_l}} &+
+    \sum_{o=1}^{500} \frac{\frac{\partial U_O(x_o, y)}{\partial y}}
+      {\frac{\partial U_O(x_o, y)}{\partial x_o}} = c\\
+  \sum_{l=1}^{500} \frac{(1-\alpha) x_l^{\alpha} y^{-\alpha}}
+      {\alpha x_l^{\alpha - 1} y^{1-\alpha}} &+
+    \sum_{o=1}^{500} \frac{(1-\beta) x_o^{\beta} y^{-\beta}}
+      {\beta x_o^{\beta-1} y^{1-\beta}}  = 1\\
+  \sum_{l=1}^{500} \frac{1-\alpha}{\alpha} \frac{x_l}{y} &+
+    \sum_{o=1}^{500} \frac{1-\beta}{\beta} \frac{x_o}{y}  = 1\\
+  \Longrightarrow y = \frac{1-\alpha}{\alpha} \sum_{l=1}^{500} x_l &+
+    \frac{1-\beta}{\beta} \sum_{o=1}^{500} x_o
+\end{align*}
+
+b) If $\alpha = \beta$, show that the Pareto optimal amount of public goods depends on the aggregate income in the community, but not on how that income is distributed.
+    * For the community, $\sum_{i=1}^N x_i + y \leq W$  (with $x$ and $W$ in gallons of milk, and $c_y = 1 gallon/firework$).
+    * Lemma 1: Note that $y = \sum_{l=1}^{500} \frac{1-\alpha}{\alpha} x_l + \sum_{o=1}^{500} \frac{1-\beta}{\beta} x_o$ becomes $y = \frac{1-\alpha}{\alpha} \left(\sum_{l=1}^{500} x_l +
+    \sum_{o=1}^{500} x_o \right)$ when we sub in $\alpha = \beta$.
+\begin{align*}
+  \sum_{i=1}^N x_i &+ y \leq W\\
+  \left(\sum_{l=1}^{500} x_l + \sum_{o=1}^{500} x_o \right) &+ y \leq W
+    &\text{(separate Olsens \& Larsons)}\\
+  \frac{\alpha}{1-\alpha}y &+ y \leq W
+    &\text{(sub in Lemma 1)}\\
+  \Longrightarrow \left(1 + \frac{\alpha}{1-\alpha} \right) y &\leq W\\
+\end{align*}
+    * When $\alpha = 1$, utility is independent of $y$ so no public goods are produced (and $y$ is independent of $W$)
+    * When $\alpha = 0$, utility is independent of $x$ so no private goods are consumed and all wealth goes into producing public goods.
+
+
+## 2.4 Let $U_C(X_C, Y) = X_C + 2\sqrt{Y}$ and $U_D(X_D, Y) = X_D + \sqrt{Y}$. Suppose that $c = 1$.
+
+a) Determine the amount of $Y$ that must be produced if the output is to be Pareto optimal and if both persons are to have positive consumption of private goods.
+    * Starting with the basic Samuelson condition for quasilinear preferences (4.10):
+\begin{align*}
+  f'_C(Y) &+ f'_D(Y) = c\\
+  \frac{1}{\sqrt{Y}} &+ \frac{1}{2\sqrt{Y}} = c\\
+  Y &= \left(\frac{3}{2c}\right)^2 = \frac{9}{4c}
+\end{align*}
+    * For $c = 1$, $Y = 2.25$.
+b) Find and describe the set of Pareto optimal allocations in which one or the other person consumes no private goods. Show that at these Pareto optima, the Samuelson conditions do not necessarily apply.
+    * On the utility possibility frontier, $U_C + U_D = X_C + X_D + f_C(Y^*) + f_D(Y^*)$.
+    * Once the public good has been paid for, the remaining total wealth to be spent on private goods is $W - p_Y Y^*$.  Therefore, $U_C + U_D = W - p_Y Y^* + f_C(Y^*) + f_D(Y^*)$.
+    * If one person, say Cecil (though these all hold for Dorothy as well), were to take all the remaining wealth and spend it on private goods for himself, then $X_D = 0$ but the Samuelson conditions still hold: we are still at $Y^*$ which satisfies the Samuelson conditions above.
+    * If Cecil were to spend even more for private goods, such that $Y < Y^* = 2.25$, to maximize his own utility, then $X_D = 0$, and the solution is still Pareto optimal, but Samuelson conditions no longer hold:
+$$f'_C(Y) + f'_D(Y) = \frac{1}{\sqrt{Y}} + \frac{1}{2\sqrt{Y}} > c = \frac{1}{\sqrt{Y^*}} + \frac{1}{2\sqrt{Y^*}}$$
+    * If he goes even further, he reduces $Y$ below the point where his personal marginal benefit from $Y$ is greater than the marginal cost of $Y$, i.e. $f'_C(Y) > c$, at which point he begins to reduce his own utility, as well as Dorothy's utility.
+c) Draw the utility possibility frontier.
+```{r}
+W   <- 10
+p_Y <- 1
+
+Y_star <- 2.25
+
+### straight line segment
+U_C1 <- seq(0, 7.75, .05) + 2 * sqrt(Y_star)
+U_D1 <- W - Y_star + 3 * sqrt(Y_star) - U_C1
+
+U_C2 <- seq(0, min(U_C1), .05)
+U_D2 <- .5 * U_C2 + W - .25 * U_C2^2
+
+U_D3 <- seq(min(U_D1), 0, -.05)
+U_C3 <- 2 * U_D3 + W - U_D3^2
+
+df <- data.frame(U_C = c(U_C2, U_C1, U_C3),
+                 U_D = c(U_D2, U_D1, U_D3))
+df_pts <- df %>%
+  filter(U_C == max(U_C) | U_D == max(U_D)) 
+df_y_star <- data.frame(U_C = U_C1,
+                        U_D = U_D1) %>%
+  filter(U_C == max(U_C) | U_D == max(U_D)) 
+
+plot3 <- ggplot(df, aes(x = U_C, y = U_D)) +
+  ggtheme_plot() +
+  geom_path() +
+  geom_line(data = df_y_star, color = 'red') +
+  geom_point(data = df_pts) +
+  geom_point(data = df_y_star, color = 'red') +
+  annotate('text', x = c(1, 11.5), y = c(9, 1), label = c('A', 'B')) +
+  labs(x = TeX('$U_C$'),
+       y = TeX('$U_D$')) +
+  # xlim(c(0, 12)) +
+  geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
+
+ggsave('fig3.png', height = 2, width = 4, dpi = 300)
+```
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{fig3.png}
+    \caption{Utility possibility frontier; between A and B is Pareto optimal locus; red is locus of efficient provision of public goods.}
+  \end{figure}
+
+d) Write down an explicit formula for the straight line portion of the utility possibility frontier.
+\begin{align*}
+  U_D &= W - p_Y Y^* + f_C(Y^*) + f_D(Y^*) - U_C\\
+    &= W - 2.25 + 3\sqrt{2.25} - U_C\\
+    &= W + 2.25 - U_C
+\end{align*}
+    * The plot above is based upon $W = 10$.
+e) Write down explicit expressions for the curved portions of the utility possibility frontier.
+\begin{align*}
+  U_D &= \frac{1}{2} U_C + W - \frac{1}{4}U_C^2
+    &\text{(upper curved portion incl. A)}\\
+  U_C &= 2 U_D + W - U_D^2
+    &\text{(rightward curved portion incl. B)}
+\end{align*}
+
+## 2.5 Cecil and Dorothy found a place to live rent-free. Now they are deciding whether to buy a car. 
+
+They have a total income of \$1000 and a car would cost \$400. Cecil’s utility is given by $X_C(1+Y)$ and Dorothy’s by $X_D(3+Y)$ where $Y = 1$ if they buy a car and $Y = 0$ if they do not, and where $X_C$ and $X_D$ are the amounts that Cecil and Dorothy spend on private goods.
+
+1. Write an equation for the utility possibility frontier if they are not allowed to buy a car and another equation for the utility possibility frontier if they must buy a car.
+    * With no car
+\begin{align*}
+  U_C(X_C^0, 0) + U_D(X_D^0, 0) &= X_C^0 + 3X_D^0\\
+  U_C^0 + U_D^0 &= X_C^0 + 3(1000 - X_C^0)  & (X_D^0 = \$1000 - X_C^0)\\
+  U_D^0 &= -2X_C^0 + 3000 - U_C^0\\
+  U_D^0 &= -3U_C^0 + 3000                   & (X_C^0 = U_C^0)
+\end{align*}
+    * With car (disposable income after car = $600)
+\begin{align*}
+  U_C(X_C^1, 1) + U_D(X_D^1, 1) &= 2X_C^1 + 4X_D^1\\
+  U_C^1 + U_D &= 2X_C^1 + 4(600 - X_C^1)  & (X_D^1 = \$600 - X_C^1)\\
+  U_D^1 &= -2X_C + 2400 - U_C^1\\
+  U_D^1 &= -2U_C^1 + 2400                 & (2X_C^1 = U_C^1)
+\end{align*}
+    
+2. Graph these two utility possibility frontiers and shade in the utility possibility set if they are free to decide whether or not to buy a car.
+```{r}
+U_C <- c(0, 1000, 1200)
+U_D0 <- -3*U_C + 3000
+U_D1 <- -2*U_C + 2400
+df <- data.frame(U_C, U_D0, U_D1) %>%
+  rename(`don't buy` = U_D0, `buy a car` = U_D1) %>%
+  gather(decision, U_D, -U_C)
+
+df_shade <- data.frame(U_C = c(0, 0, 600, 1200),
+                       U_D = c(0, 3000, 1200, 0))
+
+plot4 <- ggplot(df, aes(x = U_C, y = U_D)) + 
+  ggtheme_plot() +
+  geom_polygon(data = df_shade, fill = 'grey70', alpha = .4) +
+  # geom_point(data = df_buy,
+  #            aes(y = U_D0)) +
+  geom_line(aes(color = decision)) +
+  geom_point(x = 500, y = 1500, size = .75) +
+  geom_point(x = 650, y = 1050, size = .75) +
+  annotate('text', x = 500, y = 1700, label = '2.5.3.ii', hjust = 0, size = 3) +
+  annotate('text', x = 650, y = 1250, label = '2.5.4.ii', hjust = 0, size = 3) +
+  labs(x = TeX('$U_C$'),
+       y = TeX('$U_D$')) +
+  ylim(c(0, 3000)) +
+  geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
+
+ggsave('fig4.png', height = 2, width = 4, dpi = 300)
+```
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{fig4.png}
+    \caption{Cecil and Dorothy go car shopping!}
+  \end{figure}
+3. Suppose that if they don’t purchase the car, Cecil and Dorothy split their money equally. Could they achieve a Pareto improvement by buying the car? Show your answer in two ways:
+    (i) Compare the sum of willingnesses to pay to the cost of the car. 
+        * Calculate willingness to pay at $X_C^0 = X_D^0 = \$500$:
+$$V_C(X_C^0) = \frac{1}{2}X_C^0 = \$250; \hspace{12pt} V_D(X_D^0) = \frac{1}{4}X_D^0 = \$125$$
+        * The sum of willingness to pay $V_C(X_C^0) + V_D(X_D^0) = \$375 < \$400$ so they are not willing to jointly pay for the car.
+    (ii) Show whether or not the outcome where each has \$500 and they have no car produces a point on the overall utility possibility frontier.
+        * Calculate utilities for each person at \$500 and plot on Figure 4: 
+$$U_C(X_C = 500, car = 0) = 500; \hspace{12pt} U_D(X_D = 500, car = 0) = 1500$$
+        * Appears to be right on the possibility frontier - no Pareto improvement possible.  The point is above the line for utility of purchasing a car, so buying a car would necessarily reduce someone's utility.
+4. Suppose that if they don’t purchase the car, income would be divided so that $X_C = 650$ and $X_D = 350$. Could they achieve a Pareto improvement by buying the car? Show your answer in two ways:
+    (i) Compare the sum of willingnesses to pay to the cost of the car. 
+        * Calculate willingness to pay at $X_C^0 = \$650, X_D^0 = \$350$:
+$$V_C(X_C^0) = \frac{1}{2}X_C^0 = \$325; \hspace{12pt} V_D(X_D^0) = \frac{1}{4}X_D^0 = \$87.5$$
+        * The sum of willingness to pay $V_C(X_C^0) + V_D(X_D^0) = \$412.50 > \$400$ so they should purchase the car.
+    (ii) Show whether or not the situation where $X_C = \$650$ and $X_D = \$350$ and they have no car is on the overall utility possibility frontier.
+        * Calculate utilities for each person and plot on Figure 4: 
+$$U_C(X_C = 650, car = 0) = 650; \hspace{12pt} U_D(X_D = 350, car = 0) = 1050$$
+        * The point is inside the utility possibility frontier; therefore, buying a car could make one or both of them better off.

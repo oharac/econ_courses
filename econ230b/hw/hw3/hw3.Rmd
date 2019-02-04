@@ -1,0 +1,448 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\LL}{\mathcal{L}}
+\newcommand{\eps}{\varepsilon}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+# Exercises Lecture 3
+
+### 3.1 Suppose in the example where Cecil and Dorothy have utility functions $X_C Y^2$ and $X_D Y$ respectively, the Distribution Branch has the rule that $X_C = 2X_D$. Solve for the Pareto optimal choice of $Y$ by the Allocation Branch.
+
+Start with Samuelson conditions and budget constraint $W = X_C + X_D + Y$ (in the example, $p_X = p_Y = 1$, so I will continue with that assumption):
+\begin{align*}
+  \frac{\partial U_C/\partial Y}{\partial U_C/\partial X_C} &+ \frac{\partial U_C/\partial Y}{\partial U_C/\partial X_C} = p_Y (= 1)\\
+  \frac{2 X_C}{Y} &+ \frac{X_D}{Y} = 1\\
+  2 X_C &+ X_D = Y\\
+  2 X_C &+ W - X_C - Y = Y &\text{($X_D = W - X_C - Y$)}\\
+  \Longrightarrow Y &= \frac{X_C + W}{2}\\
+  \frac{1}{2}X_C &= W - X_C - Y &\text{(budget + dist constraint)}\\
+  \Longrightarrow Y &= W - \frac{3}{2}X_C = \frac{X_C + W}{2}\\
+  \Longrightarrow X_C &= \frac{1}{4}W\\
+  \Longrightarrow X_D &= \frac{1}{8}W\\
+  \Longrightarrow Y &= \frac{5}{8}W
+\end{align*}
+  
+
+### 3.2 Where $\alpha > 0$ and $\beta > 0$, show that if all consumers have identical Cobb-Douglas utility functions $X_i^{\alpha}Y^{\beta}$ then these same preferences can also be represented by a utility function of the form $A(Y)X_i + B_i(Y)$. What are the functions $A(Y)$ and $B_i(Y)$?
+
+>_Hint: What monotonic transformation of the Cobb-Douglas functions will give a utility function of the Bergstrom-Cornes form?_
+
+\begin{align*}
+  U_i &= X_i^{\alpha}Y^{\beta}\\
+  \Rightarrow U_i^{1/\alpha} &= (X_i^{\alpha}Y^{\beta})^{1/\alpha} 
+      &\text{(monotonic transformation)}\\
+    &= X_i Y^{\beta/\alpha} + 0\\
+    &= A(Y) X_i + B_i(Y) 
+      &\text{ where } A(Y) = Y^{\beta/\alpha} \text{ and } B_i(Y) = 0 \hspace{6pt} \blacksquare
+\end{align*}
+
+
+### 3.3 Consider an economy with two individuals. 
+Person $i$ has utility function $Y (X_i + k_i)$ where $k_i > 0$. Public goods can be produced from private goods at a cost of one unit of private goods per unit of public goods, and there is an initial allocation of $W$ units of private goods.
+
+a) Find the unique amount of public goods that satisfies the Samuelson condition.
+\begin{align*}
+  \sum \frac{\partial U_i/\partial Y}{\partial U_i/\partial X_i} &= p_Y (= 1)\\
+  \Rightarrow \sum_i \frac{X_i + k_i}{Y} &= 1\\
+  \Rightarrow Y &= \sum_i (X_i + k_i)\\
+  \Rightarrow Y &= W - Y + \sum_i k_i &(W = \sum_i X_i + Y)\\
+  \Rightarrow Y &= \frac{W + \sum_i k_i}{2}
+\end{align*}  
+b) Show that there are some Pareto optima that do not satisfy the Samuelson condition and that have a different amount of public goods.
+    * Suppose person 1 manages to maximize his own utility without consideration for the welfare of person 2. Assume this involves leaving no private goods for person 2, and then selecting the balance between private (for himself) and public goods that makes him most happy.
+\begin{align*}
+  \max Y (X_1 + k_1)  &\text{ s.t. } X_1 + X_2 (=0) + Y \leq W\\
+  \LL &= Y(X_1 + k_1) - \lambda(X_1 + Y - W) &\text{(Lagrangian)}\\
+  \partial \LL / \partial Y       &= X_1 + k_1 - \lambda = 0\\
+  \partial \LL / \partial X_1     &= Y - \lambda = 0\\
+  \partial \LL / \partial \lambda &= -(X_1 + Y - W) = 0\\
+  \Longrightarrow Y &= \lambda = X_1 + k_1\\
+  \Longrightarrow X_1 &= \frac{W - k_1}{2}\\
+  \Longrightarrow Y &= \frac{W - k_1}{2} + k_1 = \frac{W + k_1}{2}
+\end{align*}
+    * This allocation is different from the Samuelson conditions in part a, since $k_2 > 0$:
+$$Y = \frac{W + k_1}{2} < \frac{W + k_1 + k_2}{2}$$
+    * Note person 2 could also maximize her own utility at person 1's expense; and in between the Samuelson condition and either of these two personal-utility-maximizing conditions would be a locus of Pareto optimal situations that do not satisfy the Samuelson conditions and have different amounts of public goods.
+    
+c) Describe the utility possibility set and the utility possibility frontier. Sketch the way it would look, qualitatively.
+    * Because each person's utility depends on the _product_ of quantities of private and public goods, a situation in which no public goods are provided will result in zero utility, minimizing each utility and overall utility (for cases where $k_1 > 0, k_2 > 0$).
+    * When public good $Y$ is at its optimum, a diagonal line will reflect the tradeoff between distribution of private goods between each person.
+    * When one or the other person receives no private goods, and all wealth is allocated between (e.g.) $X_1$ and $Y$ with $X_2 = 0$, we can draw a curve describing the change of utility of each person as the share of $Y$ increases from 0 to its optimal value.  This curve will start at (0, 0) and form a parabolic curve (since the utility of the person with private goods increases as $Y^2$ and that of the other increases linearly, as $Y$) until it smoothly connects with the diagonal line.
+    * The plot below is constructed based on $W=10$ and $k_1 = 1$, with $k_2 = 3$ for blue dotted line, $k_2 = 0.5$ for red solid line, $k_2 = -1$ for green dashed line.
+``` {r}
+
+make_df <- function(W, k1, k2) {
+  x1 <- seq(0, W, .1)
+  x2 <- seq(0, W, .1)
+  df <- crossing(x1, x2) %>%
+    mutate(y = W - x1 - x2,
+           tot = x1 + x2 + y) %>%
+    filter(y >= 0) %>%
+    filter(round(tot, 2) == W) %>%
+    mutate(U1 = y * (x1 + k1),
+           U2 = y * (x2 + k2),
+           U_tot = round(U1 + U2, 3))
+  
+  df_possibility <- df %>%
+    filter(x1 == 0 & y <= (W + k1 + k2)/2) %>%
+    arrange(U1) %>%
+    bind_rows(df %>%
+      filter(U_tot == max(U_tot)) %>%
+      arrange(U1)) %>%
+    bind_rows(df %>%
+      filter(x2 == 0 & y <= (W + k1 + k2)/2) %>%
+      arrange(desc(U_tot)))
+}
+
+df1 <- make_df(W = 10, k1 = 1, k2 = 3)
+df2 <- make_df(W = 10, k1 = 1, k2 = .5)
+df3 <- make_df(W = 10, k1 = 1, k2 = -1)
+
+plot_3_3 <- ggplot(df1, aes(x = U1, y = U2)) +
+  ggtheme_plot() +
+  geom_polygon(color = 'slateblue', fill = 'slateblue4', alpha = .2, linetype = 'dotted') +
+  geom_polygon(data = df2, color = 'red4', fill = 'red', alpha = .3) +
+  geom_polygon(data = df3, color = 'green4', fill = 'green', alpha = .3, linetype = 'dashed') +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+  coord_cartesian(xlim = c(-5, 31), ylim = c(-5, 45), expand = FALSE) +
+  labs(x = TeX('$U_1$'), y = TeX('$U_2$'))
+
+ggsave('fig3_3_c.png', height = 3, width = 4, dpi = 300)
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_3_c.png}
+  \caption{Utility possibility frontiers for $W = 10, k_1 = 1$, and $k_2 \in 3, .5, -1$}
+\end{figure}
+d) Suppose that one or both of the $k_i$s are negative. Compare the quantity of public goods at Pareto optimal outcomes that do not satisfy the Samuelson conditions with those at Pareto optimal outcomes that do. Interpret your result.
+
+### 3.4 Consider an economy with $n$ individuals where individual $i$ has utility function $U_i(X_i, Y ) = Y^{\alpha} (X_i + \beta_i Y + \gamma_i)$, where $0 < \alpha < 1, \sum_i \beta_i = 0$, and $\gamma_i > 0$ for all $i$. 
+Assume that public goods can be produced from private goods at a cost of one unit of private goods per unit of public goods, and that there is an initial allocation of $W$ units of private goods. Find the unique quantity of $Y$ that satisfies the Samuelson conditions.
+
+* First, find $A(Y)$ and $B_i(Y)$, so we can use the specialized Samuelson condition formula
+\begin{align*}
+  U_i(X_i, Y ) &= Y^{\alpha} (X_i + \beta_i Y + \gamma_i)\\
+    &= (Y^\alpha X_i) + (\beta_i Y + \gamma_i)\\
+    &= A(Y) X_i + B_i(Y) \text{ where } A(Y) = Y^\alpha 
+        \text{ and } B_i(Y) = \beta_i Y^{\alpha + 1} + \gamma_i Y^\alpha
+\end{align*}
+* Plug these values into the Samuelson condition:
+\begin{align*}
+  \frac{A'(Y)}{A(Y)}(W - cY) &+ \sum_i \frac{B_i'(Y)}{A(Y)} = c\\
+  \Rightarrow \frac{\alpha Y^{\alpha - 1}}{Y^\alpha}(W - Y) 
+      &+ \sum_i \frac{(\alpha + 1)\beta_i Y^\alpha + \alpha \gamma_i Y^{\alpha - 1}}{Y^\alpha} = 1\\
+  \Rightarrow \frac{\alpha}{Y}(W - Y)
+      &+ (\alpha + 1)\sum_i \beta_i (=0) + \alpha \sum_i \frac{\gamma_i}{Y} = 1\\
+  \Rightarrow \alpha W + \alpha \sum_i \gamma_i &= (1 + \alpha) Y\\
+  \Rightarrow Y &= \frac{\alpha}{1 + \alpha}(W + \sum_i \gamma_i)\\
+\end{align*}
+
+### 3.5 Prove the following results which are claimed in the text of the lecture:
+a) An allocation that maximizes the sum of individual utilities over all
+feasible allocations must be Pareto optimal.
+    * If an allocation that maximizes sum of utilities over all feasible allocations $\mathcal{F}$ is Pareto optimal, there cannot be a feasible allocation that is Pareto superior to it.
+    * Let $(\bar x_1, ..., \bar x_N, y)$, which maximizes utilities for each person subject to their individual wealth $\bar p x_i + \bar q_i y \leq W_i$ (where $\bar p$ and $\bar q_i$ are the set prices paid for private goods and person i's contribution to public goods, respectively).
+    * Let an allocation $(x_1, ..., x_N, y)$ be Pareto superior to $(\bar x_1, ..., \bar x_N, y)$.
+    * If the new allocation is Pareto superior, then for each person, $U_i(x_i, y) \geq U_i(\bar x_i, \bar y)$ with at least one person getting a strictly greater $U$ (by definition of Pareto superior).
+    * Therefore, the new preferred bundle must cost at least as much as the original bundle: $\bar p x_i + \bar q_i y \geq W_i$, with at least some strictly greater (the same who strictly preferred the new bundle).  Summing these up across all people, the sum of costs of new bundle is (strictly) greater than the initial wealth: $\sum_i^N(\bar px_i + \bar q_i y) > \sum_i^N W_i(\bar p, \bar q)$.
+    * Sum of individual budgets must be greater or equal to sum of prices paid by each person for goods: $\sum_i^N W_i(\bar p, \bar q) \geq \sum_i^N(\bar px_i' + \bar q_i y')$ for all $(\sum x_i', y') \in \mathcal{F}$.
+    * Therefore, $\bar p \sum_i^N(x_i) + \sum_i^N(\bar q_i) y > \bar p\sum_i^N(x_i') + \sum(\bar q_i )y'$, so $(\sum x_i, y)$ is outside the feasible set - it is not affordable.
+    * Therefore, while $(x_1, ..., x_N, y)$ is Pareto superior to $(\bar x_1, ..., \bar x_N, y)$, it is not in the set of feasible allocations. $\blacksquare$
+    * Note, this is basically paraphrased from the example shown in lecture, as well as the lecture notes.
+    
+b) Where $a_i > 0$ for all $i = 1,...,n$, any allocation that maximizes the sum 
+$$\sum_{i=1}^n a_i U_i(X_i, Y)$$
+of individual utilities over all feasible allocations must be Pareto optimal.
+    * This is just a linear transformation of $U_i$ unique for each person $i$, which essentially just alters the weights of preferences within the sum, not changing the underlying proof of part a) in any substantial way.
+    * Starting with the same allocations $(x_1, ..., x_N, y)$ which is Pareto superior to $(\bar x_1, ..., \bar x_N, y)$, which maximizes utilities for each person subject to their individual wealth, now we compare for each person $a_i U_i(x_i, y) \geq a_i U_i(\bar x_i, \bar y)$.
+    * Everything else follows identically from part a).
+
+### 3.6 There are two consumers and one public good. Person 1 always prefers more of the public good to less. Person 2’s preferences are more subtle.
+Their utility functions are given by
+$$U_1(X_1, Y) = (1 + X_1)Y$$
+$$U_2(X_2, Y) = X_2Y - \frac{1}{2}Y^2$$
+The feasible allocations are those such that $X_1 + X_2 + Y = W$.
+
+``` {r}
+U <- seq(1, 20, 2)
+
+W <- 10
+
+y <- seq(0, 10, .01)
+df <- crossing(U, y) %>%
+  mutate(x2 = (.5 * y^2 + U) / y) %>%
+  filter(x2 <= W) %>%
+  group_by(U) %>%
+  mutate(min_x = (x2 == min(x2))) %>%
+  ungroup()
+
+df_min <- df %>% filter(min_x) %>% 
+  group_by(U) %>% 
+  summarize(y = mean(y), x2 = first(x2))
+
+plot_3_6_b <- ggplot(df, aes(x2, y, color = U)) +
+  ggtheme_plot() +
+  theme(panel.grid.major.x = element_blank()) +
+  geom_path(aes(group = U), size = .5) +
+  xlim(c(0, 12)) + ylim(c(0, 10)) +
+  geom_vline(xintercept = 0) + geom_hline(yintercept = 0) +
+  geom_vline(data = df_min, aes(xintercept = x2), size = .25, alpha = .2) +
+  geom_abline(intercept = 0, slope = 1, linetype = 'dotted', size = .5, color = 'red', alpha = .5) +
+  geom_point(data = df_min, color = 'red', size = .5) +
+  labs(x = TeX('$X_2$ (private good)'), 
+       y = TeX('$Y$ (public good)'),
+       color = TeX('$U_2$'))
+ggsave('fig3_6_b.png', height = 3, width = 4, dpi = 300)
+  
+```
+
+a) Are these utility functions of the Bergstrom-Cornes form?
+    * Yes.  We can rewrite each into the form $A(Y)X_i + B_i(Y)$:
+$$U_1(X_1, Y) = (1 + X_1) Y = YX_1 + Y$$
+$$U_2(X_2, Y) = X_2 Y - \frac{1}{2}Y^2$$
+    where $A(Y) = Y$, $B_1 = Y$, $B_2 = \frac{1}{2}Y^2$.
+b) Draw some sample indifference curves for Person 2 between private
+and public goods. How would you describe Person 2’s attitude toward
+public goods?
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_6_b.png}
+  \caption{Indifference curves for Person 2}
+\end{figure}
+    * For a given amount of private goods X (e.g. the dashed vertical line on the plot), person 2 prefers an intermediate amount of public goods over a very low or very high level - in fact, for a given quantity of private goods, she prefers the _same amount_ of public goods, as noted by the 1:1 line (red dotted line).
+    * This can be interpreted as at some point (for a given level of indifference), the public _good_ (worth trading away some amount of private good) becomes a public _bad_ requiring compensation of additional private goods.
+c) Find the allocations that maximize the sum of utilities. Take care to
+distinguish the case where $W$ is large enough for there to be an interior
+solution from the case where it is not.
+    * Start from the specialized Samuelson equation to find optimal $Y^*$:
+\begin{align*}
+  \frac{A'(Y)}{A(Y)}(W - Y) &+ \sum_i \frac{B_i'(Y)}{A(Y)} = c\\
+  \Rightarrow \frac{1}{Y^*}(W - Y^*) &+ \frac{1}{Y^*}(1 - Y^*) = 1\\
+  \Rightarrow Y^* &= \frac{W + 1}{3}
+\end{align*}
+    * Find allocation for $X$:
+\begin{align*}
+  W &= X_1 + X_2 + Y = X + Y\\
+    &= X + \frac{W + 1}{3}\\
+  \Rightarrow X &= \frac{2W - 1}{3}
+\end{align*}
+    * But if $W < \frac{1}{2}$ then $X < 0$ which is not feasible.  Therefore, the allocations that maximize the sum of utilities are:
+\begin{align*}
+  Y &= \begin{cases} 
+      \frac{W + 1}{3} &\text{for } W > \frac{1}{2}\\
+      W  &\text{for } W \leq \frac{1}{2}
+    \end{cases}\\
+  X &= \begin{cases}
+      \frac{2W - 1}{3}  &\text{for } W > \frac{1}{2}\\
+      0 &\text{for } W \leq \frac{1}{2}\\
+    \end{cases}
+\end{align*}
+    
+d) In the case where $W = 4$, find all of the Pareto optimal allocations and
+draw the utility possibility set and show the utility possibility frontier.
+    * The total utility maximizing allocations are as given by the formulas above: $Y = 5/3, X_1 + X_2 = 7/3$.
+    * Pareto optimal but not total utility maximizing allocations are found when $0 \leq Y < 5/3$, and either $\{X_1, X2\} = \{W - Y, 0\}$ or  $\{X_1, X2\} = \{0, W - Y\}$.
+    * See figure 3.
+``` {r}
+
+make_df_3_6 <- function(W) {
+  x1 <- seq(0, W, .01)
+  x2 <- seq(0, W, .01)
+  y_star <- (W + 1)/3
+  df <- crossing(x1, x2) %>%
+    mutate(y = W - x1 - x2,
+           tot = x1 + x2 + y) %>%
+    filter(y >= 0) %>%
+    mutate(U1 = y * (x1 + 1),
+           U2 = y * x2 - .5 * y^2,
+           U_tot = round(U1 + U2, 3))
+    
+  # ggplot(df, aes(x = U1, y = U2)) + geom_point()
+  
+  df_possibility <- df %>%
+    filter(x1 == 0 & y <= y_star) %>%
+    arrange(U1) %>%
+    bind_rows(df %>%
+      filter(U_tot == max(U_tot)) %>%
+      arrange(U1)) %>%
+    bind_rows(df %>%
+      filter(x2 == 0 & y <= y_star) %>%
+      arrange(desc(U_tot)))
+}
+
+df_3_6_d <- make_df_3_6(W = 4)
+
+plot_3_6d <- ggplot(df_3_6_d, aes(x = U1, y = U2)) +
+  ggtheme_plot() +
+  geom_polygon(color = 'slateblue', fill = 'slateblue4', alpha = .2, linetype = 'solid') +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+  # coord_cartesian(xlim = c(-5, 31), ylim = c(-5, 45), expand = FALSE) +
+  labs(x = TeX('$U_1$'), y = TeX('$U_2$'))
+
+ggsave('fig3_6_d.png', height = 2, width = 4, dpi = 300)
+
+df_3_6_e <- make_df_3_6(W = .5) %>%
+  mutate(private_goods = ifelse(x1 > x2, 'X_1', 'X_2'))
+
+plot_3_6e <- ggplot(df_3_6_e, aes(x = U1, y = U2)) +
+  ggtheme_plot() +
+  geom_polygon(color = NA, fill = 'slateblue4', alpha = .2, linetype = 'solid') +
+  geom_path(aes(color = private_goods)) +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+  # coord_cartesian(xlim = c(-5, 31), ylim = c(-5, 45), expand = FALSE) +
+  labs(x = TeX('$U_1$'), y = TeX('$U_2$'), color = 'Private goods')
+
+ggsave('fig3_6_e.png', height = 2, width = 4, dpi = 300)
+
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_6_d.png}
+  \caption{Utility possibility frontier for $W = 4$}
+\end{figure}
+e) In the case where $W = 1/2$, find all of the Pareto optimal allocations
+and draw the utility possibility frontier. What distributions of private
+consumption are consistent with a Pareto optimal allocation?
+    * The total utility maximizing allocation (based on the above formulas) is $\{X, Y\} = \{0, 1/2\}$.
+    * But, if we give up some of the public goods and allocate them to $X_1$ or $X_2$, we create a region of utility possibilities.  The possibilities are bounded by varing $Y \in (0, 1/2)$ and either $X_1 = 1/2 - Y, X_2 = 0$ or vice versa.  Clearly it is Pareto optimal to give all the residual public goods to $X_2$, and is Pareto optimal when $Y \in (1/6, 1/2), X_2 = 1/2 - Y, X_1 = 0$.
+    * See figure 4.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_6_e.png}
+  \caption{Utility possibility frontier for $W = .5$}
+\end{figure}
+f) For what values, if any, of $W$ are there Pareto optimal allocations in which both consumers consume some private goods and where the sum of utilities over the set of feasible allocations is not maximized.
+    * See Fig. 4.  While there are Pareto optimal allocations in situations where the sum of the utilities over the set of feasible allocations is not maximized (see 3.6.e), all these allocations occur when $X_2$ gets all the residual private goods not allocated to public goods.
+
+### 3.7 Bergstrom and Cornes prove that...
+under fairly weak assumptions representability of preferences in the functional form $A(Y)X_i + B_i(y)$ is both necessary and sufficient for it to be true that _regardless of the level of aggregate income_ starting from a Pareto optimal allocations in which both consumers have some private goods, if one leaves the amount of public goods unchanged and redistributes private goods to reach another allocation in which all consumers have some private goods, the resulting outcome will also be Pareto optimal. 
+
+This exercise shows that the “necessity” part of this proposition depends critically on the qualification regardless of the level of aggregate income.
+
+Consider an economy with one public good, one private good, and two
+consumers. Consumer 1 likes the public good and Consumer 2 hates it. The
+amount of public good provided must be either 0 or 1. The public good is
+costless to produce. There is one unit of private good which can be divided
+between Consumers 1 and 2 in any way such that private goods consumption
+adds to 1. Thus the set of feasible allocations is $\{(x_1, x_2, y)|x_1 \geq 0, x_2 \geq 0, x_1 + x_2 = 1, y \in \{0, 1\}\}$. The utility functions of Consumers 1 and 2
+respectively are:
+$$U_1(x_1, y) = (x_1 + 1)(1 + y) = (1 + y)x_1 + y + 1$$
+$$U_2(x_2, y) = (x_2 + 1)(2 - y) = (2 - y)x_2 - y + 2$$
+a) Show that no monotonic transformations of these utility functions will make it possible to write them both in the Bergstrom-Cornes form $A(Y)X_i + B_i(y)$.
+    *_Hint: If this were possible, the sum of marginal rates of substitution would not change after a redistribution of private goods._
+    * Let us take the contrapositive: if we can show the sum of MRS changes after a redistribution, then we cannot write the two utility functions in Bergstrom-Cornes form.  First, find the sum of MRS:
+\begin{align*}
+  \sum MRS &= \frac{\partial U_1 / \partial Y}{\partial U_1 / \partial X_1} +
+      \frac{\partial U_2 / \partial Y}{\partial U_2 / \partial X_2}\\
+    &= \frac{x_1 + 1}{1 + y} +
+      \frac{-x_2 - 1}{2 - y}
+\end{align*}
+    * Choosing two possible allocations across $x_1, x_2$: $\{1, 0, 1\}$ and $\{0, 1, 1\}$
+\begin{align*}
+  \sum MRS, \{1, 0, 1\} &= \frac{1 + 1}{1 + 1} + \frac{0 - 1}{2 - 1} = 1 + -1 = 0\\
+  \sum MRS, \{0, 1, 1\} &= \frac{0 + 1}{1 + 1} + \frac{-1 - 1}{2 - 1} = .5 + -2 = -1.5\\
+\end{align*}
+    * Since the two allocations result in two different sums of MRS, then we can conclude that the two utility functions cannot be represented in Bergstrom-Cornes form.
+b) Draw the utility possibility frontier for this economy.
+    * For $y = 0$, $U_1 = x_1 + 1$ and $U_2 = 2x_2 + 2 = -2x_1 + 4$.  Increasing $x_1$ from 0 to 1, we get a diagonal line from (1, 4) to (2, 2).
+    * For $y = 1$, $U_1 = 2x_1 + 2$ and $U_2 = x_2 + 1 = 2 - x_1$ (essentially flipping the $y = 0$ case).  Here increasing $x_1$ from 0 to 1, we get another diagonal from (2, 2) to (4, 1).
+    * See Figure 5. Due to the equality constraint on $x_1 + x_2 = 1$, and zero cost of $y$, these are the only possibilities - there is no region of possibilities, only a line.
+```{r}
+
+W <- 1
+x1 <- seq(0, W, .01)
+y  <- 0:1
+
+df <- crossing(x1, y) %>%
+  mutate(x2 = 1 - x1,
+         U1 = (x1 + 1) * (1 + y),
+         U2 = (x2 + 1) * (2 - y),
+         U_tot = round(U1 + U2, 3))
+  
+plot_3_7b <- ggplot(df, aes(x = U1, y = U2)) + 
+  ggtheme_plot() +
+  geom_line() +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+  labs(x = TeX('$U_1$'), y = TeX('$U_2$'))
+
+ggsave('fig3_7_b.png', width = 4, height = 2, dpi = 300)
+
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_7_b.png}
+  \caption{Utility possibility frontiers}
+\end{figure}
+c) Assuming that lotteries are not possible, show that every possible allocation is Pareto optimal.
+    * Since all possible allocations fall on these two linear segments, and each segment has a strictly negative slope, there is no point at which you can make person 1 better off without making person 2 worse off.
+d) Suppose that the functions $U_1$ and $U_2$ are the von Neuman Morgenstern representations. Starting from allocations in which both consumers have some private goods, would it be possible to find a lottery that would make both consumers better off?
+    * Yes.  If the lottery were a choice between two allocations, one on either side of the "kink" in the utility line.  In other words, $(x_1, x_2, 0)$ with probability $p \in (0, 1)$ and $(x_1', x_2', 1)$ with probability $(1 - p)$, where $x_1 \in [0, 1)$ and $x_1' \in (0, 1]$.
+e) Suppose that instead of 1 unit of private goods, there were two units of private goods to be allocated, so that the set of feasible allocations is $\{(x_1, x_2, y)|x_1 \geq 0, x_2 \geq 0, x_1 + x_2 = 2, y \in \{0, 1\}\}$. Draw and label two separate lines; one showing the utility distributions possible if $y = 0$ and one showing the utility distributions possible if $y = 1$. Do these lines cross? Identify the utility possibility frontier and show that the Pareto optimal amount of public goods depends on the distribution of income.
+    * Here, if we allow $x_1$ to go from 0 to 2, and $y = 0$, then the utility line extends from (1, 6) to (3, 2); for $y = 1$, the utility line starts at (2, 3) and extends to (6, 1).  See Figure 6.
+    * The $y = 1$ line crosses the $y = 0$ line at $(\frac{8}{3}, \frac{8}{3})$.  Now the Pareto optimal set is the top part of the $y=0$ line and the right-most part of the $y=1$ line:
+\begin{align*}
+  \begin{cases} \text{ if } y = 0 &x_1 \in [0, \frac{5}{3}), x_2 = 2 - x_1\\
+    \text{ if } y = 1 &x_1 \in [\frac{1}{3}, 2], x_2 = 2 - x_1
+  \end{cases}
+\end{align*}
+```{r}
+
+W <- 2
+x1 <- seq(0, W, .01)
+y  <- 0:1
+
+df <- crossing(x1, y) %>%
+  mutate(x2 = 2 - x1,
+         U1 = (x1 + 1) * (1 + y),
+         U2 = (x2 + 1) * (2 - y),
+         U_tot = round(U1 + U2, 3),
+         y = as.character(y))
+  
+  
+plot_3_7e <- ggplot(df, aes(x = U1, y = U2, color = y)) + 
+  ggtheme_plot() +
+  geom_line(aes(group = y)) +
+  geom_hline(yintercept = 0) + geom_vline(xintercept = 0) +
+  labs(x = TeX('$U_1$'), y = TeX('$U_2$'))
+
+ggsave('fig3_7_e.png', width = 4, height = 2, dpi = 300)
+
+```
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_7_e.png}
+  \caption{Utility possibility frontiers}
+\end{figure}

@@ -1,0 +1,60 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 260A
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+
+<!-- This is a template for homework assignments to be written in LaTeX formatting -->
+
+\begin{enumerate}
+\item\textbf{First homework problem} %textbf = bold face
+	\begin{align*} %begins align package, gives number for every line by default, 
+		% the asterisk turns that off.  The align environment also is trying to format
+		% as an equation.
+		% NOTE: need code between these lines... even just a comment otherwise error
+		A & =  \begin{bmatrix} 
+		% bmatrix is bracket, vmatrix is vertical bars (determinant), pmatrix is parens
+			a & b & c\\ % first line defines the columns
+			d & e & f\\
+			g & h & i
+			\end{bmatrix}% the ampersand will align whatever follows, so in this case
+			% the equals signs will line up
+			&\text{(first line, here is a whole bunch of extra crap)}\\ 
+			% The second ampersand right aligns this part.
+			% The complier will consider all a single line until \\ (or blank line?)
+			\\[12pt] % can add additional space using options
+    B &= \begin{bmatrix}
+        1 & 2 & 3\\
+        4 & 5 & 6
+      \end{bmatrix} 
+      &\text{(second line)}\\
+	\end{align*}
+\item\textbf{Second homework problem
+\\ this is a new line} % \\ begins a new line
+\end{enumerate}

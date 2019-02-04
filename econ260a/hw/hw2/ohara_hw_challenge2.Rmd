@@ -1,0 +1,158 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 260A
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{pgfplots}
+---
+
+
+# Econ 260A: Homework Challenge #2
+
+An exhaustible resource is costlessly extracted in continuous time by 
+competitive firms (assume all the other assumptions of the Hotelling model 
+apply). The market inverse demand curve is $p(y) = a - by$ where $p(t)$ and 
+$y(t)$ denote the price and quantity in time $t$ and $a$ and $b$ are finite 
+parameters. The initial stock of the resource is given by $x(0) = x_0$, the
+interest rate is $r$, and the time horizon is $0 \leq t \leq T$.
+
+___a) Use optimal control theory___ _to characterize the dynamic market 
+equilibrium. Clearly state all of the first-order and transversality 
+conditions that must hold._
+
+From the Nonrenewable Resources lecture notes, we know that we can obtain
+the competitive market equilibrium in the same way as we would determine
+the optimal program based on solving the planner problem.  
+
+Determine flow of benefits $U(y(t))$:
+\begin{align*}
+  U(y(t)) &= \int_0^{y(t)} p(s) ds = \int_0^{y(t)} (a + bs) ds 
+      = as + \frac{1}{2}bs^2 \biggr\rvert_0^{y(t)}\\
+    &= ay(t) + \frac{1}{2}by(t)^2
+\end{align*}
+The basic planner problem becomes:
+\begin{align*}
+  \max_{y(t)} \int_0^T [ay(t) - \frac{1}{2}by(t)^2] e^{-rt}dt \hspace{10pt} \text{subj. to} 
+      \hspace{10pt}\dot x(t) = -y(t), \hspace{10pt} x(0) = x_0
+\end{align*}
+Current-value Hamiltonian:
+$$\tilde H = U(y(t)) - \mu(t)y(t) = ay(t) - \frac{1}{2}by(t)^2 - \mu(t)y(t)$$
+The maximum principle for this problem:
+\begin{align*}
+  \tilde H_y &= 0 = a + by(t) - \mu(t) = p(y(t)) - \mu(t) &\text{(maximum condition)}\\
+  -\tilde H_x &= \dot \mu(t) - r \mu(t) = 0               &\text{(adjoint equation)}\\
+  \tilde H_{\mu} &= \dot x(t) = y(t)                      &\text{(equation of motion)}\\
+  \tilde H(T) &= 0                                        &\text{(free time condition)}\\
+  \mu(T)x(T) &= 0 \Rightarrow x(T) = 0                    &\text{(free state condition)}
+\end{align*}
+From the maximum condition and adjoint equation:
+\begin{align*}
+  \tilde H_y = 0 &= p(y(t)) - \mu(t) = p(t) - \mu(t) 
+      &\text{(apply Leibniz' rule to max cond'n)}\\
+  \Rightarrow p(t) &= \mu(t)\\
+  \dot \mu(t) - r \mu(t) &= 0 
+      &\text{(adjoint eq'n)}\\
+  \Rightarrow \frac{\dot \mu(t)}{\mu(t)} &= r \Rightarrow \frac{\dot p(t)}{p(t)} = r
+      &\text{(substitute into adjoint eq'n)}\\
+  \Rightarrow p(t) &= p(0)e^{rt}      
+      &\text{(Hotelling's rule)}\\
+\end{align*}
+So to characterize the dynamic market equilibrium, the price grows at the discount rate:
+$$p(t) = p(0)e^{rt}$$
+With the free time condition $\tilde H(T) = 0$ and free state condition $x(T) = 0$
+we know, as stated in the notes:
+$$\int_0^Ty(t)dt = x_0$$
+Additionally, we know from expanding free time condition $\tilde H(T) = 0$ that
+$$y(T) = 0$$
+
+
+___b) Use your results from part (a)___ _to derive an implicit function for 
+$T$ in terms of the parameters of the problem ($a, b, x_0, r$). Show how $T$
+changes with marginal changes in each of the parameters and discuss the
+economic intuition for each comparative static result._
+
+Since $y(T) = 0$ and $p(t) = a - by(t)$: 
+$$p(T) = p(0)e^{rT} = a$$
+We can also derive a function $y(p, t)$:
+$$p(t) = a - by(t) \hspace{6pt} \Longrightarrow \hspace{6pt} y(t) = \frac{a - p(t)}{b}$$
+Hotelling (1931) follows these steps to determine an implicit function
+which we can use to determine $T^*$.
+\begin{align*}
+  x_0 &= \int_0^T y(t)dt = \int_0^T \frac{a - p(t)}{b} dt\\
+    &= \frac{1}{b}(aT - \frac{p_0}{r}(e^{rT} - 1))\\
+  \Rightarrow bx_0 &= aT - \frac{a}{r}(1 - e^{-rT})\\
+  \Rightarrow \frac{a}{r}e^{-rT} &= bx_0 - aT + \frac{a}{r}
+\end{align*}
+From this, we can define two functions
+$$z_1(T) = \frac{a}{r}e^{-rT} \hspace{10pt}\text{ and }\hspace{10pt} z_2(T) = - aT + bx_0 + \frac{a}{r}$$
+Plotting these on a $(T, z)$ plot, the decreasing exponential curve $z_1(T)$ should
+intersect the negative slope line exactly once in $\mathbb{R}_2^+$.  
+Logic: at $T = 0$, both have same slope $-a$ but the intercept of the line
+is higher ($z_1(0) = \frac{a}{r}, z_2(0) = \frac{a}{r} + bx_0$).  Since
+$z_1$ approaches zero asymptotically from above and $z_2$ crosses zero, there
+will be exactly one intersection.  At this intersection we find the optimal $T^*$ for 
+exhaustion of the resource.
+
+From this, we can examine the comparative statics for changes in $a, b, r, x_0$.
+Hotelling (1931) claims that a higher expected price when production rate
+is very small will result in a longer period of production:
+
+> In general, the higher the price anticipated when the rate of production 
+becomes extremely small, compared with the price for a more rapid production, 
+the more protracted will be the period of operation.
+
+* As $a$ increases (holding other parameters constant), $T^*$ increases: 
+  $\frac{\Delta T^*}{\Delta a} > 0$.
+    * By the equations, intercepts for both $z_1, z_2$ increase linearly, shifting
+      them both upward by the same amount.  Additionally, the slope of 
+      each at $T=0$ is steeper (in a negative direction).  The slope change would
+      tend to reduce $T^*$ while the intercept change would tend to increase it,
+      making graphical analysis a little trickier.
+    * However, we also know that $p(T) = a = p_0e^{rT}$, which, holding constant 
+      $p_0$, means an increase in $T$.
+    * But the optimal program is determined by choosing an initial price 
+      such that the resource is exhausted at the time when demand goes to zero.  A higher
+      price pushes up the demand curve, resulting in higher prices at all production
+      rates, increasing $T^*$ per Hotelling's prediction.
+* As $b$ increases, $T^*$ should increase:
+  $\frac{\Delta T^*}{\Delta b} > 0$.
+    * Graphically, the $z_1$ curve is unchanged, but $z_2$ line shifts upward. 
+      This pushes the intersection point $T^*$ farther to the right.  Therefore increase in $b$
+      results in a longer time to exhaustion $T^*$.  
+    * This term is basically a cost that increases with high extraction, which should 
+      reduce extraction in early years and push final extraction farther into the future. 
+* As $x_0$ increases, $T^*$ increases:
+  $\frac{\Delta T^*}{\Delta x_0} > 0$.
+    * Graphically, $z_2$ shifts upward.  This is similar to an increase in
+      $b$ since the terms are linked in the implicit function.  
+    * Intuitively, additional stock at the start will still be subject to
+      extraction rates driven by demand, meaning the rate of extraction
+      relative to the total initial stock will decrease, extending the time to
+      final extraction,
+* As $r$ increases, $T^*$ will decrease...?
+  $\frac{\Delta T^*}{\Delta r} < 0$.
+    * Graphically, both intercepts shift downward by the same amount $\frac{a}{\Delta r}$, 
+      though $z_2$ drops _proportionally_ less due to the $bx_0$ term.  The slopes at
+      $T = 0$ remain identical, at $-a$.  This becomes difficult to predict
+      graphically, though it seems as if it should move the intersection to the
+      left, _decreasing_ $T^*$.
+    * Conceptually, if $r$ increases then the prices grow at a higher
+      rate of interest, resulting in higher prices as extraction shrinks; by one
+      reading of Hotelling this should extend the time until final extraction.
+      This may be an inaccurate reading of Hotelling's prediction, since I
+      believe he is discussing rate of extraction as a direct function of price
+      (essentially our demand curve $y = \frac{a - p}{b}$); 
+      but here we are looking at extraction decreasing over time as price 
+      increases as a function of time, one step removed from the demand curve.
+    * I'm inclined to stick with $T^*$ decreasing in $r$.
+      
+

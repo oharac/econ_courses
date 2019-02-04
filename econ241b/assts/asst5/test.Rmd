@@ -1,0 +1,54 @@
+---
+title: Title
+author: Me
+date: Today
+output:
+  word_document:
+    toc: no
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes:
+- \usepackage{tikz}
+- \usepackage{pgfplots}
+---
+
+
+
+## Stata
+
+My output matches that of the Charness and Kuhn (2007) Table 3, with the
+exception of the error for rel\_w1\_low (I got .0274, the paper reports .026).
+
+$$this = \frac{1}{3}$$
+
+this is $\frac{1}{4}$
+
+The code is essentially identical to exercise 4, with the exception of adding an 
+option of `reg ..., robust cluster(wrk1id)` or `(wrk2id)`.
+
+\begin{table}[htbp]
+  \centering
+  \caption{A: Type 1 workers $this = \frac{1}{5}$}
+  \begin{tabular}{l*{2}{c}}
+  \hline\hline
+              &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}\\
+              &\multicolumn{1}{c}{e1}&\multicolumn{1}{c}{e1}\\
+  \hline
+  \_Iw1\_1      &        .499&         .42\\
+              &    (.08262)&     (.1038)\\
+  [1em]
+  \_Iw1\_2      &       $1.278^2$ &       1.119\\
+              &     (.1718)&     (.1715)\\
+  [1em]
+  \_Iw1\_3      &       1.544&       1.308\\
+              &     (.4949)&      (.442)\\
+  [1em]
+  rel\_w1\_low  &     -.02431&      .01501\\
+              &    (.02738)&    (.04194)\\
+  \hline
+  \(N\)       &         555&         555\\
+  \(R^{2}\)   &       0.295&       0.604\\
+  \end{tabular}
+\end{table}

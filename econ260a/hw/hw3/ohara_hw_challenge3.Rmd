@@ -1,0 +1,220 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 260A
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{pgfplots}
+---
+
+
+# Econ 260A: Homework Challenge #3
+
+### 1. Suppose each patch is owned by a separate landowner, and that all landowners were myopic. Describe the dynamics and the steady state of this system.
+
+Since each patch is owned by a separate landowner, each owner will care only about the costs and benefits of management within his or her patch.  Since all landowners are myopic, they will not care about costs or benefits of current management in the next period: $C_{it+1}(x_{it+1}) = 0$.
+
+In this case, each landowner will suffer damages in this period based on post-control stock, and a cost of any control efforts.  Any money spent on control will reduce the cost of the damage.  Each landowner will control the stock down to the point where the marginal cost of control equals the marginal damage that would be prevented by that control, without worrying about future damages caused by the growth of the residual stock, or caused by the movement of the species into this patch from other patches.  To show this we can set up a DPE with cost instead of value, and minimize the cost.  Note this is set up for costs/stocks/harvest within a single patch $i$.
+
+\begin{align*}
+  C_{it}(x_{it}) &= \min_{e_{it}}\left(\int_{e_{it}}^{x_{it}} \theta_i c(s) ds + 
+        k_i e_{it} + \delta C_{it+1}(x_{it+1})\right)
+      &\text{(DPE of cost)}\\
+    &= \min_{e_{it}}\left(\int_{e_{it}}^{x_{it}} \theta_i c(s) ds + 
+        k_i e_{it} + 0\right)
+      &\text{(myopic owners)}\\
+  \Longrightarrow 0 &= \frac{\partial}{\partial e_{it}}
+        \left(\int_{e_{it}}^{x_{it}} \theta_i c(s) ds + 
+        k_i e_{it}\right)
+      &\text{(FOC)}\\
+  \Longrightarrow 0 &= - \theta_i c(e_{it}^*) + k_i
+      &\text{(Leibniz' rule etc.)}\\
+  \Longrightarrow  \theta_i c(e_{it}^*) &= k_i
+      &\text{(marg. cost = marg. damage)}\blacksquare
+\end{align*}
+
+Each subsequent turn, the stock in each patch $i$ will grow back and stocks will move around such that the stock leaving each patch exactly balances the stock moving in from other patches, so that $x_{it+1} = x_{it}$; then this is harvested down to $e_i^*$ according to the above conditions. 
+
+-----
+
+### 2. For the remainder of this assignment, assume that a central planner can determine the level of control in each patch in each time period.
+
+#### a. _Write down the period $t$ dynamic programming equation. Identify the state and control variables and the equation of motion._
+
+Our DPE in terms of cost, and for the entire set of patches $i \in 1, ..., N$:
+$$C_t(\mathbf x_t) = \min_{e_{it}}\sum_{i=1}^N\left(\int_{e_{it}}^{x_{it}} \theta_i c(s) ds + k_i e_{it} \right) + \delta C_{t+1}(\mathbf x_{t+1})$$
+where $\mathbf x_{t} = [x_{1t}, x_{2t}, ..., x_{Nt}]$.  Per notation in Costello et al. (2017), we can combine the period-$t$ control cost and damage cost terms into a single expression :
+$$\Phi_i(x_{it}, e_{it}) = \int_{e_{it}}^{x_{it}} \theta_i c(s) ds + k_i e_{it}$$
+And then rewrite our period-$t$ DPE as:
+$$C_t(\mathbf x_t) = \min_{e_{it}}\sum_{i=1}^N \Phi_i(x_{it}, e_{it}) + \delta C_{t+1}(\mathbf x_{t+1})$$
+The state variable is $x_{it}$ for all $i$, i.e. $\mathbf x_{t}$. The control variable is residual stock $e_{it}$ for all $i$.
+
+The equation of motion is as given above:
+$$x_{it+1} = \sum_{j=1}^N D_{ji}g(e_{jt})$$
+    
+#### b. _Assume a $T$-period time horizon, with no salvage value. What is the period $T$ dynamic programming equation? Derive the period $T$ value function and policy function._
+
+At time $T$, our social planner no longer cares about future costs, so similar to above, 
+$C_{iT+1}(x_{iT+1}) = 0$ for all $i$.
+
+\begin{align*}
+  C_T(\mathbf x_T) &= \min_{e_{iT}} \sum_{i=1}^N \Phi_i(x_{iT}, e_{iT}) + 
+        \delta C_{T+1}(\mathbf x_{T+1}) \\
+    &= \min_{e_{iT}}\sum_{i=1}^N  \Phi_i(x_{iT}, e_{iT})
+      &(C_{T+1}(\mathbf x_{T+1}) = 0)\\
+  \Longrightarrow 0 &= \frac{\partial}{\partial e_{iT}} 
+        \sum_{i=1}^N \left( \int_{e_{iT}}^{x_{iT}} \theta_i c(s) ds + 
+        k_i e_{iT} \right)
+      &\text{(FOC, expand $\Phi_i$)}\\
+  \Longrightarrow 0 &= \sum_{i=1}^N (- \theta_i c(e_{iT}^*) + k_i)
+\end{align*}
+
+And for all $i$, $(\theta_i c(e_{iT}^*) - k_i) = 0$.  To see why, consider a patch where
+$\theta_i c(e_{iT}^*) < k_i$, i.e. the cost of additional control is less than the damage
+avoided by that control - so the social planner would make the economically rational 
+decision to control further until $\theta_i c(e_{iT}^*) = k_i$.  (Then flip that logic to ensure
+that $\theta_i c(e_{iT}^*) \not >k_i$...)
+\begin{align*}
+  k_i &= \theta_i c(e_{iT}^*) \hspace{6pt} \forall i\\
+  \Longrightarrow e_{iT}^* &= c^{-1}(k_i / \theta_i) \hspace{6pt} \forall i
+      &\text{(period $T$ policy function)}
+\end{align*}
+Assuming that $c(s)$ is invertible (since $c'(s) < 0$ this seems valid).  Note that $c^{-1}(k_i / \theta_i)$ is a function evaluated at a constant (ratio of constants), 
+independent of $x$ and $e$, so $e_{iT}^*$ is a time-specific and 
+patch-specific constant.
+
+Plugging this back into the DPE:
+\begin{align*}
+  C_T(\mathbf x_T) &= \min_{e_{iT}}\sum_{i=1}^N\left(\Phi_i(x_{iT}, e_{iT})\right)\\
+    &= \sum_{i=1}^N \Phi_i(x_{iT}, e_{iT}^*) = \Phi_i(x_{iT}, c^{-1}(k_i / \theta_i))
+      &\text{(period $T$ value (cost) function)}
+\end{align*}
+
+#### c. _Work backward through time to derive the period $t$ value function and policy function._
+
+Step back to period $T-1$:
+\begin{align*}
+  C_{T-1}(\mathbf x_{T-1}) &= \min_{e_{iT-1}} \left( \sum_{i=1}^N \Phi_i(x_{iT-1}, e_{iT-1}) + 
+        \delta C_{T}(\mathbf x_{T}) \right)\\
+    &= \min_{e_{iT-1}} \left( \sum_{i=1}^N \Phi_i(x_{iT-1}, e_{iT-1}) +
+        \delta \sum_{i=1}^N \Phi_i(x_{iT}, e_{iT}^*) \right)\\
+    &= \min_{e_{iT-1}} \left( \sum_{i=1}^N \left( \int_{e_{iT-1}}^{x_{iT-1}} 
+        \theta_i c(s) ds + k_i e_{iT-1} \right) +
+        \delta \sum_{i=1}^N (k_i e_{iT}^* + \int_{e_{iT}^*}^{x_{iT}} \theta_i c(s) ds) \right)\\
+    &= \min_{e_{iT-1}} \left( \sum_{i=1}^N \left( \int_{e_{iT-1}}^{x_{iT-1}} 
+        \theta_i c(s) ds + k_i e_{iT-1} \right) +
+        \delta \sum_{i=1}^N (k_i e_{iT}^* + 
+        \int_{e_{iT}^*}^{\sum_{j=1}^N D_{ji}g(e_{jT-1})} \theta_i c(s) ds) \right)\\
+  \Longrightarrow 0 &= - \theta_i c(e_{iT-1}^*) + k_i + 
+        \delta \sum_{j=1}^N \theta_j c(x_{jT}) D_{ij}g'(e_{iT-1}^*)
+      &\text{(FOC, $\forall i$)}
+\end{align*}
+
+From the perspective of period $T-1$, our social planner would choose $e_{iT-1}^*$ for each patch $i$ based on these conditions:
+$$\theta_i c(e_{iT-1}^*) = k_i + \delta \sum_{j=1}^N \theta_j c(x_{jT}) D_{ij}g'(e_{iT-1}^*)$$
+
+This resembles the period $T$ policy function $\theta_i c(e_{iT-1}^*) = k_i$ with an additional term for the discounted future marginal control cost across all patches due to growth and spread of residual stock remaining in this patch.
+
+Note the apparent flip of subscripts in $\theta_j c(x_{jT}) D_{ij}g'(e_{iT-1}^*)$: this is accounting for all the costs of controlling the spread of our invasive species from patch $i$ to all other patches $j$.  When we take the derivative of the total cost function $C_{T-1}(\mathbf x_{T-1})$ with respect to $e_{iT-1}$, we will get terms in each of the other patches $j$ that contain $e_{iT-1}$.
+
+We have an implicit function of policy $e_{iT-1}^*$ that is not dependent on $x_{iT-1}$.  If we plug this into our DPE from above:
+$$C_{T-1}(\mathbf x_{T-1}) = \sum_{i=1}^N \left( \int_{e_{iT-1}^*}^{x_{iT-1}} 
+        \theta_i c(s) ds + k_i e_{iT-1}^* \right) +
+        \delta \sum_{i=1}^N (k_i e_{iT}^* + 
+        \int_{e_{iT}^*}^{\sum_{j=1}^N D_{ji}g(e_{jT-1}^*)} \theta_i c(s) ds)$$
+Note that the rightmost term is independent of $x_{iT-1}$, so we can express it as a time-specific constant $\Theta_{T-1}$:
+$$C_{T-1}(\mathbf x_{T-1}) = \sum_{i=1}^N \Phi(x_{iT-1}, e_{iT-1}^*) + \Theta_{T-1}$$
+
+I will conjecture that the period-$t$ value (cost) function will look like:
+
+$$C_{t}(\mathbf x_{t}) = \sum_{i=1}^N \Phi_i(x_{it}, e_{it}^*) + \Theta_{t}$$
+
+Plugging this into a period-$t$ DPE:
+\begin{align*}
+  C_t(\mathbf x_t) &= \min_{e_{it}} \sum_{i=1}^N 
+        \left(\int_{e_{it}}^{x_{it}} \theta_i c(s) ds + k_i e_{it} \right) + 
+        \delta C_{t+1}(\mathbf x_{t+1})\\
+    &= \min_{e_{it}} \sum_{i=1}^N \Phi(x_{it}, e_{it}^*) + 
+        \delta \sum_{i=1}^N \Phi(x_{it+1}, e_{it+1}^*) + \Theta_{t+1}\\
+  \Rightarrow 0 &= \frac{\partial}{\partial e_{it}^*} \left( 
+        \sum_{i=1}^N \left( \int_{e_{it}^*}^{x_{it}} 
+        \theta_i c(s) ds + k_i e_{it}^* \right) + 
+        \delta \sum_{i=1}^N \left(\int_{e_{it+1}^*}^{x_{it+1}} 
+        \theta_i c(s) ds + k_i e_{it+1}^* \right) + \Theta_{t+1} \right)
+      \text{(FOC wrt $e_{it}$)}\\
+    &= \sum_{i=1}^N \left( 
+        \frac{\partial}{\partial e_{it}^*} \int_{e_{it}^*}^{x_{it}} \theta_i c(s) ds + 
+          k_i + 
+        \delta 
+          \frac{\partial}{\partial e_{it}^*}\int_{e_{it+1}^*}^{x_{it+1}} \theta_i c(s) ds + 
+          \frac{\partial}{\partial e_{it}^*}k_i e_{it+1}^* \right) + 
+          \frac{\partial}{\partial e_{it}^*}\Theta_{t+1}\\
+    &= \sum_{i=1}^N \left( -\theta_i c(e_{it}^*) + k_i + 
+        \delta 
+          \frac{\partial}{\partial e_{it}^*}
+            \int_{e_{it+1}^*}^{\sum_{j=1}^N D_{ji}g(e_{jt})} \theta_i c(s) ds + 
+          0 \right) + 0\\
+    &= \sum_{i=1}^N \left( -\theta_i c(e_{it}^*) + k_i + 
+        \delta \sum_{j=1}^N D_{ij}g'(e_{it}^*) \theta_i c(e_{it}^*) \right)
+\end{align*}
+
+From this assumption of the form of $C_t(\mathbf x_t)$ we derive that the policy function for period $t$ will look similar to that for period $T-1$: control each patch $i$ down to $e_{it}^*$ such that:
+$$\theta_i c(e_{it}^*) = k_i + \delta \sum_{j=1}^N \theta_j c(x_{jt+1}) D_{ij}g'(e_{it}^*)$$
+i.e. the marginal cost of control now, $\theta_i c(e_{it}^*)$, equals the marginal damage now $k_i$ plus the (discounted) future marginal cost of controlling the growth of the residual stock, including stock that leaves to invade other patches, since the sole owner/social planner will also bear those costs of management across all patches due to residual stock in this patch.  Importantly, note that this is an explicit function for $e_{it}^*$ independent of $x_{it}$.
+
+If we plug this back into our conjectured value function:
+\begin{align*}
+  C_t(\mathbf x_t) &= \sum_{i=1}^N \Phi(x_{it}, e_{it}^*) + 
+        \delta \sum_{i=1}^N \Phi(x_{it+1}, e_{it+1}^*)  + \Theta_{t+1}\\
+\end{align*}
+Where again, the rightmost portions are independent of $x_{it}$.  Define:
+$$\Theta_{t} = \delta \sum_{i=1}^N \Phi(x_{it+1}, e_{it+1}^*) + \Theta_{t+1}$$
+then our value (cost) function becomes:
+$$  C_t(\mathbf x_t) = \sum_{i=1}^N \Phi(x_{it}, e_{it}^*) + \Theta_t$$
+
+#### d. _In an infinite horizon problem, how does the level of control in patch $i$ depend on: $x_i$, $k_i$, $\theta_i$, $D_{ii}$, $D_{ij}$. Try to interpret each of these comparative statics._
+
+Define implicit policy function $F$:
+$$F = \theta_i c(e_{it}^*) - k_i - \delta \sum_{j=1}^N \theta_j c(x_{jt+1}) D_{ij}g'(e_{it}^*)$$
+
+From this we can use the implicit function theorem $\frac{\partial e^*}{\partial z} = -F_z/F_{e^*}$ to calculate comparative statics for each variable.  Some assumptions: $\theta_i > 0$ and $c'(\cdot) < 0$ (downward sloping costs); $g''(e_i^*) < 0$ (otherwise the planet would be overrun).  $g'(e_i^*) > 0$ if residual stock is below the MSY of the invasive species, which seems most likely, but goes negative if stock is allowed to grow larger than MSY.  While we want to consider a steady state, I will leave in the $t$ terms for now since there is a period dependency due to the $x_{jt+1}$ terms.
+\begin{align*}
+  F_{e_i^*} &= \theta_i c'(e_{it}^*)
+        - \delta \sum_{j=1}^N \theta_j [
+            c'(x_{jt+1}) \frac{\partial x_{jt+1}}{\partial e_{it}} D_{ij}g'(e_{it}^*) + 
+            c(x_{jt+1}) D_{ij} g''(e_{it}^*) ]\\
+    &= \theta_i c'(e_{it}^*)
+        - \delta \sum_{j=1}^N \theta_j [
+            c'(x_{jt+1}) [D_{ij}g'(e_{it}^*)]^2 + c(x_{jt+1}) D_{ij} g''(e_{it}^*) ]
+        & (\frac{\partial x_{jt+1}}{\partial e_{it}} = D_{ij}g'(e_{it}^*))\\
+    &= \theta_i c'(e_{it}^*)
+        - \delta \theta_i [ c'(x_{it+1}) [D_{ii} g'(e_{it}^*)]^2 + 
+            c(x_{it+1}) D_{ii} g''(e_{it}^*) ] \\
+        & \hspace{6pt} - \delta \sum_{j=1,j\neq i}^N \theta_j [
+            c'(x_{jt+1}) [D_{ij}g'(e_{it}^*)]^2 + c(x_{jt+1}) D_{ij} g''(e_{it}^*) ]
+    & \text{(separate $x_i$ terms)}
+\end{align*}
+Here we can see $F_{e_{it}^*}$ is rather ambiguous in sign: the first term is negative ($\theta_i > 0$ and $c'(\cdot) < 0$), and then subtract the sum terms which are both negative ($c'(\cdot) < 0$ and $g''(\cdot) < 0$).  For the other terms:
+\begin{align*}
+  F_{x_{it}}   &= 0 \hspace{12pt}\text{ (note $x_{it+1}$ is indep. of $x_{it}$)} &= 0\\
+  F_{k_i}      &= - 1  & < 0\\
+  F_{\theta_i} &= c(e_{it}^*) - \delta c(x_{it+1}) D_{ii} g'(e_{it}^*)
+    & > 0 \\
+  F_{D_{ii}}   &= - \delta \theta_i c(x_{it+1}) g'(e_{it}^*)  &< 0 \\
+  F_{D_{ij}}   &= - \delta \sum_{j=1,j\neq i}^N \theta_j c(x_{jt+1}) g'(e_{it}^*) &< 0
+\end{align*}
+
+* $\frac{\partial e_i^*}{\partial k_i} = -\frac{F_{k_i}}{F_{e_i^*}}$.  We should expect that as marginal damage increases, it becomes more attractive to control down to a lower level (perhaps even eradication if control costs are low), therefore $\frac{\partial e_i^*}{\partial k_i} < 0$.  This suggests $F_{e_i^*} < 0$ so I will assume that from here out based on this intuition.
+* $\frac{\partial e_{it}^*}{\partial x_{it}} = -\frac{F_{x_{it}}}{F_{e^*_{it}}} = 0$: a small change in $x_i$ in this period should not affect the optimal control in this period.  Had I dropped the $t$ subscripts earlier, I would have gotten a positive relationship between $x_i$ and $e_i^*$ which seems dubious.
+* $\frac{\partial e_i^*}{\partial \theta_i} = -\frac{F_{\theta_i}}{F_{e_i^*}} > 0$: As it becomes more expensive to control the species, it is less costly to control less now (pushing costs into the discounted future), resulting in a higher residual stock.
+* $\frac{\partial e_i^*}{\partial D_{ii}} = -\frac{F_{D_{ii}}}{F_{e_i^*}} < 0$: As a greater proportion of the species remains in its original patch, the costs of future control within this plot increase, so it makes sense to control more in the current period, resulting in a lower residual stock.
+* $\frac{\partial e_i^*}{\partial D_{ij}} = -\frac{F_{D_{ij}}}{F_{e_i^*}} < 0$: As a greater proportion of the species moves into other patches, the costs of future control in those other patches increases, so again it makes sense to control more in the current period, resulting in a lower residual stock in this patch.
+

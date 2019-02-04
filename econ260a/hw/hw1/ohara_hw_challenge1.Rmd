@@ -1,0 +1,331 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 260A
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+  html_document:
+    toc: no
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{pgfplots}
+---
+
+
+# Econ 260A: Homework Challenge #1
+
+The stock of a renewable resource at the beginning of period $t$ is $x_t$ and 
+the harvest is $h_t$, leaving residual stock $y_t \equiv x_t - h_t$.
+The price is $p = 1$, assume initially that the cost of fishing is zero 
+(so the period-$t$ payoff is just $h_t$), and the discount factor is $\delta$.
+The equation of motion is:
+\begin{align}
+  x_{t + 1} = f(y_t)
+\end{align}
+
+Answer the following questions:
+
+\begin{enumerate}
+\item Write the period-$t$ dynamic programming equation.
+
+  $x_t$ = stock at start of period $t$\\
+  $h_t$ = harvest during period $t$\\
+  $y_t \equiv x_t - h_t$ = residual stock after harvest\\
+  $p = 1, c = 0$ so $\pi_t = h_t$ = profit in period $t$\\
+  $x_{t+1} = f(y_t)$ = equation of motion.
+  \begin{align*}
+    V_t(x_t) &= \max_{y_t} [\pi(x_t, y_t) + \delta V_{t+1}(G(x_t, y_t))] 
+        &\text{(basic DPE)}\\
+      &= \max_{h_t}[h_t + \delta V_{t+1}(f(x_t - h_t))]
+        &\text{(sub in given parameters)}
+  \end{align*}
+
+\item Use backward induction to characterize the optimal policy function and 
+  value function at any arbitrary period $t < T$ in a $T$-period problem.
+  
+  Begin by assuming that at time $T$, there is no future value to the fishery,
+  so $V_{T+1}(x_{T+1}) = 0$. This could be different if we assumed a 
+  positive salvage value.
+  \begin{align*}
+    V_T(x_T) &= \max_{h_T}[h_T + \delta V_{T+1}(f(x_T - h_T))]
+        &\text{(dpe in period $T$)}\\
+      &= \max_{h_T}[h_T + \delta \times 0] 
+          = \max_{h_T}[h_T]
+        &\text{(sub in zero for $V_{T+1}(\cdot)$)}\\
+    \Longrightarrow h^*_T &= x_T
+        &\text{($0 < h_T \leq x_T$)}\\
+    \Longrightarrow V_T(x_T) &= x_T
+        &\text{(value of stock in period $T$)}
+  \end{align*}
+  So the optimal policy in period $T$ is to harvest it all, taking all
+  remaining stock $x_T$.
+  
+  In the previous period $T-1$:
+  \begin{align*}
+    V_{T-1}(x_{T-1}) &= \max_{h_{T-1}}[h_{T-1} + 
+          \delta V_{T}(f(x_{T-1} - h_{T-1}))]
+        &\text{(dpe in period $T - 1$)}\\
+      &= \max_{h_{T-1}}[h_{T-1} + \delta V_T(x_T)]
+        &\text{($x_T = f(x_{T-1} - h_{T-1})$)}\\
+      &= \max_{h_{T-1}}[h_{T-1} + \delta x_T]
+        &\text{($V_T(x_T) = x_T$)}\\
+    \frac{dV_{T-1}}{dH_{T-1}} &= 1 + \delta \frac{dx_T}{dh_{T-1}} = 0
+        &\text{(first-order condition)}\\
+      &= 1 + \delta f'(x_{T-1} - h_{T-1})(-1) = 0\\
+    \Longrightarrow f'(x_{T-1} - h_{T-1}) &= 1 / \delta\\
+    \text{Define } y^* &\text{ such that } f'y^*_{T-1} = 1 / \delta
+        &\text{(optimal residual stock)}\\
+    \Longrightarrow h^*_{T-1}(x_{T-1}) &= x_{T-1} - y^*_{T-1} 
+          \text{ so } y^*_{T-1} \text{ indep. of } x_{T-1}\\
+    \Longrightarrow V_{T-1}(x_{T-1}) &= h^*_{T-1} + \delta x_T = 
+          h^*_{T-1} + \delta f(x_{T-1} - h^*_{T-1})
+        &\text{($x_T = f(x_{T-1} - h^*_{T-1})$)}\\
+     &= x_{T-1} - y^*_{T-1} + \delta f(y^*_{T-1})
+        &\text{($y^*_{T-1} = x_{T-1} - h^*_{T-1}$)}\\
+    \text{Since }y^*_{T-1} &\text{ is independent of } x_{T-1} \text{, define}\\
+    C &\equiv - y^*_{T-1} + \delta f(y^*_{T-1}) = \text{constant}\\
+    \Longrightarrow V_{T-1}(x_{T-1}) &= x_{T-1} + C
+  \end{align*}
+  
+  Stepping back one more time step to period $T-2$, and noting the
+  similarities in equation form to those in period $T-1$:
+  \begin{align*}
+    V_{T-2}(x_{T-2}) &= \max_{h_{T-2}}[h_{T-2} + \delta (x_{T-1} + C)]
+        &\text{($V_{T-1}(x_{T-1}) = x_{T-1} + C$)}\\
+      &= \max_{h_{T-2}}[h_{T-2} + \delta (f(x_{T-2} - h_{T-2}) + C)]
+        &\text{($x_{T-1} = f(x_{T-2} - h_{T-2})$)}\\
+    \frac{dV_{T-2}}{dh_{T-2}} &= 1 + \delta \frac{dx_T-1}{dh_{T-2}} = 0
+        &\text{(first-order condition)}\\
+      &= 1 + \delta f'(x_{T-2} - h_{T-2})(-1) = 0\\
+    \Longrightarrow f'(x_{T-2} - h_{T-2}) &= 1 / \delta\\
+    \text{Define } y^* &\text{ such that } f'y^*_{T-2} = 1 / \delta
+        &\text{(optimal residual stock)}\\
+    \Longrightarrow h^*_{T-2}(x_{T-2}) &= x_{T-2} - y^*_{T-2} 
+          \text{ so } y^*_{T-2} \text{ indep. of } x_{T-2}\\
+    \text{by symmetry to $T-1$, define } K &\equiv - y^*_{T-2} + 
+          \delta f(y^*_{T-2}) = \text{constant}\\
+    \Longrightarrow V_{T-2}(x_{T-2}) &= x_{T-2} + K
+  \end{align*}
+  
+  Conjecture that the form of the value function at any time $t$ takes the
+  form
+  $$V_t(x_t) = x_t + \theta_t$$
+  where $\theta_t$ is a constant in each period $t$ independent of $x_t$.
+  Can we verify that this satisfies the DPE?
+  \begin{align*}
+    V_t(x_t) &= \max_{h_t}[h_t + \delta V_{t+1}(x_{t+1})]
+        &\text{(dpe)}\\
+      &= \max_{h_t}[h_t + \delta(x_{t+1} + \theta_{t+1})]
+        &\text{(by hypothesis of $V_{t+1}$)}\\
+      &= \max_{h_t}[h_t + \delta(f(x_t - h_t) + \theta_{t+1})]
+        &\text{($x_{t+1} = f(x_t - h_t)$)}\\
+    \frac{dV_{t}}{dh_{t}} &= 1 + \delta (f'(x_t - h_t)(-1) + 0) = 0
+        &\text{(first order condition)}\\
+    \Longrightarrow 1 / \delta &= f'(x_t - h^*_t) = f'(y^*_t)\\
+    \Longrightarrow V_t(x_t) &= x_t - y^*_t + \delta(f(y^*t) + \theta_{t+1})\\
+    \text{Define } \theta_{t+1} &\equiv -y^*_t + \delta(f(y^*t) + \theta_{t+1}\\
+    \Longrightarrow V_t(x_t) &= x_t + \theta_t &\blacksquare
+  \end{align*}
+  
+  Does this result (having a single MEY value at residual harvest $y^*$)
+  depend on the growth function being strictly concave?
+  
+\item How does the period-$t$ policy function depend on $p$?
+
+  If the harvest is valued at price $p$ then profit $\pi(h_t) = ph_t$.
+  Using this value and quickly repeating the backward induction from
+  period $T$ as before (some steps elided for clarity):
+  \begin{align*}
+    V_T(x_T) &= \max_{h_T}[ph_T + \delta V_{T+1}(f(x_T - h_T))]\\
+      &= \max_{h_T}[ph_T + \delta \times 0] 
+          = \max_{h_T}[ph_T]\\
+    \Longrightarrow h^*_T &= x_T\\
+    \Longrightarrow V_T(x_T) &= px_T
+  \end{align*}
+  Unsurprisingly, the policy in period $T$ of harvesting all remaining 
+  stock is unchanged if $p \neq 1$.  Continue backward induction! 
+  In period $T-1$:
+  \begin{align*}
+    V_{T-1}(x_{T-1}) &= \max_{h_{T-1}}[ph_{T-1} + \delta V_{T}(x_T)]\\
+      &= \max_{h_{T-1}}[ph_{T-1} + \delta px_T]\\
+      &= p\max_{h_{T-1}}[h_{T-1} + \delta x_T]
+          &\text{(distributive property)}\\
+      &= p\max_{h_{T-1}}[h_{T-1} + \delta f(x_{T-1} - h_{T-1})]\\
+      &...
+  \end{align*}
+  From here, the derivation is identical to that in question 2, multiplied
+  by a scalar $p$ term.  The term to be maximized is independent of $p$, so 
+  the first-order conditions result in the same $y^*$ as before, satisfying 
+  $f'(y^*) = 1/\delta$.  Similarly, we find the value 
+  function $V_{T-1}(x_{T-1}) = px_{T-1} + C$.
+  
+  Does this carry through to period $T-2$?
+  \begin{align*}
+    V_{T-2}(x_{T-2}) &= \max_{h_{T-2}}[ph_{T-2} + \delta V_{T-1}(x_{T-1})]\\
+      &= \max_{h_{T-2}}[ph_{T-2} + \delta (px_{T-1} + C)]\\
+      &= p\max_{h_{T-2}}[h_{T-2} + \delta (x_{T-1} + C/p)]
+          &\text{(distributive property)}\\
+      &= p\max_{h_{T-2}}[h_{T-2} + \delta (f(x_{T-2} - h_{T-2}) + C/p)]\\
+      &...
+  \end{align*}
+  
+  Again, the term to be maximized is independent of $p$ (note $C/p$ is just
+  a constant so drops out of the first order conditions).  By similarity
+  to question 2, we can see that the policy function is identical for any 
+  constant $p$, though the value function scales linearly with $p$.
+  
+  Note that if $p$ were not constant but rather a function $p(h_t, x_t)$,
+  e.g. a large harvest floods the market dropping the price, then the first 
+  order condition likely becomes considerably messier...  Similarly if we
+  were to include a cost term $c(h_t, x_t)$, the policy function would 
+  necessarily change.
+  
+\item Now suppose the current period payoff is $\alpha h_t - \beta h_t^2$
+  (for $\alpha > 0$ and $\beta > 0$). 
+  $Guess$ that the period-$t$ dynamic programming equation is a linear function 
+  of the state.
+  Then try to verify that the Bellman equation is satisfied (or is not 
+  satisfied). 
+  In other words, try to prove or disprove that the DPE is linear in the state.
+  
+  Guess that the value function is linear function of state:
+  $$V_t(x_t) = \gamma x_t + \Theta_t$$
+  where $\gamma$ is a linear scaling constant and $\theta$ is a time-dependent
+  (but $x_t$-independent) constant.
+  
+  Does this satisfy the DPE?
+  \begin{align*}
+    V_t(x_t) &= \max_{h_t}[\alpha h_t - \beta h_t^2 + \delta V_{t+1}(x_{t+1})]
+        &\text{(DPE with $\pi(h_t) = \alpha h_t - \beta h_t^2$)}\\
+      &= \max_{h_t}[\alpha h_t - \beta h_t^2 + 
+          \delta (\gamma x_{t+1} + \theta_{t+1}) ]
+        &\text{($V_{t+1}(x_{t+1}) = \gamma x_{t+1} + \theta_{t+1}$ by hyp.)}\\
+      &= \max_{h_t}[\alpha h_t - \beta h_t^2 + 
+          \delta (\gamma f(x_t - h_t) + \theta_{t+1})]
+        &\text{(eqn of motion)}\\
+    \Longrightarrow \frac{dV_t}{dh_t} &= \alpha - 2\beta h_t + 
+          \delta (\gamma f'(x_t - h_t)(-1) + 0)] = 0
+        &\text{(f.o.c.)}\\
+    \Longrightarrow f'(x_t - h^*_t) &= \frac{\alpha - 2\beta h^*_t}{\delta \gamma}\\
+    \Longrightarrow h^*_t &= \frac{\alpha - \delta\gamma f'(x_t - h_t)}{2\beta}
+  \end{align*}
+  
+  At this point, we can see that the slope of the growth function at the
+  optimal residual stock $f'(x_t - h^*_t) = f'(y^*_t)$ is not constant, but
+  instead dependent on the size of the optimal harvest itself.  This
+  shows that $y^*$ is not independent of $x$: $y^*_t = y^*(x_t)$.
+  
+  Define $h^*_t \equiv x_t - y^*(x_t)$, plug $h^*_t$ into the DPE function 
+  to see if it can simplify to our conjectured value function:
+  
+  \begin{align*}
+    V_t(x_t) &= \alpha h^*_t - \beta h_t^*2 + 
+        \delta V_{t+1}(x_{t+1})]\\
+      &= \alpha(x_t - y^*(x_t)) - \beta(x_t^2 - 2x_t y^*(x_t) + y^*(x_t)^2) +
+        \delta V_{t+1}(f(y^*(x_t)))\\
+      &= x_t(\alpha + 2\beta y^*(x_t)) - x_t^2(\beta) + \Theta_t(y^*(x_t))
+  \end{align*}
+  
+  It is pretty clear that this, with $x_t^2$ terms and $y^*(x_t)$ terms, 
+  will not solve to $\gamma x_t + \theta_t$, unless $\beta = 0$.  
+  
+  For $\beta = 0$, our profit function becomes $\pi_t = \alpha h_t$,
+  which is identical in form to problem 3, and results in a DPE that is
+  linear in the state.  
+  
+\item Retaining the non-linear payoff function, now assume the stock evolves 
+  in a stochastic fashion: $x_{t+1} = z_t f(y_t)$, where 
+  $z_t = \{1 - \theta, 1 + \theta\}$ (i.e. it takes one of those two values, 
+  each with probability 0.5), and $f(y_t) = y_t + ry_t(1 - y_t/K)$. 
+  Write a computer program that solves this problem numerically. 
+  You can use the following parameters: 
+  $\delta = .9$, $\alpha = 20$, $\beta = .6$, $r = .3$, $K = 100$, 
+  $\theta = .3$. How does the converged optimal policy function depend on 
+  $\theta$, $r$, $\delta$, and $\alpha$?
+
+  The policy function is based on the current stock $x_t$ and the expectation
+  of value of future stock $\mathbb{E}[V_{t+1}(x_{t+1})]$.  The future shock
+  is unobservable, so we must rely on our expectation of the value the stock
+  after the stochastic shock has occurred.
+  
+  $$V_{t}(x_{t}) = \max_{h_t}[\alpha h_t - \beta h_t^2 + \delta \mathbb{E}[V_{t+1}(x_{t+1})]]$$
+  where
+  $$\mathbb{E}[V_{t+1}(x_{t+1})] = 0.5V_{t+1}((1 + \theta)x_{t+1}) + 0.5V_{t+1}((1 - \theta)x_{t+1})$$
+
+  Fig. 1 shows the convergence of the value function and the policy
+  function for this situation.  The red dashed line shows the converged
+  functions for the value and policy for the situation in which no
+  stochastic shocks occur.
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{5_convergence.png}
+    \caption{Convergence of value and harvest policy functions.}
+  \end{figure}
+  
+  See code in separate pdf.
+  
+  \textbf{Dependence on $\theta$:} Since we are basing policy on the expected value 
+  of $V_t(z_tf(y^*))$, and $V_t(x_t)$ is concave, then by Jensen's inequality:
+  $$\mathbb{E}[V_t(x_t)] \leq V_t(\mathbb{E}[x_t])$$
+  increasing $\theta$ generally decreases the value of future stock growth,
+  decreasing $y^*$ and generally increasing the value of current harvest over
+  the $\theta = 0$ situation.
+  
+  \textbf{Dependence on $r$:} An increase in $r$ will increase the optimal residual
+  stock level (the minimum level at which harvest will occur), though once that
+  residual stock is reached, harvests can be higher due to the higher growth rate 
+  of the stock.
+  Since our optimal policy is based on setting $f'(x_t - h_t) = 1/\delta$, changing
+  $f'(x_t - h_t)$ changes the optimal residual stock.  For a given $\delta > 0$,
+  $y^*$ is increasing in $r$: a very low $r$ results in a low $y^*$ (value of
+  leaving a fish in the water to reproduce is low) while high $r$
+  results in high $y^*$ (each fish left in the water will produce many more
+  for future harvest).
+  
+  \textbf{Dependence on $\delta$:} An increase in $\delta$ increases the present value
+  of future harvests, reducing current harvests (in favor of future harvests).  
+  For a given $r$, higher $\delta$ 
+  results in higher $y^*$: the reproductive value of a fish left in the water is 
+  increased. 
+  
+  \textbf{Dependence on $\alpha$:} An increase in $\alpha$ with no increase in $\beta$
+  represents an increase in sale price of harvest with no increase in cost.  At higher
+  stocks, the price of harvest greatly outweighs the cost to harvest, increasing the
+  incentive to harvest at higher levels (Fig. 2).  This also increases the value of future
+  harvests, so it increases the optimal residual stock as well.  These play against
+  each other at stocks slightly above the optimal residual harvest, as seen in the
+  plot where the policy curves intersect.
+  
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{5_param_plots.png}
+    \caption{Effect of parameter change on policy functions.}
+  \end{figure}
+  
+  See code in separate pdf.
+  
+\item Suppose $x_0 = 15$. Using the infinite-horizon optimal policy 
+  function, simulate the optimized system forward for 20 years under 
+  baseline parameters above. Run 10 separate simulations and plot the 
+  trajectory of $x_t$ and $h_t$ over time for each simulation. 
+  (You should produce 2 plots, one for the 10 trajectories of $x_t$ and one
+  for the 10 trajectories of $h_t$).
+  
+  Here (Fig. 3) I have incorporated 500 simulations and a time horizon of 50 years,
+  and plotted the mean stock and harvest (across all simulations) on top.  
+  Note that the stock never drops to zero in any simulation, though in many 
+  simulations the harvest drops to zero for a time when the stock falls below
+  the optimal residual stock.  See code in separate pdf.
+    
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{6_simulations.png}
+    \caption{Simulations (500) over 50 time periods}
+  \end{figure}
+  
+\end{enumerate}
+
