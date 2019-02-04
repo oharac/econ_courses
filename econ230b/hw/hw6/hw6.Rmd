@@ -25,9 +25,10 @@ header-includes:
 knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
                       echo = FALSE, message = FALSE, warning = FALSE)
 
-source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+# source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
 ### loads tidyverse packages, defines helper functions
 
+library(tidyverse)
 library(latex2exp)
 
 ```
@@ -122,7 +123,9 @@ $$U_G = 48x - x^2 + z_G + px; \hspace{6pt} U_H = 60y - y^2 + z_H - px$$
 * Note this is subject to a budget constraint: $px \leq z_G$, otherwise George can't afford as much $X$ as he would prefer.
 
 ### 6.4 Suppose that George and Hazel of the previous problems are able to communicate cheaply and easily. 
-Whenever there are possible gains from a deal between them, they will make a deal. The outcome of the deal always turns out to be the Nash bargaining solution (sometimes called the “cooperative” Nash solution). In any situation, they recognize a “threat point”, which is the distribution of utility $(\bar U_G, \bar U_H)$ that they would achieve if they make no deal. The result of bargaining is that they find the point on the utility possibility frontier that maximizes the product $(U_G - \bar U_G)(U_H - \bar U_H)$ over all possible utility distributions in their utility possibility set. Prove that in doing so, Hazel and George will choose the point on the utility possibility frontier such that $U_G - \bar U_G = U_H - \bar U_H$. Would this be true regardless of the shape of the utility possibility frontier? Explain.
+Whenever there are possible gains from a deal between them, they will make a deal. The outcome of the deal always turns out to be the Nash bargaining solution (sometimes called the “cooperative” Nash solution). In any situation, they recognize a “threat point”, which is the distribution of utility $(\bar U_G, \bar U_H)$ that they would achieve if they make no deal. The result of bargaining is that they find the point on the utility possibility frontier that maximizes the product $(U_G - \bar U_G)(U_H - \bar U_H)$ over all possible utility distributions in their utility possibility set. Prove that in doing so, Hazel and George will choose the point on the utility possibility frontier such that $U_G - \bar U_G = U_H - \bar U_H$. Would this be true regardless of the shape of the utility possibility frontier? Explain.  
+
+Vincent is a buttface! $$buttface = butt + face(Vincent)$$
 
 ### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
 
