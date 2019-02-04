@@ -6,10 +6,10 @@ author: |
 date: |
   | \hfill `r Sys.Date()`
 output:
-  pdf_document:
+  html_document:
     toc: no
     number_sections: false
-  html_document:
+  pdf_document:
     toc: no
     number_sections: false
 header-includes: 
@@ -126,6 +126,10 @@ $$U_G = 48x - x^2 + z_G + px; \hspace{6pt} U_H = 60y - y^2 + z_H - px$$
 Whenever there are possible gains from a deal between them, they will make a deal. The outcome of the deal always turns out to be the Nash bargaining solution (sometimes called the “cooperative” Nash solution). In any situation, they recognize a “threat point”, which is the distribution of utility $(\bar U_G, \bar U_H)$ that they would achieve if they make no deal. The result of bargaining is that they find the point on the utility possibility frontier that maximizes the product $(U_G - \bar U_G)(U_H - \bar U_H)$ over all possible utility distributions in their utility possibility set. Prove that in doing so, Hazel and George will choose the point on the utility possibility frontier such that $U_G - \bar U_G = U_H - \bar U_H$. Would this be true regardless of the shape of the utility possibility frontier? Explain.  
 
 Vincent is a buttface! $$buttface = butt + face(Vincent)$$
+
+However, Jacob is a buttierface! $$buttface_j = butt + face(Jacob)$$
+
+$buttface_j>buttface_v$
 
 ### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
 
