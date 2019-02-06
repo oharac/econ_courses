@@ -44,7 +44,7 @@ library(latex2exp)
 
 # Problem set 4
 
-__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the $\LaTeX$ work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
+__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the LaTeX work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
 
 ## Exercises Lecture 6
 
@@ -152,7 +152,7 @@ Whenever there are possible gains from a deal between them, they will make a dea
         \frac{\dd U_H}{\dd Y})(U_G-\bar{U}_G) = 
         (\frac{\dd U_G}{\dd Y} - \frac{\dd U_G}{\dd X})(U_H-\bar{U}_H)  \\
   \end{align*}
-* Recall from the Samuelson condition:  
+* Recall from the Samuelson condition for $X$:  
   \begin{align*}
   \frac{\dd U_G / \dd X}{\dd U_G / \dd Z_G} + 
       \frac{\dd U_H / \dd X}{\dd U_H / \dd Z_H} &= MSC_X & \\
@@ -161,7 +161,7 @@ Whenever there are possible gains from a deal between them, they will make a dea
       & \text{ (since utility is quasilinear, and $MSC_X = 0$)}\\
   \Rightarrow \frac{\dd U_G}{\dd X} &= - \frac{\dd U_H}{\dd X} & \\
   \end{align*}
-* The other Samuelson condition:  
+* The Samuelson condition for $Y$:  
   \begin{align*}
     \frac{\dd U_G / \dd Y}{\dd U_G / \dd Z_G} + 
         \frac{\dd U_H / \dd Y}{\dd U_H / \dd Z_H} &= MSC_Y & \\
@@ -187,7 +187,72 @@ Whenever there are possible gains from a deal between them, they will make a dea
 ### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
 
 a) Assuming that there is no government interference, so that the threat point is the noncooperative Nash equilibrium, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+
+* The non-cooperative NE is given by $(\bar{U}_G,\bar{U}_H)$. From 6.1 (b), we found that the non-cooperative NE gave $\bar{X}=24$, $\bar{Y}=18$.  
+  \begin{align*}
+    \Rightarrow \bar{U}_G &= 48(24) - 24^2 + Z_G\\
+    &= 576 + W_G\\
+    \wedge \ \bar{U}_H &= 60(18) - 18^2 - (18)(24) + Z_H\\
+    &= 324 + W_H
+  \end{align*}
+
+* With zero transactions costs, by the Coase theorem, George and Hazel achieve the Pareto optimal $X$ and $Y$, which we earlier found to be $X^*=12$, $Y*=24$. Following the relationship of problem 6.4,  
+  \begin{align*}
+    U_G - \bar{U}_G &= U_H - \bar{U}_H\\
+    \Rightarrow 48(12) - 12^2 + Z_G - 576 - W_G &= 
+      60(24) - 24^2 - 12(24) + Z_H - 324 - W_H\\
+    \Rightarrow Z_G - W_G - 144 &= Z_H - W_H + 252\\
+    \Rightarrow Z_G - W_G &= Z_H-W_H + 396
+  \end{align*}
+
+* Note that $Z_G=W_G+W_H-Z_H$.  
+  \begin{align*}
+    \Rightarrow W_G+W_H-W_G-Z_H &= -W_H+396+Z_H\\
+    \Rightarrow 2W_H - 396 &= 2Z_H\\
+    \Rightarrow \boxed{Z_H = W_H-198} & \wedge \boxed{Z_G = W_G + 198} \\
+  \end{align*}
+
+* $U_G$ from bargaining is given by $48(12)-12^2+W_G+198$. $U_H$ from bargaining is 
+  given by $60(24)-24^2-12(24)+W_H-198$.  
+  \begin{align*}
+    \Rightarrow \boxed{U_{G,bargain}=W_G+630} \wedge \boxed{U_{H,bargain} = W_H+378}
+  \end{align*}
+
 b) Assuming that the government imposes strict liability and that the threat point is the noncooperative Nash equilibrium that would obtain under these rules, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+
+* From 6.1 (C), the non-cooperative NE is $\bar{X}=9$ $\wedge$ $\bar{Y}=30$.  
+  \begin{align*}
+    \Rightarrow \bar{U}_G &= 48(9)-9^2-9(30)+Z_G\\
+    &= 81 + Z_G\\
+    &= 81 + W_G\\
+    \wedge \ \bar{U}_H &= 60(30)-30^2+Z_H\\
+    &=900 + Z_H\\
+    &=900 + W_H
+  \end{align*}
+
+* Again by the Coase theorem, George and Hazel achieve the Pareto optimal $X$ and $Y$,
+  $X^*=12$ $\wedge$ $Y^*=24$. From 6.4,
+  \begin{align*}
+    U_G-\bar{U}_G &= U_H-\bar{U}_H\\
+    \Rightarrow 48(12) - 12^2 -12(24) + Z_G - 81 - W_G &= 
+      60(24)-24^2 +Z_H - 900 - W_H\\
+    \Rightarrow 99 + Z_G - W_G &= Z_H - W_H
+  \end{align*}
+
+* Note that $Z_G=W_G+W_H-Z_H$.
+  \begin{align*}
+    \Rightarrow 99 + W_G + W_H - Z_H - W_G &= Z_H - W_H\\
+    \Rightarrow 2W_H + 99 &= 2Z_H\\
+    \Rightarrow \boxed{Z_H = W_H + \frac{99}{2}} & \wedge 
+      \boxed{Z_G = W_G - \frac{99}{2}}
+  \end{align*}
+
+* $U_G$ from bargaining is $48(12)-12^2-12(24)+W_G-\frac{99}{2}$. 
+  $U_H$ from bargaining is $60(24)-24^2+W_H+\frac{99}{2}$.
+  \begin{align*}
+    \Rightarrow \boxed{U_{G,bargain}=W_G+\frac{189}{2}} \wedge 
+      \boxed{U_{H,bargain} = W_H+\frac{1827}{2}}
+  \end{align*}
 
 ### 6.6 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution. The government imposes the tax rate $t$ that induced George to perform a Pareto optimal amount of activity $X$ when George and Hazel were unable to bargain and the money was given to Isolde.
 
@@ -207,13 +272,13 @@ a) If the government gives the tax revenue to Isolde, what levels of activities 
         x &= 60 - 2y
       \end{align*}
     * Solving these gives $x = -4$, which is not feasible. Thus, George is put at a corner and $x = 0$. Then, $y = 30$. 
-b) If the government splits the taxrevenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
+b) If the government splits the tax revenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
     * Similar to above, the feasibility constraint is altered. We now have the constraint:
       \begin{align*}
         z_G + \frac{1}{2} tx + z_H + \frac{1}{2} tx - tx &\leq w_G + w_H\\
         \Leftrightarrow z_G + z_H &\leq w_G + w_H
       \end{align*}
-    * We then have the same budget constraint as the intitial case. We know the Nash bargaining solution attains the efficient outcome, and thus, $x = 12$, $y = 24$ as found before. 
+    * We then have the same budget constraint as the initial case. We know the Nash bargaining solution attains the efficient outcome, and thus, $x = 12$, $y = 24$ as found before. 
 
 ### 6.7 Hazel and George have one and only chance to make a deal. 
 The chance works like this. Hazel offers George an all-or-nothing proposition. If George reduces his $X$ing to a level $x^*$, Hazel will give him a lump sum payment of $z^*$ dollars. If George rejects this deal, then the outcome will revert to the noncooperative Nash equilibrium in which there is no government interference. After George has either accepted or rejected the deal that he is offered, Hazel can decide on the amount of $Y$ing that she will do. Hazel knows George’s utility function. Assuming that George will accept any deal that is as good or better for him than the Nash equilibrium outcome, what combination of $x^*$ and $z^*$ should Hazel make in order to maximize her utility?
@@ -238,7 +303,7 @@ $$60y - y^2 - x^*y + z_H - z^* \hspace{5mm} \text{s.t.} \hspace{5mm} 48x^* - x^{
 * This yields $x^* = 12$, $z^* = 576 + 144 - 48(12) = 144$.
 
 ### 6.8 This problem is like the previous one except for one thing. Hazel does not know George’s utility function. 
-Hazel knows that George’s utility function is of the functional form: $UG(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
+Hazel knows that George’s utility function is of the functional form: $U_G(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
 
 a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he reduces his amount of $X$ing to $x^*$. What choice of $z^*$ and $x^*$ would maximize Hazel’s expected utility.
 
@@ -246,21 +311,21 @@ a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he redu
 
 *  For the noncooperative Nash equilibria $y=18$ and: 
 
-\begin{ceqn}
-  \[ x = \begin{cases} 
+\begin{align*}
+  x = \begin{cases} 
         18 & \text{if $A=36$}    \\
           30 & \text{if $A=60$}      
            \end{cases}
-    \]
-\end{ceqn}
+\end{align*}
 
 * If Hazel is to make an offer to George, he will accept if: 
 
-  \[ x = \begin{cases} 
+\begin{align*}
+  x = \begin{cases} 
         U(x^*)+ z^* \geq 324 + z_g & \text{if $A=36$}    \\
         U(x^*)+ z^* \geq 900 + z_g  & \text{if $A=60$}      
            \end{cases}
-    \]
+\end{align*}
 
   \[ \Leftrightarrow x = \begin{cases} 
         36x^* - (x^*)^2 + z^*\geq 324 & \text{if $A=36$}    \\
