@@ -178,10 +178,10 @@ The chance works like this. Hazel offers George an all-or-nothing proposition. I
 $$60y - y^2 - x^*y + z_H - z^* \hspace{5mm} \text{s.t.} \hspace{5mm} 48x^* - x^{*2} + z^* \geq 576$$
 * First order conditions reveal:
 \begin{align*}
-  60-2y-x=0\\
-  -y+48-2x=0
+  60 - 2y - x &= 0\\
+  -y + 48 - 2x &= 0
 \end{align*}
-* This yields $x^*=12$, $z^*=576+144-48(12)=144$.
+* This yields $x^* = 12$, $z^* = 576 + 144 - 48(12) = 144$.
 
 ### 6.8 This problem is like the previous one except for one thing. Hazel does not know George’s utility function. 
 Hazel knows that George’s utility function is of the functional form: $UG(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
