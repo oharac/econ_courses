@@ -41,10 +41,11 @@ library(latex2exp)
 \newcommand{\LL}{\mathscr{L}}
 \newcommand{\dd}{\partial}
 
-
-## Exercises Lecture 6
+# Problem set 4
 
 __NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the $\LaTeX$ work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
+
+## Exercises Lecture 6
 
 ### 6.1 George’s utility function is
 $$U_G(x, y) = 48x - x^2 + z_G$$
@@ -242,6 +243,27 @@ a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he redu
 
 > _Hint: There are only two interesting strategies for Hazel. She might choose $x^*$ and $z^*$ so that George is sure to accept her offer, whether $A = 60$ or $A = 36$. Alternatively, she might choose $x^*$ and $z^*$ so that George will accept her offer if and only if $A = 36$. For each of these two strategies there is a best choice of $x^*$ and $z^*$. Find these two solutions. Then compare Hazel’s utility under each solution._
 
+*  For the noncooperative Nash equilibria $y=18$ and: 
+
+\begin{ceqn}
+  \[ x = \begin{cases} 
+        18 & \text{if $A=36$}    \\
+          30 & \text{if $A=60$}      
+           \end{cases}
+    \]
+\end{ceqn}
+
+* If Hazel is to make an offer to George, he will accept if: 
+
+  \[ x = \begin{cases} 
+        U(x^*)+ z^* \geq 324 + z_g & \text{if $A=36$}    \\
+        U(x^*)+ z^* \geq 900 + z_g  & \text{if $A=60$}      
+           \end{cases}
+    \]
+
+* Strategy 1 by Hazel: Making sure George accepts independent of his type: 
+
+
 b) Show that for any offer that Hazel makes, there is a probability of at least 1/2 that the amount of $X$ selected by George is not Pareto optimal.
 
 
@@ -293,4 +315,11 @@ FOC:
   & T = -p_H \left( \frac{C_D(D,H)}{C_H(D,H)} \right) \\
   & T = p_H \frac{H}{D} 
 \end{align*}
-
+Now let: 
+\begin{align*}
+  & MRS^D_i = p_H \frac{H}{D} \\
+  & A_i - D_i - \frac{D_i}{H} - \frac{D}{H}= p_H \frac{H}{D}  \\
+  & D_i \left(\frac{H+1}{H}\right) = A_i -\frac{D}{H} - p_H \frac{H}{D} \\
+  & D_i^* = \frac{H+1}{H}\left(H A_i -D^* - \frac{p_H H^2}{D^*} \right) \\
+  & \text{...solving for $D^*$ was too cumbersome, must have made some algebra mistakes.}
+\end{align*} 
