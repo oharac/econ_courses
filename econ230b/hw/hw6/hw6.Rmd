@@ -40,7 +40,9 @@ library(latex2exp)
 
 <!-- This is a template for homework assignments to be written in LaTeX formatting -->
 
-# Exercises Lecture 6
+# HW4
+
+## Exercises Lecture 6
 
 ### 6.1 George’s utility function is
 $$U_G(x, y) = 48x - x^2 + z_G$$
@@ -147,3 +149,16 @@ a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he redu
 > _Hint: There are only two interesting strategies for Hazel. She might choose $x^*$ and $z^*$ so that George is sure to accept her offer, whether $A = 60$ or $A = 36$. Alternatively, she might choose $x^*$ and $z^*$ so that George will accept her offer if and only if $A = 36$. For each of these two strategies there is a best choice of $x^*$ and $z^*$. Find these two solutions. Then compare Hazel’s utility under each solution._
 
 b) Show that for any offer that Hazel makes, there is a probability of at least 1/2 that the amount of $X$ selected by George is not Pareto optimal.
+
+
+## Exercises Lecture 7
+
+### 3.1 Residents of Carburetor, Ohio (pop. $n$), have utility functions
+$$U_i(D_i, M_i, C) = A_i D_i - \frac{1}{2}D_i^2 - D_i \frac{D}{H} + M_i$$
+where for each $i$, $D_i$ is driving by $i$, $D = \sum_{j=1}^n D_j$, $M_i$ is money expenditure by $i$ on goods, $H$ is total highway expenditures in Carburetor and where $A_i > 1$ is a parameter for each $i$. Gasoline is available for free in Carburetor, and it costs nothing to maintain cars. The only goods that money can buy in Carburetor are Big Macs and highway improvements. The initial endowment of income is $W_i$ for each $i$. The price of Big Macs is \$1.
+
+1. Since preferences are quasilinear, the Pareto optimal amount of driving for each $i$ and the Pareto optimal total highway expenditures must be independent of income distribution (except for the case of Pareto optimal allocations where some consumers consume no Big Macs). Find these Pareto optimal quantities.
+2. If no tolls are charged, find the Nash equilibrium amount of driving by each resident of Carburetor.
+3. Suppose that each resident of Carburetor is charged a uniform toll according to the rule suggested in the text of this lecture. What will this toll be? How much driving will each $i$ do?
+
+
