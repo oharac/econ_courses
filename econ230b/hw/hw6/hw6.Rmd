@@ -361,14 +361,14 @@ $$60y - y^2 - x^*y + z_H - z^* \hspace{5mm} \text{s.t.} \hspace{5mm} 36x^* - (x^
 
 \begin{align*}
 & U^H(20,100) = 300 + W_H \\
-& E\[U^H(4,196)\] = 324 + W_H \\
+& \EE[U^H(4,196)] = 324 + W_H \\
 \end{align*} 
 
-Since $U^H(20,100) <E\[U^H(4,196)\]$, she would pick the second strategy. 
+Since $U^H(20,100) < \EE[U^H(4,196)]$, she would pick the second strategy. 
 
 b) Show that for any offer that Hazel makes, there is a probability of at least 1/2 that the amount of $X$ selected by George is not Pareto optimal.
 
-From (a), we found that $U^H(20,100) <E\[U^H(4,196)\]$, Hazel will pick strategy 2. By definition, there is a 1/2 chance that if George ends up being a $A=60$ type, then he will reject the offer and it will not be pareto optimal. 
+From (a), we found that $U^H(20,100) < \EE[U^H(4,196)]$, Hazel will pick strategy 2. By definition, there is a 1/2 chance that if George ends up being a $A=60$ type, then he will reject the offer and it will not be pareto optimal. 
 
 ## Exercises Lecture 7
 
