@@ -207,13 +207,13 @@ a) If the government gives the tax revenue to Isolde, what levels of activities 
         x &= 60 - 2y
       \end{align*}
     * Solving these gives $x = -4$, which is not feasible. Thus, George is put at a corner and $x = 0$. Then, $y = 30$. 
-b) If the government splits the taxrevenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
+b) If the government splits the tax revenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
     * Similar to above, the feasibility constraint is altered. We now have the constraint:
       \begin{align*}
         z_G + \frac{1}{2} tx + z_H + \frac{1}{2} tx - tx &\leq w_G + w_H\\
         \Leftrightarrow z_G + z_H &\leq w_G + w_H
       \end{align*}
-    * We then have the same budget constraint as the intitial case. We know the Nash bargaining solution attains the efficient outcome, and thus, $x = 12$, $y = 24$ as found before. 
+    * We then have the same budget constraint as the initial case. We know the Nash bargaining solution attains the efficient outcome, and thus, $x = 12$, $y = 24$ as found before. 
 
 ### 6.7 Hazel and George have one and only chance to make a deal. 
 The chance works like this. Hazel offers George an all-or-nothing proposition. If George reduces his $X$ing to a level $x^*$, Hazel will give him a lump sum payment of $z^*$ dollars. If George rejects this deal, then the outcome will revert to the noncooperative Nash equilibrium in which there is no government interference. After George has either accepted or rejected the deal that he is offered, Hazel can decide on the amount of $Y$ing that she will do. Hazel knows George’s utility function. Assuming that George will accept any deal that is as good or better for him than the Nash equilibrium outcome, what combination of $x^*$ and $z^*$ should Hazel make in order to maximize her utility?
@@ -238,7 +238,7 @@ $$60y - y^2 - x^*y + z_H - z^* \hspace{5mm} \text{s.t.} \hspace{5mm} 48x^* - x^{
 * This yields $x^* = 12$, $z^* = 576 + 144 - 48(12) = 144$.
 
 ### 6.8 This problem is like the previous one except for one thing. Hazel does not know George’s utility function. 
-Hazel knows that George’s utility function is of the functional form: $UG(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
+Hazel knows that George’s utility function is of the functional form: $U_G(x, z_G) = Ax - x^2 + z_G$, but all she knows about $A$ is that with probability 1/2, $A = 36$ and with probability 1/2, $A = 60$.
 
 a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he reduces his amount of $X$ing to $x^*$. What choice of $z^*$ and $x^*$ would maximize Hazel’s expected utility.
 
