@@ -152,7 +152,7 @@ Whenever there are possible gains from a deal between them, they will make a dea
         \frac{\dd U_H}{\dd Y})(U_G-\bar{U}_G) = 
         (\frac{\dd U_G}{\dd Y} - \frac{\dd U_G}{\dd X})(U_H-\bar{U}_H)  \\
   \end{align*}
-* Recall from the Samuelson condition:  
+* Recall from the Samuelson condition for $X$:  
   \begin{align*}
   \frac{\dd U_G / \dd X}{\dd U_G / \dd Z_G} + 
       \frac{\dd U_H / \dd X}{\dd U_H / \dd Z_H} &= MSC_X & \\
@@ -161,7 +161,7 @@ Whenever there are possible gains from a deal between them, they will make a dea
       & \text{ (since utility is quasilinear, and $MSC_X = 0$)}\\
   \Rightarrow \frac{\dd U_G}{\dd X} &= - \frac{\dd U_H}{\dd X} & \\
   \end{align*}
-* The other Samuelson condition:  
+* The Samuelson condition for $Y$:  
   \begin{align*}
     \frac{\dd U_G / \dd Y}{\dd U_G / \dd Z_G} + 
         \frac{\dd U_H / \dd Y}{\dd U_H / \dd Z_H} &= MSC_Y & \\
@@ -187,7 +187,72 @@ Whenever there are possible gains from a deal between them, they will make a dea
 ### 6.5 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution.
 
 a) Assuming that there is no government interference, so that the threat point is the noncooperative Nash equilibrium, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+
+* The non-cooperative NE is given by $(\bar{U}_G,\bar{U}_H)$. From 6.1 (b), we found that the non-cooperative NE gave $\bar{X}=24$, $\bar{Y}=18$.  
+  \begin{align*}
+    \Rightarrow \bar{U}_G &= 48(24) - 24^2 + Z_G\\
+    &= 576 + W_G\\
+    \wedge \ \bar{U}_H &= 60(18) - 18^2 - (18)(24) + Z_H\\
+    &= 324 + W_H
+  \end{align*}
+
+* With zero transactions costs, by the Coase theorem, George and Hazel achieve the Pareto optimal $X$ and $Y$, which we earlier found to be $X^*=12$, $Y*=24$. Following the relationship of problem 6.4,  
+  \begin{align*}
+    U_G - \bar{U}_G &= U_H - \bar{U}_H\\
+    \Rightarrow 48(12) - 12^2 + Z_G - 576 - W_G &= 
+      60(24) - 24^2 - 12(24) + Z_H - 324 - W_H\\
+    \Rightarrow Z_G - W_G - 144 &= Z_H - W_H + 252\\
+    \Rightarrow Z_G - W_G &= Z_H-W_H + 396
+  \end{align*}
+
+* Note that $Z_G=W_G+W_H-Z_H$.  
+  \begin{align*}
+    \Rightarrow W_G+W_H-W_G-Z_H &= -W_H+396+Z_H\\
+    \Rightarrow 2W_H - 396 &= 2Z_H\\
+    \Rightarrow \boxed{Z_H = W_H-198} & \wedge \boxed{Z_G = W_G + 198} \\
+  \end{align*}
+
+* $U_G$ from bargaining is given by $48(12)-12^2+W_G+198$. $U_H$ from bargaining is 
+  given by $60(24)-24^2-12(24)+W_H-198$.  
+  \begin{align*}
+    \Rightarrow \boxed{U_{G,bargain}=W_G+630} \wedge \boxed{U_{H,bargain} = W_H+378}
+  \end{align*}
+
 b) Assuming that the government imposes strict liability and that the threat point is the noncooperative Nash equilibrium that would obtain under these rules, find the predicted amount of $X$ing and of $Y$ing and the predicted distribution of income and of utility between George and Hazel.
+
+* From 6.1 (C), the non-cooperative NE is $\bar{X}=9$ $\wedge$ $\bar{Y}=30$.  
+  \begin{align*}
+    \Rightarrow \bar{U}_G &= 48(9)-9^2-9(30)+Z_G\\
+    &= 81 + Z_G\\
+    &= 81 + W_G\\
+    \wedge \ \bar{U}_H &= 60(30)-30^2+Z_H\\
+    &=900 + Z_H\\
+    &=900 + W_H
+  \end{align*}
+
+* Again by the Coase theorem, George and Hazel achieve the Pareto optimal $X$ and $Y$,
+  $X^*=12$ $\wedge$ $Y^*=24$. From 6.4,
+  \begin{align*}
+    U_G-\bar{U}_G &= U_H-\bar{U}_H\\
+    \Rightarrow 48(12) - 12^2 -12(24) + Z_G - 81 - W_G &= 
+      60(24)-24^2 +Z_H - 900 - W_H\\
+    \Rightarrow 99 + Z_G - W_G &= Z_H - W_H
+  \end{align*}
+
+* Note that $Z_G=W_G+W_H-Z_H$.
+  \begin{align*}
+    \Rightarrow 99 + W_G + W_H - Z_H - W_G &= Z_H - W_H\\
+    \Rightarrow 2W_H + 99 &= 2Z_H\\
+    \Rightarrow \boxed{Z_H = W_H + \frac{99}{2}} & \wedge 
+      \boxed{Z_G = W_G - \frac{99}{2}}
+  \end{align*}
+
+* $U_G$ from bargaining is $48(12)-12^2-12(24)+W_G-\frac{99}{2}$. 
+  $U_H$ from bargaining is $60(24)-24^2+W_H+\frac{99}{2}$.
+  \begin{align*}
+    \Rightarrow \boxed{U_{G,bargain}=W_G+\frac{189}{2}} \wedge 
+      \boxed{U_{H,bargain} = W_H+\frac{1827}{2}}
+  \end{align*}
 
 ### 6.6 Suppose that George and Hazel from the previous problems have no transactions costs and always bargain to the Nash bargaining solution. The government imposes the tax rate $t$ that induced George to perform a Pareto optimal amount of activity $X$ when George and Hazel were unable to bargain and the money was given to Isolde.
 
