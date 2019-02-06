@@ -158,7 +158,55 @@ $$U_i(D_i, M_i, C) = A_i D_i - \frac{1}{2}D_i^2 - D_i \frac{D}{H} + M_i$$
 where for each $i$, $D_i$ is driving by $i$, $D = \sum_{j=1}^n D_j$, $M_i$ is money expenditure by $i$ on goods, $H$ is total highway expenditures in Carburetor and where $A_i > 1$ is a parameter for each $i$. Gasoline is available for free in Carburetor, and it costs nothing to maintain cars. The only goods that money can buy in Carburetor are Big Macs and highway improvements. The initial endowment of income is $W_i$ for each $i$. The price of Big Macs is \$1.
 
 1. Since preferences are quasilinear, the Pareto optimal amount of driving for each $i$ and the Pareto optimal total highway expenditures must be independent of income distribution (except for the case of Pareto optimal allocations where some consumers consume no Big Macs). Find these Pareto optimal quantities.
+
+* Samuelson condition for efficient amount of highway expenditure, $H$
+
+\begin{align*}
+   C_{H}(C,D) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C}\right) &= p_H \\
+  \frac{D}{H^2} \sum^{n}_{j=1} D_i &= p_H \\
+  H &= \frac{\sqrt{p_H}}{D}
+\end{align*} 
+
+* Samuelson condition for efficient amount of driving, $D$
+
+\begin{align*}
+& \frac{U^i_D(M_j, D_j, C)}{U^i_M(M_j, D_j, C)} +  C_{D}(D,H) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C)}\right) = 0 \\
+& A_i - D_i - \frac{D}{H} - \frac{1}{H} \sum^{n}_{j=1} D_i = 0 \\
+& A_i - D_i - 2\frac{D}{H} = 0 \\
+& D_i = A_i - 2\frac{D}{H} \\
+& \sum^{n}_{j=1}D_i = \sum^{n}_{j=1}\left(A_i - 2\frac{D}{H} \right)\\
+&  D =  \sum^{n}_{j=1}A_i - 2n\frac{D}{H} 
+\end{align*} 
+
+* Combining both initial solution with endogeneous terms 
+
+\begin{align*}
+& D^* = \sum^{n}_{j=1}A_i - 2n\sqrt{p_H} \\
+& H^* = \frac{1}{\sqrt{p_H}} \sum^{n}_{j=1}A_i - 2n
+\end{align*} 
+
+
 2. If no tolls are charged, find the Nash equilibrium amount of driving by each resident of Carburetor.
+
+\begin{align*}
+& \max \limits_{D_i, M_i} U_i(D_i, M_i, C) \hspace{10pt} \text{s.t.} \hspace{10pt} M_i \leq W_i \\
+& \max \limits_{D_i} A_i D_i - \frac{1}{2}D_i^2 - D_i \frac{D}{H} + W_i 
+\end{align*} 
+FOC: 
+\begin{align*}
+& A_i - D_i - \frac{D_i}{H} - \frac{D}{H} = 0 \\
+& D_i \left(\frac{H + 1}{H} \right)  = A_i - \frac{D}{H}  \\
+& D_i = \frac{H}{H + 1} A_i -  \frac{D}{H + 1} \\
+& D = \frac{H}{H + 1} \sum^{n}_{j=1}A_i -  \frac{nD}{H + 1} \\
+& D^* = \frac{1}{1 + \frac{n}{H + 1}}\frac{H}{H + 1} \sum^{n}_{j=1}A_i  \\
+& D^* = \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i  \\
+ \implies &D_i^* = \frac{1}{H + 1}\left( H A_i - \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i \right)
+\end{align*} 
+
 3. Suppose that each resident of Carburetor is charged a uniform toll according to the rule suggested in the text of this lecture. What will this toll be? How much driving will each $i$ do?
 
+\begin{align*}
+& T = -p_H \left( \frac{C_D(D,H)}{C_H(D,H)} \right) \\
+& T = p_H \frac{H}{D} 
+\end{align*}
 
