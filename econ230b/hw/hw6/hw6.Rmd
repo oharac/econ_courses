@@ -21,6 +21,7 @@ header-includes:
   - \usepackage{pgfplots}
   - \usepackage{amsmath}
   - \usepackage{mathrsfs}
+  - \usepackage{nccmath} 
 ---
 
 ``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
