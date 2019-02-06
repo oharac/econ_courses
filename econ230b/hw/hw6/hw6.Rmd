@@ -43,7 +43,7 @@ library(latex2exp)
 
 # Problem set 4
 
-__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the $\LaTeX$ work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
+__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the LaTeX work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
 
 ## Exercises Lecture 6
 
@@ -245,21 +245,21 @@ a) Hazel offers to give George a lump sum payment of of $z^*$ dollars if he redu
 
 *  For the noncooperative Nash equilibria $y=18$ and: 
 
-\begin{ceqn}
-  \[ x = \begin{cases} 
+\begin{align*}
+  x = \begin{cases} 
         18 & \text{if $A=36$}    \\
           30 & \text{if $A=60$}      
            \end{cases}
-    \]
-\end{ceqn}
+\end{align*}
 
 * If Hazel is to make an offer to George, he will accept if: 
 
-  \[ x = \begin{cases} 
+\begin{align*}
+  x = \begin{cases} 
         U(x^*)+ z^* \geq 324 + z_g & \text{if $A=36$}    \\
         U(x^*)+ z^* \geq 900 + z_g  & \text{if $A=60$}      
            \end{cases}
-    \]
+\end{align*}
 
 * Strategy 1 by Hazel: Making sure George accepts independent of his type: 
 
