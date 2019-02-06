@@ -1,6 +1,9 @@
 ---
 title: | 
-  | \hfill \Large{Casey O'Hara}
+  | \hfill \large{Albert Garcia}
+  | \hfill \large{Jacob Gellman}
+  | \hfill \large{Casey O'Hara}
+  | \hfill \large{Vincent Thivierge}
 author: |
   | \hfill Econ 230B
 date: |
@@ -38,11 +41,10 @@ library(latex2exp)
 \newcommand{\LL}{\mathscr{L}}
 \newcommand{\dd}{\partial}
 
-<!-- This is a template for homework assignments to be written in LaTeX formatting -->
-
-# HW4
 
 ## Exercises Lecture 6
+
+We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the LaTeX work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
 
 ### 6.1 George’s utility function is
 $$U_G(x, y) = 48x - x^2 + z_G$$
