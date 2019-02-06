@@ -44,7 +44,7 @@ library(latex2exp)
 
 ## Exercises Lecture 6
 
-__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the LaTeX work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
+__NOTE:__ We all worked on our problem sets individually and came to consensus on answers as a group, so we chose to collaborate on the $\LaTeX$ work and submit our final answers as a group.  Please let us know if this is a problem and we will work in smaller groups on future problem sets.
 
 ### 6.1 George’s utility function is
 $$U_G(x, y) = 48x - x^2 + z_G$$
@@ -96,7 +96,7 @@ b) If the government gives all of the tax revenue to Hazel, what tax rate $t$ mu
       \frac{\dd U_H}{\dd y} &= 60 - 2y - x = 0\\
       \Rightarrow &\text{ $t$ is unaffected by Hazel's actions}
     \end{align*}
-    * Since the tax is on $x$ but Hazel only controls $y$, the revenue to her does not affect the amount of $X$ing that George does.  Hazel may want _more_ $X$ing now, since she earns utility from the revenue, but she has no say in the matter.  Therefore, compensating the victim does not change the tax needed to bring the system into Pareto optimality (i.e. $t = 24$).
+    * Since the tax is on $x$ but Hazel only controls $y$, the revenue to her does not affect the amount of $X$ing that George does.  Hazel may want _more_ $X$ing now, since she earns utility from the revenue, but she has no say in the matter; she can neither communicate nor make a deal with George.  Therefore, compensating the victim does not change the tax needed to bring the system into Pareto optimality (i.e. $t = 24$).
 c) If the government gives half of the tax revenue to Hazel and half to George, what tax rate $t$ must it use to induce George and Hazel to perform Pareto optimal amounts of activities $X$ and $Y$.
     * In this case, George actually gets a little kickback from his taxes.  This reduces the effective impact of the tax on his decision about $X$ing, so the tax must be higher to bring the situation into Pareto optimality.
       $$U_G = 48x - x^2 + z_G - tx + \frac{1}{2}tx; \hspace{6pt} U_H = 60y - y^2 + z_H + \frac{1}{2}tx$$
@@ -135,7 +135,8 @@ Whenever there are possible gains from a deal between them, they will make a dea
   \end{align*}
 * Taking FOCs:  
   \begin{align*}
-    &\frac{\dd U}{\dd X} = \frac{\dd U_G}{\dd X}U_H + \frac{\dd U_H}{\dd X}U_G -  \frac{\dd U_G}{\dd X}\bar{U}_H - \frac{\dd U_H}{\dd X}\bar{U}_G=0  \\
+    &\frac{\dd U}{\dd X} = \frac{\dd U_G}{\dd X}U_H + \frac{\dd U_H}{\dd X}U_G -  
+        \frac{\dd U_G}{\dd X}\bar{U}_H - \frac{\dd U_H}{\dd X}\bar{U}_G=0  \\
     &\frac{\dd U}{\dd Y} = \frac{\dd U_G}{\dd Y}U_H + 
         \frac{\dd U_H}{\dd Y}U_G -  
         \frac{\dd U_G}{\dd Y}\bar{U}_H - 
@@ -190,48 +191,48 @@ b) Assuming that the government imposes strict liability and that the threat poi
 
 a) If the government gives the tax revenue to Isolde, what levels of activities $X$ and $Y$ will George and Hazel choose?
     * If George is taxed at the rate from question 6.3, his budget constraint, and therefore, the joint feasibility constraint, is altered. The corresponding Lagrangian is as follows:
-\begin{align*}
-  \LL       &= \lambda_1[48x - x^2 + z_G] + \lambda_2[60y - y^2 - xy + z_H] + 
-      \mu[w_G + w_H - z_G - z_H - tx]\\
-  \LL_x     &= \lambda_1[48 - 2x] - \lambda_2y = t\mu\\
-  \LL_y     &= \lambda_2[60 - 2y - x] = 0\\
-  \LL_{z_G} &= \lambda_1 = \mu\\
-  \LL_{z_H} &= \lambda_2 = \mu
-\end{align*}
+      \begin{align*}
+        \LL       &= \lambda_1[48x - x^2 + z_G] + \lambda_2[60y - y^2 - xy + z_H] + 
+            \mu[w_G + w_H - z_G - z_H - tx]\\
+        \LL_x     &= \lambda_1[48 - 2x] - \lambda_2y = t\mu\\
+        \LL_y     &= \lambda_2[60 - 2y - x] = 0\\
+        \LL_{z_G} &= \lambda_1 = \mu\\
+        \LL_{z_H} &= \lambda_2 = \mu
+      \end{align*}
     * Accounting for the fact that $t = 24$ yields the following two equations:
-\begin{align*}
-  48 - 2x &= 24 + y\\
-  x &= 60 - 2y
-\end{align*}
+      \begin{align*}
+        48 - 2x &= 24 + y\\
+        x &= 60 - 2y
+      \end{align*}
     * Solving these gives $x = -4$, which is not feasible. Thus, George is put at a corner and $x = 0$. Then, $y = 30$. 
 b) If the government splits the taxrevenue between George and Hazel, what levels of activities $X$ and $Y$ will George and Hazel choose?
     * Similar to above, the feasibility constraint is altered. We now have the constraint:
-\begin{align*}
-  z_G + \frac{1}{2} tx + z_H + \frac{1}{2} tx - tx &\leq w_G + w_H\\
-  \Leftrightarrow z_G + z_H &\leq w_G + w_H
-\end{align*}
+      \begin{align*}
+        z_G + \frac{1}{2} tx + z_H + \frac{1}{2} tx - tx &\leq w_G + w_H\\
+        \Leftrightarrow z_G + z_H &\leq w_G + w_H
+      \end{align*}
     * We then have the same budget constraint as the intitial case. We know the Nash bargaining solution attains the efficient outcome, and thus, $x = 12$, $y = 24$ as found before. 
 
 ### 6.7 Hazel and George have one and only chance to make a deal. 
 The chance works like this. Hazel offers George an all-or-nothing proposition. If George reduces his $X$ing to a level $x^*$, Hazel will give him a lump sum payment of $z^*$ dollars. If George rejects this deal, then the outcome will revert to the noncooperative Nash equilibrium in which there is no government interference. After George has either accepted or rejected the deal that he is offered, Hazel can decide on the amount of $Y$ing that she will do. Hazel knows George’s utility function. Assuming that George will accept any deal that is as good or better for him than the Nash equilibrium outcome, what combination of $x^*$ and $z^*$ should Hazel make in order to maximize her utility?
 
 * Recall in Nash equilibrium that $x=24$, $y=18$. This gives:
-\begin{align*}
-  U_G = 576 + z_G\\
-  U_H = 324 + z_H
-\end{align*}
+  \begin{align*}
+    U_G = 576 + z_G\\
+    U_H = 324 + z_H
+  \end{align*}
 * If Hazel is to make an offer to George, she knows he will accept if
-\begin{align*}
-  U(x^*) + z^* \geq 576 + z_G\\
-  \Leftrightarrow 48x^* - x^{*2} + z^* \geq 576
-\end{align*}
+  \begin{align*}
+    U(x^*) + z^* \geq 576 + z_G\\
+    \Leftrightarrow 48x^* - x^{*2} + z^* \geq 576
+  \end{align*}
 * Then Hazel maximizes 
 $$60y - y^2 - x^*y + z_H - z^* \hspace{5mm} \text{s.t.} \hspace{5mm} 48x^* - x^{*2} + z^* \geq 576$$
 * First order conditions reveal:
-\begin{align*}
-  60 - 2y - x &= 0\\
-  -y + 48 - 2x &= 0
-\end{align*}
+  \begin{align*}
+    60 - 2y - x &= 0\\
+    -y + 48 - 2x &= 0
+  \end{align*}
 * This yields $x^* = 12$, $z^* = 576 + 144 - 48(12) = 144$.
 
 ### 6.8 This problem is like the previous one except for one thing. Hazel does not know George’s utility function. 
@@ -252,43 +253,44 @@ where for each $i$, $D_i$ is driving by $i$, $D = \sum_{j=1}^n D_j$, $M_i$ is mo
 
 1. Since preferences are quasilinear, the Pareto optimal amount of driving for each $i$ and the Pareto optimal total highway expenditures must be independent of income distribution (except for the case of Pareto optimal allocations where some consumers consume no Big Macs). Find these Pareto optimal quantities.
     * Samuelson condition for efficient amount of highway expenditure, $H$
-\begin{align*}
-   C_{H}(C,D) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C}\right) &= p_H \\
-  \frac{D}{H^2} \sum^{n}_{j=1} D_i &= p_H \\
-  H &= \frac{\sqrt{p_H}}{D}
-\end{align*} 
+      \begin{align*}
+         C_{H}(C,D) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C}\right) &= p_H \\
+        \frac{D}{H^2} \sum^{n}_{j=1} D_i &= p_H \\
+        H &= \frac{\sqrt{p_H}}{D}
+      \end{align*} 
     * Samuelson condition for efficient amount of driving, $D$
-\begin{align*}
-& \frac{U^i_D(M_j, D_j, C)}{U^i_M(M_j, D_j, C)} +  C_{D}(D,H) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C)}\right) = 0 \\
-& A_i - D_i - \frac{D}{H} - \frac{1}{H} \sum^{n}_{j=1} D_i = 0 \\
-& A_i - D_i - 2\frac{D}{H} = 0 \\
-& D_i = A_i - 2\frac{D}{H} \\
-& \sum^{n}_{j=1}D_i = \sum^{n}_{j=1}\left(A_i - 2\frac{D}{H} \right)\\
-&  D =  \sum^{n}_{j=1}A_i - 2n\frac{D}{H} 
-\end{align*} 
+      \begin{align*}
+        & \frac{U^i_D(M_j, D_j, C)}{U^i_M(M_j, D_j, C)} +  C_{D}(D,H) \sum^{n}_{j=1}\left(\frac{U^i_C(M_j, D_j, C)}{U^i_M(M_j, D_j, C)}\right) = 0 \\
+        & A_i - D_i - \frac{D}{H} - \frac{1}{H} \sum^{n}_{j=1} D_i = 0 \\
+        & A_i - D_i - 2\frac{D}{H} = 0 \\
+        & D_i = A_i - 2\frac{D}{H} \\
+        & \sum^{n}_{j=1}D_i = \sum^{n}_{j=1}\left(A_i - 2\frac{D}{H} \right)\\
+        &  D =  \sum^{n}_{j=1}A_i - 2n\frac{D}{H} 
+      \end{align*} 
     * Combining both initial solution with endogeneous terms 
-\begin{align*}
-& D^* = \sum^{n}_{j=1}A_i - 2n\sqrt{p_H} \\
-& H^* = \frac{1}{\sqrt{p_H}} \sum^{n}_{j=1}A_i - 2n
-\end{align*} 
+      \begin{align*}
+        & D^* = \sum^{n}_{j=1}A_i - 2n\sqrt{p_H} \\
+        & H^* = \frac{1}{\sqrt{p_H}} \sum^{n}_{j=1}A_i - 2n
+      \end{align*} 
 2. If no tolls are charged, find the Nash equilibrium amount of driving by each resident of Carburetor.
-\begin{align*}
-& \max \limits_{D_i, M_i} U_i(D_i, M_i, C) \hspace{10pt} \text{s.t.} \hspace{10pt} M_i \leq W_i \\
-& \max \limits_{D_i} A_i D_i - \frac{1}{2}D_i^2 - D_i \frac{D}{H} + W_i 
-\end{align*} 
+      \begin{align*}
+        & \max \limits_{D_i, M_i} U_i(D_i, M_i, C) \hspace{10pt} \text{s.t.} \hspace{10pt} M_i \leq W_i \\
+        & \max \limits_{D_i} A_i D_i - \frac{1}{2}D_i^2 - D_i \frac{D}{H} + W_i 
+      \end{align*} 
 FOC: 
-\begin{align*}
-& A_i - D_i - \frac{D_i}{H} - \frac{D}{H} = 0 \\
-& D_i \left(\frac{H + 1}{H} \right)  = A_i - \frac{D}{H}  \\
-& D_i = \frac{H}{H + 1} A_i -  \frac{D}{H + 1} \\
-& D = \frac{H}{H + 1} \sum^{n}_{j=1}A_i -  \frac{nD}{H + 1} \\
-& D^* = \frac{1}{1 + \frac{n}{H + 1}}\frac{H}{H + 1} \sum^{n}_{j=1}A_i  \\
-& D^* = \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i  \\
- \implies &D_i^* = \frac{1}{H + 1}\left( H A_i - \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i \right)
-\end{align*} 
+      \begin{align*}
+        & A_i - D_i - \frac{D_i}{H} - \frac{D}{H} = 0 \\
+        & D_i \left(\frac{H + 1}{H} \right)  = A_i - \frac{D}{H}  \\
+        & D_i = \frac{H}{H + 1} A_i -  \frac{D}{H + 1} \\
+        & D = \frac{H}{H + 1} \sum^{n}_{j=1}A_i -  \frac{nD}{H + 1} \\
+        & D^* = \frac{1}{1 + \frac{n}{H + 1}}\frac{H}{H + 1} \sum^{n}_{j=1}A_i  \\
+        & D^* = \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i  \\
+        \implies &D_i^* = \frac{1}{H + 1}\left( H A_i - \frac{H}{H + n + 1} \sum^{n}_{j=1}A_i \right)
+      \end{align*} 
 3. Suppose that each resident of Carburetor is charged a uniform toll according to the rule suggested in the text of this lecture. What will this toll be? How much driving will each $i$ do?
+
 \begin{align*}
-& T = -p_H \left( \frac{C_D(D,H)}{C_H(D,H)} \right) \\
-& T = p_H \frac{H}{D} 
+  & T = -p_H \left( \frac{C_D(D,H)}{C_H(D,H)} \right) \\
+  & T = p_H \frac{H}{D} 
 \end{align*}
 
