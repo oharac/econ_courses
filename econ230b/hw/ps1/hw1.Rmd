@@ -44,7 +44,7 @@ library(latex2exp)
 
 reload <- FALSE
 
-if(!file.exists('fig1.png') | reload) {
+if(!file.exists('fig1_1a.png') | reload) {
   df <-  crossing(c = seq(0, 30, .1),
                    t = seq(0, 30, .1)) %>%
     mutate(Anne  = -((c - 20)^2 + (t - 25)^2),
@@ -89,14 +89,14 @@ if(!file.exists('fig1.png') | reload) {
     scale_color_manual(values = c('lightblue', 'pink3')) +
     labs(x = 'Cribbage', y = 'Temperature', color = '', linetype = '')
   
-  ggsave('fig1.png', height = 3, width = 6, dpi = 300)
+  ggsave('fig1_1a.png', height = 3, width = 6, dpi = 300)
 }
 ```
 
 a. Sketch their indifference curves on a diagram.  
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{fig1.png}
+    \includegraphics[width=\linewidth]{fig1_1a.png}
     \caption{Indifference curves for Anne and Bruce}
   \end{figure}
 b. Is the situation (10, 15) Pareto optimal?
@@ -121,7 +121,7 @@ as you move along this line._
 
 ``` {r define utility possibility frontier for Anne and Bruce}
 
-if(!file.exists('fig2.png') | !file.exists('fig3.png') | reload) {
+if(!file.exists('fig1_2.png') | !file.exists('fig1_3.png') | reload) {
 
   df <- data.frame(C = seq(8, 22, .1)) %>%
     mutate(T = C + 5,
@@ -149,7 +149,7 @@ if(!file.exists('fig2.png') | !file.exists('fig3.png') | reload) {
     coord_cartesian(xlim = c(-250, 0), ylim = c(-250, 0)) +
     labs(x = TeX('$U_A$'), y = TeX('$U_B$'))
 
-  ggsave('fig2.png', height = 3, width = 3, dpi = 300)
+  ggsave('fig1_2.png', height = 3, width = 3, dpi = 300)
 
   fig_plot_3r <- ggplot(df, aes(x = u_a_3r, y = u_b_3r)) +
     ggtheme_plot() +
@@ -162,7 +162,7 @@ if(!file.exists('fig2.png') | !file.exists('fig3.png') | reload) {
     coord_cartesian(xlim = c(-250^(1/3), 0), ylim = c(-250^(1/3), 0)) +
     labs(x = TeX('$U_A$'), y = TeX('$U_B$'))
 
-  ggsave('fig3.png', height = 3, width = 3, dpi = 300)
+  ggsave('fig1_3.png', height = 3, width = 3, dpi = 300)
   
 }
 
@@ -170,7 +170,7 @@ if(!file.exists('fig2.png') | !file.exists('fig3.png') | reload) {
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\linewidth]{fig2.png}
+  \includegraphics[width=\linewidth]{fig1_2.png}
   \caption{Utility possibility frontier for Anne and Bruce}
 \end{figure}
 
@@ -188,7 +188,7 @@ b. Suppose that the utility functions in problem 1.1 represent sure-thing prefer
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\linewidth]{fig3.png}
+  \includegraphics[width=\linewidth]{fig1_3.png}
   \caption{Utility possibility frontier, with cube-root transformation}
 \end{figure}
 
@@ -208,7 +208,7 @@ __In principle, breakfast could be served at any time on a 24 hour clock.__
 
 ``` {r plot indifference curves for Anne and Bruce breakfast vs temp}
 
-if(!file.exists('fig4.png') | reload) {
+if(!file.exists('fig1_4.png') | reload) {
 
   b_A <- 11; b_B <- 6; t_A <- 25; t_B <- 15
   ### Anne prefers breakfast at 6 am; Bruce prefers it at 11 am.
@@ -247,7 +247,7 @@ if(!file.exists('fig4.png') | reload) {
     scale_color_manual(values = c('lightblue', 'pink3')) +
     labs(x = 'Breakfast time', y = 'Temperature', color = '', linetype = '')
   
-  ggsave('fig4.png', height = 3, width = 6, dpi = 300)
+  ggsave('fig1_4.png', height = 3, width = 6, dpi = 300)
 
 }
 
@@ -258,7 +258,7 @@ material draw indifference curves for Anne and Bruce. (Use two colors
 of ink). Show the locus Pareto optimal situations.
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{fig4.png}
+    \includegraphics[width=\linewidth]{fig1_4.png}
     \caption{Indifference curves for Anne and Bruce}
   \end{figure}
     * The odd pattern of indifference curves occurs because once 12 hours have passed since their preferred breakfast time, they are so disappointed they'd rather save their waffles until the following day.
@@ -282,7 +282,7 @@ __Find the new set of Pareto optimal situations.__
 
 reload <- FALSE
 
-if(!file.exists('fig5.png') | reload) {
+if(!file.exists('fig1_5.png') | reload) {
   df <-  crossing(c = seq(0, 30, .1),
                   t = seq(0, 30, .1)) %>%
     mutate(Anne  = -((c - 20)^2 + (t - 25)^2),
@@ -317,7 +317,7 @@ if(!file.exists('fig5.png') | reload) {
     scale_color_manual(values = c('lightblue', 'pink3', 'palegreen4')) +
     labs(x = 'Cribbage', y = 'Temperature', color = '', linetype = '')
   
-  ggsave('fig5.png', height = 3, width = 6, dpi = 300)
+  ggsave('fig1_5.png', height = 3, width = 6, dpi = 300)
 }
 ```
 
@@ -331,7 +331,7 @@ makes the Kuhn-Tucker solution work so "oddly"?_
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\linewidth]{fig5.png}
+  \includegraphics[width=\linewidth]{fig1_5.png}
   \caption{Indifference curves for Anne, Bruce, and Charlie}
 \end{figure}
 

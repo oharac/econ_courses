@@ -1,0 +1,96 @@
+---
+title: | 
+  | \hfill \large{Albert Garcia}
+  | \hfill \large{Jacob Gellman}
+  | \hfill \large{Casey O'Hara}
+  | \hfill \large{Vincent Thivierge}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+  - \usepackage{nccmath} 
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(tidyverse)
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\dd}{\partial}
+
+# Problem set 5
+
+## Exercises lecture 8
+
+### 8.1 Every morning, 6,000 commuters must travel from East Potato to West Potato. There are two ways to make the trip. 
+One way is to drive straight across town, through the heart of Middle Potato. The other way is to take the Beltline Freeway that circles the Potatoes. The Beltline Freeway is entirely uncongested, but the drive is roundabout and it takes 45 minutes to get from East Potato to West Potato by this means. The road through Middle Potato is much shorter and if it were uncongested it would take only 20 minutes to make the trip. Given the current size of the road through Middle Potato, if the number of commuters using the road is $N_1$, the time it takes to drive from East Potato to West Potato by this road is $20 + N_1/100$.
+
+a) With the road at its current size and with no tolls, how many commuters will use the road through Middle Potato? What will be the total number of minutes per morning spent by all commuters going from East Potato to West Potato?
+
+b) Suppose that a social planner controlled access to the road through Middle Potato and chose the number of commuters who were allowed to use the Middle Potato road in such a way as to minimize the sum of the number of minutes spent by commuters traveling from East Potato to West Potato. How many commuters would the social planner permit to use the Middle Potato road each morning? How long would it then take the commuters who used this road to make their morning commute?
+
+c) Suppose that commuters value time saved from commuting at $\$w$ per minute. Suppose that the government charges a toll for driving on the road through Middle Potato and divides the revenue from the toll equally among all 6,000 commuters. If the government's objective is to minimize the total amount of time that people spend commuting, how high should it set the toll? How much revenue will it collect? With this policy, how much better off (evaluated in dollars) is each
+commuter than they were in the equilibrium with no tolls?
+
+### 8.2 Suppose that a monopolist controls the road through Middle Potato and sets the toll that maximizes total revenue. 
+
+What price will the monopolist set and how many people will use the road at this price? How does this price compare with the optimal toll?
+
+> __Hint__: _First find the "demand curve” relating number of users to price. Then find the revenue-maximizing quantity and price._
+
+### 8.3 Suppose that the road through Middle Potato can be widened at a cost of $\$p$ per inch per day. 
+
+If the road is widened by $H$ inches and if $N_1$ people use the road, the time that it would take to drive to from East Potato to West Potato by this road would be $20 + N_1/(100 + H)$. Suppose that the government's objective function is to maximize the total value of time saved from commuting minus the sum of money spent on road building. Let $w$ is the value per minute of time saved from commuting. Assuming that the government can not charge a toll for the road, or what values of the parameters $p$ and $w$ would it pay to widen the road at all. (Assume that there is no congestion for commuters coming home from work, only going to work.) If it pays to widen the road, how many commuters will be using the road when it is optimally widened? How long will it take them to make the trip, given that the road is optimally widened?
+
+### 8.4 Suppose that as in the previous problem, the road through Middle Potato can be widened at a cost of $\$p$ per inch per day. 
+
+Suppose also that the government can charge an efficient toll for using this road. What is the best combination of toll and highway expenditures? How does total toll revenue compare with the cost of building the highway? How does the optimal amount of highway expenditures compare with the optimal amount if the government cannot charge a toll? _Hint: Think about two possible corner solutions._
+
+### 8.5 Generalize the bottleneck problem so that the cost per minute of being late can take a different value $\gamma$ from the cost per minute of being early. 
+Show what happens in the limit as $\gamma$ gets large.
+
+### 8.6 Generalize the bottleneck problem so that the everyone has a utility $u(t)$ for arriving at work at time $t$ where $u(t)$ is a fairly arbitrary singlepeaked (or single-plateaued) function.
+
+(Assume that $u'(t) > -s\alpha$ for all relevant $t$.) Which results from our earlier discussion still apply and which do not?
+
+### 8.7 What happens in the above generalization if $u'(t) < -s\alpha$?
+
+### 8.8 Generalize the model to allow two types of commuters with different preferred times of arrival.
+
+
+-----
+
+## Exercises Lecture 9 
+
+### 9.1 A city has 2 types of people, and 1000 people of each type. There is one private good and one public good. 
+
+Let $X_i$ denote the amount of private consumption consumed by citizen $i$ and let $Y$ denote the amount of public good available in the city. All type 1s have the utility function
+$U(X_i, Y) = X_iY$, type 2’s have the utility function $U(X_i, Y) = X_iY^2$. The price of private goods is \$1 per unit. Type 1s have an income of \$10,000 and Type 2s have an income of \$15,000. Public goods can be made from private goods with constant returns to scale. It takes 30 units of the private good to make one unit of the public good. The following questions relate to alternative arrangements for provision of public goods in this city.
+
+a) Calculate the Lindahl equilibrium prices and quantities for this city.
+
+b) Suppose that the public good is excludable and marketed competitively as in the Oakland (1974) model. In the Oakland competitive equilibrium with free entry for firms, how many units will be consumed by the type 1s? the type 2s? What will be the total number of units produced? What will the competitive prices be? How many units of the public good will the low price seller sell? How much will the high price seller sell.

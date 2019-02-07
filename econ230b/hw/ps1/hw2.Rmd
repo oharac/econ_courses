@@ -80,13 +80,13 @@ plot1 <- ggplot(df, aes(x = Y, y = U_i)) +
   geom_vline(xintercept = 100, linetype = 'dashed') +
   labs(x = TeX('Size of skating rink ($m^2$)'),
        y = 'Individual utility')
-ggsave('fig1.png', width = 4, height = 2, dpi = 300)
+ggsave('fig2_1.png', width = 4, height = 2, dpi = 300)
 
 ```
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\linewidth]{fig1.png}
+  \includegraphics[width=\linewidth]{fig2_1.png}
   \caption{Optimal skating rink size vs utility for Muskrat, Ontario}
 \end{figure}
 
@@ -137,11 +137,11 @@ plot2 <- ggplot(df, aes(x = y, y = U_T)) +
   geom_vline(xintercept = 626.25, linetype = 'dashed') +
   labs(x = 'Size of fireworks show',
        y = 'Total utility')
-ggsave('fig2.png', width = 4, height = 2, dpi = 300)
+ggsave('fig2_2.png', width = 4, height = 2, dpi = 300)
 ```
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{fig2.png}
+    \includegraphics[width=\linewidth]{fig2_2.png}
     \caption{Optimal fireworks display for Cowflop, WI}
   \end{figure}
 
@@ -241,11 +241,11 @@ plot3 <- ggplot(df, aes(x = U_C, y = U_D)) +
   # xlim(c(0, 12)) +
   geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
 
-ggsave('fig3.png', height = 2, width = 4, dpi = 300)
+ggsave('fig2_4_c.png', height = 2, width = 4, dpi = 300)
 ```
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{fig3.png}
+    \includegraphics[width=\linewidth]{fig2_4_c.png}
     \caption{Utility possibility frontier; between A and B is Pareto optimal locus; red is locus of efficient provision of public goods.}
   \end{figure}
 
@@ -311,11 +311,11 @@ plot4 <- ggplot(df, aes(x = U_C, y = U_D)) +
   ylim(c(0, 3000)) +
   geom_vline(xintercept = 0) + geom_hline(yintercept = 0)
 
-ggsave('fig4.png', height = 2, width = 4, dpi = 300)
+ggsave('fig2_5_2.png', height = 2, width = 4, dpi = 300)
 ```
   \begin{figure}[h!]
     \centering
-    \includegraphics[width=\linewidth]{fig4.png}
+    \includegraphics[width=\linewidth]{fig2_5_2.png}
     \caption{Cecil and Dorothy go car shopping!}
   \end{figure}
 3. Suppose that if they don’t purchase the car, Cecil and Dorothy split their money equally. Could they achieve a Pareto improvement by buying the car? Show your answer in two ways:
