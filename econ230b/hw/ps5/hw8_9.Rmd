@@ -121,9 +121,33 @@ $$e_p = -\frac{dx/x}{dt/t} = -\frac{1/1250}{-\frac{w}{100}/12.50w} = 1$$
 
 If the road is widened by $H$ inches and if $N_1$ people use the road, the time that it would take to drive to from East Potato to West Potato by this road would be $20 + N_1/(100 + H)$. Suppose that the government's objective function is to maximize the total value of time saved from commuting minus the sum of money spent on road building. Let $w$ is the value per minute of time saved from commuting. Assuming that the government can not charge a toll for the road, or what values of the parameters $p$ and $w$ would it pay to widen the road at all. (Assume that there is no congestion for commuters coming home from work, only going to work.) If it pays to widen the road, how many commuters will be using the road when it is optimally widened? How long will it take them to make the trip, given that the road is optimally widened?
 
+In equilibrium, we know the costs of each driver must be the same. So $45w=(20+\frac{N_1}{100+H})w$. Then $$N_1=2500+25H$$. Each person's value of time saved is $w(45-20+\frac{N_1}{100+H})$. The maximization problem is:
+
+ $$\max\limits_{H} \hspace{5mm} N_1w(45-20-\frac{N_1}{100+H})-pH \hspace{2mm} s.t. \hspace{2mm} N_1=2500+25H$$
+$$\Leftrightarrow$$
+$$\max\limits_{H} \hspace{5mm} -pH$$
+
+Since this expression is strictly decreasing in H, the value of H that minimizes the expression is 0 unless H is so large that $$45>20+\frac{6000}{100+H}$$
+
+This implies $H>140$. The new maximization problem becomes:
+
+$$\max\limits_{H} \hspace{5mm} 6000w(25-\frac{6000}{100+H})-pH \hspace{2mm} $$
+
+FOC: $\frac{6000}{100+H}=\sqrt{\frac{c}{w}}$
+
+Then $H^*=600\sqrt{\frac{c}{w}}-100$
+
+The corresponding number of commuters is 6000 and the time it takes is $20+10\frac{w}{c}$.
+
 ### 8.4 Suppose that as in the previous problem, the road through Middle Potato can be widened at a cost of $\$p$ per inch per day. 
 
 Suppose also that the government can charge an efficient toll for using this road. What is the best combination of toll and highway expenditures? How does total toll revenue compare with the cost of building the highway? How does the optimal amount of highway expenditures compare with the optimal amount if the government cannot charge a toll? _Hint: Think about two possible corner solutions._
+
+Recall the toll is 12.5w and the government will charge enough to cover the cost of expansion. The maximization problem becomes:
+
+$$\max\limits_{H} \hspace{5mm} N_1w(25-\frac{N_1}{100+H})-pH \hspace{2mm} s.t. \hspace{2mm} N_1=\frac{1}{w}(25w-12.5w)(100+H)$$
+
+Then $H^*= \frac{6000}{\sqrt{12.5}}-100$
 
 ### 8.5 Generalize the bottleneck problem so that the cost per minute of being late can take a different value $\gamma$ from the cost per minute of being early. 
 Show what happens in the limit as $\gamma$ gets large.
