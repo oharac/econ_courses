@@ -215,4 +215,10 @@ b) Suppose that the public good is excludable and marketed competitively as in t
 
 * From $(a)$ we know that the individual demands for Type 1 and Type 2 are respectively:
 
-$$\frac{10,000}{p} = Y \hspace{10pt} \text{and} \hspace{10pt} \frac{15,000}{p} = Y $$
+$$\frac{5,000}{p} = Y \hspace{10pt} \text{and} \hspace{10pt} \frac{10,000}{p} = Y$$
+
+* The first firm charges such that it covers its cost of provision, i.e. $p_L=\frac{30}{2000}=0.015$. At this price Type 1 folks will demand $\frac{1,000,000}{3}$ and Type 2  $\frac{2,000,000}{3}$, hence firm 1 just offers $\frac{1,000,000}{3}$ to cover its cost. 
+
+* Firm 2 now attempts to enter the market and cater to Type 2 folks by charging $p_H=\frac{30}{1000}=0.03$. At this price, Type 2 demand the same amount provided under firm 1, hence firm 2 will sell 0 additional units. 
+
+
