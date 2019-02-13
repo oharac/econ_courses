@@ -135,6 +135,26 @@ Show what happens in the limit as $\gamma$ gets large.
 
 ### 8.8 Generalize the model to allow two types of commuters with different preferred times of arrival.
 
+* Let type $x$ be those who prefer an early arrival time, and type $y$ be those who prefer a later arrival time.  Let $t_y^* = t_x^* + \tau$ where $\tau > 0$.  Let $N = N_x + N_y$.  Let the traffic wait time cost $\alpha$ be identical for all people, and office arrival penalty $\beta$ be identical for all people and identical for early and late arrivals.
+* First note two degenerate cases; the first is when $\tau = 0$ which devolves to the basic case, and the second is when $\tau$ is very large, such that congestion from the two subpopulations do not overlap.  These cases are both boring, so ignore them.
+* Assume that despite the different types, the equilibrium situation will result in all commuters having an equal average (dis)utility of commuting.
+* Note that the very first commuter, leaving at time $t_1$, must be a type $x$ (a type $y$ would suffer a greater penalty for arriving that much earlier), and the last commuter, leaving at time $t_N$, must be a type $y$ (a type $x$ would similarly suffer a greater penalty for arriving that much later).
+* Note that as long as there is a queue $D(t) > 0$ in the bottleneck at all times between $t_1$ and $t_N$, the total traffic jam will last $N/s$ as in the basic problem.  Commuter type is irrelevant in the flow rate through the bottleneck.
+\begin{align*}
+  t_N - t_1 &= \frac{N}{s}\\
+  C_1 &= \beta (t_x^* - t_1) 
+      &\text{(cost; first commuter is $x$)}\\
+  C_N &= \beta (t_N - t_y^*) 
+      &\text{(cost; last commuter is $y$)}\\
+  C_1 = C_N &\Rightarrow \beta (t_x^* - t_1) = \beta (t_N - t_y^*)
+      &\text{(equal costs)}\\
+  \Rightarrow \beta (t_x^* - t_1) &= \beta (t_1 + \frac{N}{s} - (t_x^* + \tau))
+      &\text{(sub for $t_y^*$ and $t_N$)}\\
+  \Rightarrow t_x^* - t_1 &= \frac{N/s - \tau}{2}\\
+  \Rightarrow t_N - t_y^* &= \frac{N/s - \tau}{2}
+\end{align*}
+  
+
 
 -----
 
