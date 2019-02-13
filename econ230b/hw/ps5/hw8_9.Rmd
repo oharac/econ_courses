@@ -121,9 +121,33 @@ $$e_p = -\frac{dx/x}{dt/t} = -\frac{1/1250}{-\frac{w}{100}/12.50w} = 1$$
 
 If the road is widened by $H$ inches and if $N_1$ people use the road, the time that it would take to drive to from East Potato to West Potato by this road would be $20 + N_1/(100 + H)$. Suppose that the government's objective function is to maximize the total value of time saved from commuting minus the sum of money spent on road building. Let $w$ is the value per minute of time saved from commuting. Assuming that the government can not charge a toll for the road, or what values of the parameters $p$ and $w$ would it pay to widen the road at all. (Assume that there is no congestion for commuters coming home from work, only going to work.) If it pays to widen the road, how many commuters will be using the road when it is optimally widened? How long will it take them to make the trip, given that the road is optimally widened?
 
+In equilibrium, we know the costs of each driver must be the same. So $45w=(20+\frac{N_1}{100+H})w$. Then $$N_1=2500+25H.$$ Each person's value of time saved is $w(45-20+\frac{N_1}{100+H})$. The maximization problem is:
+
+ $$\max\limits_{H} \hspace{5mm} N_1w(45-20-\frac{N_1}{100+H})-pH \hspace{2mm} s.t. \hspace{2mm} N_1=2500+25H$$
+$$\Leftrightarrow$$
+$$\max\limits_{H} \hspace{5mm} -pH$$
+
+Since this expression is strictly decreasing in H, the value of H that minimizes the expression is 0 unless H is so large that $$45>20+\frac{6000}{100+H}$$
+
+This implies $H>140$. The new maximization problem becomes:
+
+$$\max\limits_{H} \hspace{5mm} 6000w(25-\frac{6000}{100+H})-pH \hspace{2mm} $$
+
+FOC: $\frac{6000}{100+H}=\sqrt{\frac{c}{w}}$.
+
+Then $H^*=600\sqrt{\frac{c}{w}}-100$.
+
+The corresponding number of commuters is 6000 and the time it takes is $20+10\frac{w}{c}$.
+
 ### 8.4 Suppose that as in the previous problem, the road through Middle Potato can be widened at a cost of $\$p$ per inch per day. 
 
 Suppose also that the government can charge an efficient toll for using this road. What is the best combination of toll and highway expenditures? How does total toll revenue compare with the cost of building the highway? How does the optimal amount of highway expenditures compare with the optimal amount if the government cannot charge a toll? _Hint: Think about two possible corner solutions._
+
+Recall the toll is 12.5w and the government will charge enough to cover the cost of expansion. The maximization problem becomes:
+
+$$\max\limits_{H} \hspace{5mm} N_1w(25-\frac{N_1}{100+H})-pH \hspace{2mm} s.t. \hspace{2mm} N_1=\frac{1}{w}(25w-12.5w)(100+H)$$
+
+Then $H^*= \frac{6000}{\sqrt{12.5}}-100$.
 
 ### 8.5 Generalize the bottleneck problem so that the cost per minute of being late can take a different value $\gamma$ from the cost per minute of being early. 
 
@@ -164,14 +188,30 @@ His departure time also reduces.
 
 (Assume that $u'(t) > -s\alpha$ for all relevant $t$.) Which results from our earlier discussion still apply and which do not?
 
+Let all commuters $i \in N$ have utility functions $u(t)$ for leaving to work at time $t$, with $N = \{1,2,...,n\}$ for $n$ commuters in the city. Again let $t^*$ be the time that work starts. The game is defined as $\langle N,t \in \mathbb{R}, u(t) \rangle$ where $t \in \mathbb{R}$ describes the possible action taken by a commuter. The utility function takes a single plateau, as represented below.
+
+```{r, out.width = "200px", fig.align = "center"}
+knitr::include_graphics("ut.png")
+```
+
+Since $u(t)$ is the same $\forall \ i \in N$, it must be that in Nash equilibrium, $u(t_1)=u(t_2)=...=u(t_n)$. For simplicity assume that $t_1<t_2<...<t_n$ so that each commuter leaves in order.
+
+One solution is that the departure times $t_1, t_2, ..., t_n$ are uniformly distributed along the plateau. Then, as before, $t_1 = t^* - n/2s \ \wedge \ t_n = t^* + n/2s$. Visually, the portion of the utility curve that is at a plateau is of width $n/s$, or the length of the rush hour. We can verify this by observing that $t_n - t_1 = n/s$. This is the same result as when we gave explicit utility forms.
+
+Without an explicit utility form we may still keep some of the same notation as before. For example, the length of the queue at time $t$ may still be written as $D(t)$. We can again define the rate of growth for the queue as $\dot{D}(t) = r(t) - s$. But without an explicit utility form we no longer solve for $r(t)$. In the original model we were able to solve that $r(t) = \frac{s \alpha}{\alpha - \beta}$, which implied that the queue growed at a constant rate $r>s$ as long as the commuters arrived to work before $t^*$. In this model we might therefore relax the result that the queue grows at a constant rate. For example, on the single-plateaued utility function, the solutions $t \in \{t_1,t_2,...,t_n\}$ need not be distributed uniformly, which means congestion could grow at different rates determined by $r(t)$.
+
+We may also still define $\tilde{t}$ as the departure time that allows the worker to arrive to work at $t^*$. This again implies that $\tilde{t}+\frac{D(\tilde{t})}{s}=t^*$. $D(\tilde{t})$ is the maximum length that the queue takes. One important result from the original model was that $D(\tilde{t})$, in the original model, did not depend on the capacity of the bridge. Here, without a utility form, we do not solve for $D(\tilde{t})$, so we lose that result.
+
 ### 8.7 What happens in the above generalization if $u'(t) < -s\alpha$?
+
+In the above generalization, note that for the relevant $t$, $t \in \{t_1,t_2,...,t_n\}$, we have that $u'(t) = 0$ on the plateau of the utility function. This gives $u'(t)=0>-\alpha s$. Recall that $\alpha s$ is comprised of $\alpha$, the cost per minute of waiting in traffic, while $s$ is the number of people let through the bottleneck per minute. We need that the marginal utility with respect to time is greater than the total cost per minute $\alpha s$ in the system. If the marginal utility is not greater than the cost of waiting, $u'(t)< - \alpha s$, no one should go to work.
 
 ### 8.8 Generalize the model to allow two types of commuters with different preferred times of arrival.
 
 * Let type $x$ be those who prefer an early arrival time, and type $y$ be those who prefer a later arrival time.  Let $t_y^* = t_x^* + \tau$ where $\tau > 0$.  Let $N = N_x + N_y$.  Let the traffic wait time cost $\alpha$ be identical for all people, and office arrival penalty $\beta$ be identical for all people and identical for early and late arrivals.
 * First note two degenerate cases; the first is when $\tau = 0$ which devolves to the basic case, and the second is when $\tau$ is very large, such that congestion from the two subpopulations do not overlap.  These cases are both boring, so ignore them.
 * Assume that despite the different types, the equilibrium situation will result in all commuters having an equal average (dis)utility of commuting.
-* Note that the very first commuter, leaving at time $t_1$, must be a type $x$ (a type $y$ would suffer a greater penalty for arriving that much earlier), and the last commuter, leaving at time $t_N$, must be a type $y$ (a type $x$ would similarly suffer a greater penalty for arriving that much later).
+* Note that the very first commuter, leaving at time $t_1$, must be a type $x$ (a type $y$ would suffer a greater penalty for arriving that much earlier), and the last commuter, leaving at time $t_N$, must be a type $y$ (a type $x$ would similarly suffer a greater penalty for arriving that much later).  Neither of these will face a queue, so travel time is zero and cost is just arrival time penalty.
 * Note that as long as there is a queue $D(t) > 0$ in the bottleneck at all times between $t_1$ and $t_N$, the total traffic jam will last $N/s$ as in the basic problem.  Commuter type is irrelevant in the flow rate through the bottleneck.
 \begin{align*}
   t_N - t_1 &= \frac{N}{s}\\
@@ -186,7 +226,7 @@ His departure time also reduces.
   \Rightarrow t_x^* - t_1 &= \frac{N/s - \tau}{2}\\
   \Rightarrow t_N - t_y^* &= \frac{N/s - \tau}{2}
 \end{align*}
-  
+* In the basic case, $t^* - t_1 = \frac{N}{2s}$.  In this case, assuming some $y$ commuters take pressure off the earliest commute, it seems OK that the time to leave becomes closer to $t_x^*$, but it seems like there should be some weighting by the number of $x$ and $y$ commuters.  For example, imagine 1000 type $x$ commuters; the first commuter leaves at $t_1 = t_x^* - 1000/2s$.  Then add a single type $y$, with $\tau = 1$ hour later.  This formulation says the first commuter should now leave at $t_1 = t_x^* - 1001/2s + \tau/2$, a half an hour later, just because of a single entrant who prefers a later time.  This seems to indicate one of the assumptions is faulty.
 
 
 -----
