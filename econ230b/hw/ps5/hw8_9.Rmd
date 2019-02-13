@@ -126,7 +126,39 @@ If the road is widened by $H$ inches and if $N_1$ people use the road, the time 
 Suppose also that the government can charge an efficient toll for using this road. What is the best combination of toll and highway expenditures? How does total toll revenue compare with the cost of building the highway? How does the optimal amount of highway expenditures compare with the optimal amount if the government cannot charge a toll? _Hint: Think about two possible corner solutions._
 
 ### 8.5 Generalize the bottleneck problem so that the cost per minute of being late can take a different value $\gamma$ from the cost per minute of being early. 
-Show what happens in the limit as $\gamma$ gets large.
+
+Show what happens in the limit as $\gamma$ gets large. 
+
+* Let $t_1$ be the departure time of the first commuter, $t_N$ of the last, $\beta$ the cost of arriving early and $\gamma$ the cost of arriving late. Using the equal cost condition between first and last commuters: 
+
+\begin{align*}
+  &\beta (t^* - t_1) = \gamma (t_N - t^*) \\
+  &\beta (t^* - t_1) = \gamma (\frac{N}{s} + t_1 - t^*) 
+      &\text{(since $t_N - t_1 = \frac{N}{s}$)}\\
+  &(\beta + \gamma)t^* - (\beta + \gamma)t_1 = \frac{\gamma N}{s} \\
+  &t^* - t_1 = \frac{\gamma N}{(\beta + \gamma)s} \\
+  &\boxed{t_1^* = t^* - \frac{\gamma}{(\beta + \gamma)}\frac{N}{s}} \\
+  \Rightarrow &\boxed{t_N^* = t^* + \frac{\beta}{(\beta + \gamma)}\frac{N}{s}}
+\end{align*}
+
+
+* For the early and late time, we can see that when $\gamma$ increases: 
+
+\begin{align*}
+    &\frac{\dd t_1^*}{\dd \gamma} < 0  \\
+    &\frac{\dd t_N^*}{\dd \gamma} < 0  
+\end{align*}
+
+Hence, as the cost of arriving late increases, but the earliest and latest departure time reduce. 
+
+* For the commuter that arrives just in time: 
+
+\begin{align*}
+   &\boxed{\tilde{t}^* = t^* - \frac{\beta}{\alpha}\frac{\beta}{(\beta + \gamma)}\frac{N}{s}} \\
+   &\frac{\dd \tilde{t}^*}{\dd \gamma} < 0
+\end{align*}
+
+His departure time also reduces. 
 
 ### 8.6 Generalize the bottleneck problem so that the everyone has a utility $u(t)$ for arriving at work at time $t$ where $u(t)$ is a fairly arbitrary singlepeaked (or single-plateaued) function.
 
