@@ -132,7 +132,23 @@ Show what happens in the limit as $\gamma$ gets large.
 
 (Assume that $u'(t) > -s\alpha$ for all relevant $t$.) Which results from our earlier discussion still apply and which do not?
 
+Let all commuters $i \in N$ have utility functions $u(t)$ for leaving to work at time $t$, with $N = \{1,2,...,n\}$ for $n$ commuters in the city. Again let $t^*$ be the time that work starts. The game is defined as $ \langle N,t \in \mathbb{R}, u(t) \rangle$ where $t \in \mathbb{R}$ describes the possible action taken by a commuter. The utility function takes a single plateau, as represented below.
+
+\begin{center} 
+	\includegraphics[scale=0.5]{ut.png}
+\end{center}
+
+Since $u(t)$ is the same $\forall \ i \in N$, it must be that in Nash equilibrium, $u(t_1)=u(t_2)=...=u(t_n)$. For simplicity assume that $t_1<t_2<...<t_n$ so that each commuter leaves in order.
+
+One solution is that the departure times $t_1, t_2, ..., t_n$ are uniformly distributed along the plateau. Then, as before, $t_1 = t^* - n/2s \ \wedge \ t_n = t^* + n/2s$. Visually, the portion of the utility curve that is at a plateau is of width $n/s$, or the length of the rush hour. We can verify this by observing that $t_n - t_1 = n/s$. This is the same result as when we gave explicit utility forms.
+
+Without an explicit utility form we may still keep some of the same notation as before. For example, the length of the queue at time $t$ may still be written as $D(t)$. We can again define the rate of growth for the queue as $\dot{D}(t) = r(t) - s$. But without an explicit utility form we no longer solve for $r(t)$. In the original model we were able to solve that $r(t) = \frac{s \alpha}{\alpha - \beta}$, which implied that the queue growed at a constant rate $r>s$ as long as the commuters arrived to work before $t^*$. In this model we might therefore relax the result that the queue grows at a constant rate. For example, on the single-plateaued utility function, the solutions $t \in \{t_1,t_2,...,t_n\}$ need not be distributed uniformly, which means congestion could grow at different rates determined by $r(t)$.
+
+We may also still define $\tilde{t}$ as the departure time that allows the worker to arrive to work at $t^*$. This again implies that $\tilde{t}+\frac{D(\tilde{t})}{s}=t^*$. $D(\tilde{t})$ is the maximum length that the queue takes. One important result from the original model was that $D(\tilde{t})$, in the original model, did not depend on the capacity of the bridge. Here, without a utility form, we do not solve for $D(\tilde{t})$, so we lose that result.
+
 ### 8.7 What happens in the above generalization if $u'(t) < -s\alpha$?
+
+In the above generalization, note that for the relevant $t$, $t \in \{t_1,t_2,...,t_n\}$, we have that $u'(t) = 0$ on the plateau of the utility function. This gives $u'(t)=0>-\alpha s$. Recall that $\alpha s$ is comprised of $\alpha$, the cost per minute of waiting in traffic, while $s$ is the number of people let through the bottleneck per minute. We need that the marginal utility with respect to time is greater than the total cost per minute $\alpha s$ in the system. If the marginal utility is not greater than the cost of waiting, $u'(t)< - \alpha s$, no one should go to work.
 
 ### 8.8 Generalize the model to allow two types of commuters with different preferred times of arrival.
 
