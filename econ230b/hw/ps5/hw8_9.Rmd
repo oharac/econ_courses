@@ -15,13 +15,14 @@ output:
   html_document:
     toc: no
     number_sections: false
-header-includes: 
-  - \usepackage{tikz}
-  - \usepackage{tikz-qtree}
-  - \usepackage{pgfplots}
-  - \usepackage{amsmath}
-  - \usepackage{mathrsfs}
-  - \usepackage{nccmath} 
+    self_contained: no
+#header-includes: 
+#  - \usepackage{tikz}
+#  - \usepackage{tikz-qtree}
+#  - \usepackage{pgfplots}
+#  - \usepackage{amsmath}
+#  - \usepackage{mathrsfs}
+#  - \usepackage{nccmath} 
 ---
 
 ``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
@@ -29,7 +30,7 @@ header-includes:
 knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
                       echo = FALSE, message = FALSE, warning = FALSE)
 
-source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+# source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
 ### loads tidyverse packages, defines helper functions
 
 library(tidyverse)
@@ -167,4 +168,57 @@ $U(X_i, Y) = X_iY$, type 2’s have the utility function $U(X_i, Y) = X_iY^2$. T
 
 a) Calculate the Lindahl equilibrium prices and quantities for this city.
 
+* Type 1
+
+\begin{align*}
+        & \max \limits_{X_i, Y} X_iY \hspace{10pt} \text{s.t.} \hspace{10pt} 10,000 \geq p_1Y + X_i \\
+\end{align*}
+
+FOCs: 
+
+\begin{align*}
+    &\frac{\dd L}{\dd X_i} = Y - \lambda = 0  \\
+    &\frac{\dd L}{\dd Y} = X_i - p_1\lambda = 0  \\
+    \Rightarrow & p_1Y = X_i \\
+    &\frac{\dd L}{\dd \lambda} = 10,000  =  p_1Y + X_i \\
+    \Rightarrow & 10,000 = p_1Y + p_1Y \\
+    &\frac{5000}{Y} = p_1
+\end{align*}
+
+* Type 2
+
+\begin{align*}
+        & \max \limits_{X_i, Y} X_iY^2 \hspace{10pt} \text{s.t.} \hspace{10pt} 15,000 \geq p_2Y + X_i \\
+\end{align*}
+
+FOCs: 
+
+\begin{align*}
+    &\frac{\dd L}{\dd X_i} = Y^2 - \lambda = 0  \\
+    &\frac{\dd L}{\dd Y} = 2X_iY - p_2\lambda = 0  \\
+    \Rightarrow & \frac{p_2Y}{2} = X_i \\
+    &\frac{\dd L}{\dd \lambda} = 15,000  =  p_2Y + X_i \\
+    \Rightarrow & 15,000 = p_2Y + \frac{p_2Y}{2} \\
+    &\frac{10,000}{Y} = p_2 \\
+\end{align*}
+
+* Finding the $Y^*$, $p_1^*$ and $p_2^*$
+
+\begin{align*}
+    & \sum_{i \in \text{Type 1}} p_1 + \sum_{i \in \text{Type 2}} p_2 = 30 \\
+    & 1000*\frac{10,000}{Y} + 1000*\frac{10,000}{Y} = 30 \\
+    & \boxed{Y^*=500,000} \\
+    \Rightarrow & \hspace{10pt} \boxed{p_1^*=0.01}  \hspace{10pt} \text{and} \hspace{10pt} \boxed{p_2^*=0.02} 
+\end{align*}
+
 b) Suppose that the public good is excludable and marketed competitively as in the Oakland (1974) model. In the Oakland competitive equilibrium with free entry for firms, how many units will be consumed by the type 1s? the type 2s? What will be the total number of units produced? What will the competitive prices be? How many units of the public good will the low price seller sell? How much will the high price seller sell.
+
+* From $(a)$ we know that the individual demands for Type 1 and Type 2 are respectively:
+
+$$\frac{5,000}{p} = Y \hspace{10pt} \text{and} \hspace{10pt} \frac{10,000}{p} = Y$$
+
+* The first firm charges such that it covers its cost of provision, i.e. $p_L=\frac{30}{2000}=0.015$. At this price Type 1 folks will demand $\frac{1,000,000}{3}$ and Type 2  $\frac{2,000,000}{3}$, hence firm 1 just offers $\frac{1,000,000}{3}$ to cover its cost. 
+
+* Firm 2 now attempts to enter the market and cater to Type 2 folks by charging $p_H=\frac{30}{1000}=0.03$. At this price, Type 2 demand the same amount provided under firm 1, hence firm 2 will sell 0 additional units. 
+
+
