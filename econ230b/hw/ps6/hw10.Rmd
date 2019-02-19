@@ -1,0 +1,53 @@
+---
+title: | 
+  | \hfill \large{Albert Garcia}
+  | \hfill \large{Jacob Gellman}
+  | \hfill \large{Casey O'Hara}
+  | \hfill \large{Vincent Thivierge}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+    self_contained: no
+#header-includes: 
+#  - \usepackage{tikz}
+#  - \usepackage{tikz-qtree}
+#  - \usepackage{pgfplots}
+#  - \usepackage{amsmath}
+#  - \usepackage{mathrsfs}
+#  - \usepackage{nccmath} 
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+# source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(tidyverse)
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\LL}{\mathscr{L}}
+\newcommand{\dd}{\partial}
+
+# Problem set 6
+
+## Exercises lecture 10
+
+### 10.1 Explain why it is that in the pivotal mechanism, it is a weakly dominant strategy to tell the truth.  Write your explanation in such a way that it is convincing for an intelligent person who has not studied game theory.
+
+### 10.2 Prove the assertion in the text that a Pareto improvement could be achieved by passing the ban and making appropriate side-payments if $\sum V_i > 0$, and could not be achieved if $\sum V_i < 0$.
+
