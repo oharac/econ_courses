@@ -38,6 +38,7 @@ You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
+rnorm(0,1)
 ```
 Ken is dumb. 
 
