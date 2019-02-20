@@ -30,7 +30,7 @@ output:
 knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
                       echo = FALSE, message = FALSE, warning = FALSE)
 
-# source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
 ### loads tidyverse packages, defines helper functions
 
 library(tidyverse)
@@ -49,5 +49,30 @@ library(latex2exp)
 
 ### 10.1 Explain why it is that in the pivotal mechanism, it is a weakly dominant strategy to tell the truth.  Write your explanation in such a way that it is convincing for an intelligent person who has not studied game theory.
 
+Assume you are voting on a simple yes/no proposal.  Your vote is weighted by your stated strength of preference of an outcome (e.g. your name and a dollar bid put into the "yes" jar), so if you are very interested in a "yes" outcome, you could bid a higher dollar value you'd be willing to pay to see that outcome happen.  The final outcome is determined by the difference in value offered by all "no" voters vs. the dollars offered by all "yes" voters.  For example, if there are \$100 put in the "yes" jar and \$99 put in the "no" jar, the proposition passes by a margin of +\$1 (+ for "yes" votes, - for "no").
+
+Your vote is pivotal if it changes the outcome; i.e. if your (dollar-weighted) vote were removed, the decision of the vote would flip.  In the above case, if you bid \$2 or higher for "yes", your vote is pivotal (Pivotal status of a \$1 "yes" bid is probably subject to a decision rule about tie votes), and the same would be true for _any_ voter bidding \$2 or more for "yes".  Note a vote for "no" is not pivotal in this case - removing that vote would not change the outcome.
+
+The pivotal mechanism works by taxing pivotal voters by the margin that would have occurred if they alone hadn't voted.  In the above situation, if you bid \$5 for "yes", your vote would be pivotal - if you didn't vote, the outcome would have been 99 "no" and 95 "yes" - a difference of -\$4 - so you'd be taxed that difference of \$4, which would be collected and kept by the voting authority.
+
+So why does this make truth a weakly dominant strategy?  If you truly valued the "yes" outcome at \$5, then you gain \$5 of satisfaction from the outcome, and give up only \$4, for a total satisfaction of \$1.  If you tried to game the system by overstating your value, say \$6, you would pay a tax of \$5 and end up with a total satisfaction of \$0 (your true benefit from "yes" minus your tax), so you are worse off than had you told the truth.  If your vote is pivotal, a truth strategy will result in a better outcome than overbidding; in the event that your vote is not pivotal, overbidding will not make you any better or worse off than the truth.   Thus the truth is weakly dominant over an overbidding strategy.
+
+Similarly for underbidding - if in the above case, you decide to bid below your valuation, say \$2, then the final tally would have been 99 "no" and 97 "yes" - and you would miss out on your \$5 valuation of the "yes" outcome, so you are worse off than had you told the truth - thus truth is again dominant.  Note again, if your truthful vote would have not been pivotal, your underbid just leaves you equally well off as the truth - no gain or loss for the underbid, therefore once again, truth is weakly dominant over an underbidding strategy.
+
 ### 10.2 Prove the assertion in the text that a Pareto improvement could be achieved by passing the ban and making appropriate side-payments if $\sum V_i > 0$, and could not be achieved if $\sum V_i < 0$.
 
+As in the text, let $i$'s willingness to pay for the ban be quantity of private goods $V_i$ such that
+$$U_i(X_i - V_i, 1) = U_i(X_i, 0) \hspace{6pt}\forall i$$
+where $V_i > 0$ for those that favor the ban, and $V_i < 0$ for those that oppose it.  If $X_i$ and $V_i$ are in money and money is numeraire, then
+$$U_i(X_i, 1) - V_i = U_i(X_i, 0) \hspace{6pt}\forall i$$
+Let there be $B$ people in favor of the Ban, and $N - B$ opposed.  Aggregate cost of ban to those opposed: $\sum_{i=B+1}^N -V_i$; aggregate value of ban to those in favor: $\sum_{i=1}^B V_i$.  If those in favor can, in aggregate, scrape together more than enough to cover the costs to those opposed, they can pay off those opposed to the point of indifference, and get the benefit of the ban while those opposed are no worse off - i.e., Pareto improvement:
+\begin{align*}
+  \sum_{i=1}^B V_i &> \sum_{i=B+1}^N (-V_i)\\
+  \Leftrightarrow \sum_{i=1}^B V_i &- \sum_{i=B+1}^N (-V_i) > 0\\
+  \Leftrightarrow \sum_{i=1}^B V_i &+ \sum_{i=B+1}^N V_i > 0\\
+  \Leftrightarrow \sum_{i=1}^N V_i &> 0\\
+\end{align*}
+
+This can only happen when $\sum_{i=1}^N V_i > 0$.
+
+On the other hand, if those opposed to the ban can pay off those in favor to make them indifferent to the lack of ban, then the inequalities reverse.  The ban does not pass, and those who opposed it avoid the costs of the ban while those who wanted the ban are no worse off, therefore Pareto improvement in that case as well.
