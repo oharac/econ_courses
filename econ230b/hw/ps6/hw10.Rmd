@@ -1,9 +1,6 @@
 ---
 title: | 
-  | \hfill \large{Albert Garcia}
-  | \hfill \large{Jacob Gellman}
   | \hfill \large{Casey O'Hara}
-  | \hfill \large{Vincent Thivierge}
 author: |
   | \hfill Econ 230B
 date: |
@@ -63,16 +60,32 @@ Similarly for underbidding - if in the above case, you decide to bid below your 
 
 As in the text, let $i$'s willingness to pay for the ban be quantity of private goods $V_i$ such that
 $$U_i(X_i - V_i, 1) = U_i(X_i, 0) \hspace{6pt}\forall i$$
-where $V_i > 0$ for those that favor the ban, and $V_i < 0$ for those that oppose it.  If $X_i$ and $V_i$ are in money and money is numeraire, then
+where $V_i > 0$ for those that favor the ban, and $V_i < 0$ for those that oppose it.  
+
+<!--If $X_i$ and $V_i$ are in money and money is numeraire, then
 $$U_i(X_i, 1) - V_i = U_i(X_i, 0) \hspace{6pt}\forall i$$
-Let there be $B$ people in favor of the Ban, and $N - B$ opposed.  Aggregate cost of ban to those opposed: $\sum_{i=B+1}^N -V_i$; aggregate value of ban to those in favor: $\sum_{i=1}^B V_i$.  If those in favor can, in aggregate, scrape together more than enough to cover the costs to those opposed, they can pay off those opposed to the point of indifference, and get the benefit of the ban while those opposed are no worse off - i.e., Pareto improvement:
+-->
+The total population is $N$; let there be $F$ people in favor of the Ban, and $A = N - F$ against (without loss of generalization, let them be ordered from most in favor to most opposed).
+
+If those in favor can, in aggregate, scrape together more than enough to cover the costs to those opposed while maintaining a small surplus on their side, they can pay off those opposed to the point of indifference, with a few paid off above the point of indifference to change their vote.  Those in favor each chip in a side payment $p_{i,F} = V_i - r_F$, where $r_F$ is an arbitrarily small residual to keep them in favor rather than being just indifferent to the ban.
+$$U_i^F(X_i - p_{i,F}, 1) = U_i^F(X_i - V_i + r_F, 1) > U_i^F(X_i - V_i, 1) = U_i^F(X_i, 0)$$
+So all those for the ban are still better off if the ban passes than if it does not.
+
+If these side payments are aggregated and used to buy off those against by paying their WTP plus a small residual, i.e. $p_{i,A} = -V_i + r_A$ (negative $V_i$ because to these people, $V_i < 0$):
+$$U_i^A(X_i + p_{i,A}, 1) = U_i^A(X_i - V_i + r_A, 1) > U_i^A(X_i - V_i, 1) = U_i^A(X_i, 0)$$
+So in the event of the ban, those against would be marginally better off than in the no-ban case.  So assuming these side payments exist, then the sum of the payments from those in favor can pay off the sum of costs of those against.  The ban occurs, and those in favor get the benefit of the ban while those opposed are no worse off - i.e., Pareto improvement.
+
+To prove it, assume the side payments described above exist; also let $r_A$ and $r_F$ such that $\delta = \sum_{i=F+1}^N r_A - \sum_{i=1}^F r_F > 0$
+:
 \begin{align*}
-  \sum_{i=1}^B V_i &> \sum_{i=B+1}^N (-V_i)\\
-  \Leftrightarrow \sum_{i=1}^B V_i &- \sum_{i=B+1}^N (-V_i) > 0\\
-  \Leftrightarrow \sum_{i=1}^B V_i &+ \sum_{i=B+1}^N V_i > 0\\
-  \Leftrightarrow \sum_{i=1}^N V_i &> 0\\
+  \exists \vec{p}_F \text{ and } \vec{p}_A \text{ such that }\sum_{i=1}^F p_{i,F} &> \sum_{i=F+1}^N p_{i,A}\\
+  \Leftrightarrow \sum_{i=1}^F V_i + \sum_{i=1}^F r_F &> \sum_{i=F+1}^N (-V_i) + \sum_{i=F+1}^N r_A\\
+  \Leftrightarrow \sum_{i=1}^F V_i &> \sum_{i=F+1}^N (-V_i) + \delta\\
+  \Leftrightarrow \sum_{i=1}^F V_i &- \sum_{i=F+1}^N (-V_i) > \delta\\
+  \Leftrightarrow \sum_{i=1}^F V_i &+ \sum_{i=F+1}^N V_i > \delta\\
+  \Leftrightarrow \sum_{i=1}^N V_i &> \delta
 \end{align*}
 
-This can only happen when $\sum_{i=1}^N V_i > 0$.
+Since $r_A$ and $r_F$ are arbitrarily small, $\delta > 0$ can be arbitrarily small.  Therefore, if side payments exist that create Pareto improvement, it follows that $\sum_{i=1}^N V_i > \delta > 0$, and if $\sum_{i=1}^N V_i > \delta > 0$ then side payments exist.
 
-On the other hand, if those opposed to the ban can pay off those in favor to make them indifferent to the lack of ban, then the inequalities reverse.  The ban does not pass, and those who opposed it avoid the costs of the ban while those who wanted the ban are no worse off, therefore Pareto improvement in that case as well.
+On the other hand, if those opposed to the ban can pay off those in favor to make them indifferent to the lack of ban, then the inequalities reverse and $\sum_{i=1}^N V_i < 0$.  The ban does not pass, and those who opposed it avoid the costs of the ban while those who wanted the ban are no worse off, therefore Pareto improvement occurs in that case as well.
