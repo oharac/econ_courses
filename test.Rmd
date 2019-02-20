@@ -16,8 +16,19 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+<<<<<<< HEAD
+
+```{r cars} random change by Berto
+=======
+
+chris <- "is Ken's hero"
+=======
+
+Summary Here
+=======
 ```{r cars}
 chris <- "might be stupid"
+>>>>>>> 34053010c22a6e1537bf322130fd9b4c1267ddc6
 ```
 
 ## Including Plots
