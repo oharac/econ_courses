@@ -1,0 +1,72 @@
+---
+title: | 
+  | \hfill \Large{Casey O'Hara}
+author: |
+  | \hfill Econ 230B
+date: |
+  | \hfill `r Sys.Date()`
+output:
+  pdf_document:
+    toc: no
+    number_sections: false
+  html_document:
+    toc: no
+    number_sections: false
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{tikz-qtree}
+  - \usepackage{pgfplots}
+  - \usepackage{amsmath}
+  - \usepackage{mathrsfs}
+---
+
+``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+
+knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
+                      echo = FALSE, message = FALSE, warning = FALSE)
+
+source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
+### loads tidyverse packages, defines helper functions
+
+library(latex2exp)
+
+```
+
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\LL}{\mathscr{L}}
+
+# Reflections on Congestion Externalities readings
+
+Readings referenced in this reflection:
+
+<!-- * Arnott, R., de Palma, A., & Lindsey, R. (1993). A Structural Model of Peak-Period Congestion: A Traffic Bottleneck with Elastic Demand. The American Economic Review, 83(1), 20. -->
+* Arnott, R., & Small, K. (1994). The economics of traffic congestion. American Scientist, 82(5), 446–455.
+* MacKie-Mason, J. K., & Varian, H. R. (1994). Some economics of the Internet. Presented at the Tenth Michigan Public Utility Conference, Western Michigan University.
+* Vickrey, W. (1963). Pricing and resource allocation in transportation and public utilities. American Economic Review, 53(2), 452–465.
+* Vickrey, W. S. (1969). Congestion Theory and Transport Investment. The American Economic Review, 59(2), 11.
+
+Bonus reading:
+
+* Varian, H. R. (2016). How to Build an Economic Model in Your Spare Time. The American Economist, 61(1), 10.
+    * I found this on Hal Varian's page - not related to congestion externalities at all, but very interesting and enlightening.
+    
+While I am not particularly interested in the economics of transportation, it's pretty easy to see connections to the fields I am more interested in.  Also, as a long-time resident of the SF Bay Area, many of the issues discussed in these readings could readily be applied to problems with the SF Bay transportation network.
+
+Vickrey's 1963 Pricing and Resource Allocation piece provides a very readable and clear conceptual description of the problem of congestion and the potential for tolls, rather than expansion of capacity, for finding more efficient solutions to congested transportation networks: 
+
+> If, under conditions similar to the above, the levying of congestion charges is either an actuality or an alternative under consideration, benefits from the expansion of capacity are likely to be both smaller and less capricious in their behavior than if no pricing is contemplated.
+
+While most of the math is made clear in the 1969 followup, I did find one more quote in this paper to be particularly interesting: "The delusion still persists that the primary role of pricing should always be that of financing the service rather than that of promoting economy in its use."  This resonates because if I recall correctly, the tolls over the various SF Bay bridges were originally (ostensibly) put into place to fund the bridges' construction (and perhaps maintenance).  And yet, the tolls still exist nearly 80 years later, and only increase!  The messaging of CalTrans may need some work to educate the public that those tolls are no longer for paying for past construction, but to drive efficiencies in Bay Area traffic.  (One more choice quote: "It has been said that if nothing stops the growth of populations but misery and starvation, then the population will grow until it is miserable and starves.")
+
+Vickrey's 1969 paper follows up with the mathematical derivations of his congestion model.  Conceptually, seeing the math laid out here and in class, it seems quite intuitive that while expanding a congested road may be an obvious solution, that expansion is entirely wasted for the non-congested times of day, and thus shifting incentives to balance the traffic more efficiently on the existing infrastructure through judicious application of tolls should be a first consideration.  The paper presents the benefits of variable tolls as not only creating no excess burden, but no burden at all!  However, at the time of this publication, variable tolls must have been challenging.
+
+Sticking with the traffic context, technology today creates huge opportunities for reducing congestion through Vickrey-style tolls.  It is now feasible to create tolls that readily vary minute-by-minute or mile-by-mile according to road condition - electronic signs to communicate tolls to drivers, as well as EZ Pass transmitters to collect those tolls per small portions of a route, give immense flexibility to manage congestion (I've seen these between Boston and New York, though not in the Bay Area yet) (this advent of technology is noted in the 1994 Arnott et al paper as well).  However, it might be even more effective if such tolls could be observed before deciding on a route or even a transportation method to get to work in the first place - e.g. Waze or Google Maps.  
+
+Which brings us to Arnott et al (1994).  The 1993 Arnott et al. paper builds on Vickrey's model but I found this one more conceptually intuitive and entertaining (and the photos of the models are quite adorable).  Here the authors describe three paradoxes of traffic network design that highlight some very counterintuitive results about highway expansion: "The traffic we see does not represent the full demand for peak travel at the prevailing monetary cost" since congestion deters some commuters; and "Because drivers do not pay for the time loss they impose on others, they make socially inefficient choices" about travel, a la Tragedy of the Commons.  First, the Pigou-Knight-Downs paradox, which says that expansion of capacity may not reduce congestion because it will actually increase demand to soak up that new capacity. Second, the Downs-Thompson paradox, which shows that in some cases increasing capacity actually *increases* travel time - when considering alternate public transportation systems such as a train.  Third, the Braess paradox, which shows that adding a new link between routes in a congested system can potentially increase overall congestion.  
+
+These paradoces might be seen in the Bay Area in a few ways.  Downs-Thompson may show itself in the interplay between auto traffic and CalTrain/BART traffic: increasing capacity may draw commuters away from these alternate methods, resulting in shorter or fewer trains, increasing wait time.  However, the alternate system can also be flexible in terms of adding more trains at sporadic peak times (e.g. Giants games) as long as effective communication gets this information to the commuters.  Another more recent example may be interesting to study - the authors describe that a third route (such as subsidized vanpools) may draw commuters away from the public transportation already in place.  The advent of Google and Apple buses from SF and Oakland to Mountain View/Cupertino has raised the ire of people decrying gentrification, but these also steal people away from more plebian public transportation, either decreasing the quality/quantity of BART/CalTrain service or forcing those services to increase prices to make up for reduced revenue.
+
+Braess' paradox seems particularly relevant to the Bay, with its parallel north-south highways connected by a limited number of (potentially congested) bridges that occasionally close for maintenance, construction, or occasionally earthquakes.  I wonder if Braess' Paradox was observable in a few key cases? On days when the Bay Bridge was closed (e.g. certain weekends during the construction of the new east span, or during the long closure after the 1989 Loma Prieta quake), I wonder if by removing a congested causeway, it may create a sort of reverse Braess situation (or conversely, after reopening, a regular Braess situation).  However, during the construction of the new eastern span of the Bay Bridge, periodic closures were announced well ahead of time - if any of these bled over into work weeks, perhaps commuters took extra effort to avoid commuting at all, opting for telecommuting or public transportation.
+
+
