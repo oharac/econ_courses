@@ -1,46 +1,9 @@
----
-title: | 
-  | \hfill \Large{Casey O'Hara}
-author: |
-  | \hfill Econ 230B
-date: |
-  | \hfill `r Sys.Date()`
-output:
-  pdf_document:
-    toc: no
-    number_sections: false
-  html_document:
-    toc: no
-    number_sections: false
-header-includes: 
-  - \usepackage{tikz}
-  - \usepackage{tikz-qtree}
-  - \usepackage{pgfplots}
-  - \usepackage{amsmath}
-  - \usepackage{mathrsfs}
----
 
-``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
-
-knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
-                      echo = FALSE, message = FALSE, warning = FALSE)
-
-source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
-### loads tidyverse packages, defines helper functions
-
-library(latex2exp)
-
-```
-
-\newcommand{\EE}{\mathbb{E}}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\LL}{\mathscr{L}}
-
-# Reflections on Congestion Externalities readings
+## Reflections on Congestion Externalities readings
 
 Readings referenced in this reflection:
 
-<!-- * Arnott, R., de Palma, A., & Lindsey, R. (1993). A Structural Model of Peak-Period Congestion: A Traffic Bottleneck with Elastic Demand. The American Economic Review, 83(1), 20. -->
+* Arnott, R., de Palma, A., & Lindsey, R. (1993). A Structural Model of Peak-Period Congestion: A Traffic Bottleneck with Elastic Demand. The American Economic Review, 83(1), 20.
 * Arnott, R., & Small, K. (1994). The economics of traffic congestion. American Scientist, 82(5), 446–455.
 * MacKie-Mason, J. K., & Varian, H. R. (1994). Some economics of the Internet. Presented at the Tenth Michigan Public Utility Conference, Western Michigan University.
 * Vickrey, W. (1963). Pricing and resource allocation in transportation and public utilities. American Economic Review, 53(2), 452–465.
@@ -49,7 +12,7 @@ Readings referenced in this reflection:
 Bonus reading:
 
 * Varian, H. R. (2016). How to Build an Economic Model in Your Spare Time. The American Economist, 61(1), 10.
-    * I found this on Hal Varian's page - not related to congestion externalities at all, but very interesting and enlightening.
+    * I found this on Hal Varian's page - not related to congestion externalities at all, but fun, interesting, and enlightening.
     
 While I am not particularly interested in the economics of transportation, it's pretty easy to see connections to the fields I am more interested in.  Also, as a long-time resident of the SF Bay Area, many of the issues discussed in these readings could readily be applied to problems with the SF Bay transportation network.
 
@@ -69,4 +32,6 @@ These paradoces might be seen in the Bay Area in a few ways.  Downs-Thompson may
 
 Braess' paradox seems particularly relevant to the Bay, with its parallel north-south highways connected by a limited number of (potentially congested) bridges that occasionally close for maintenance, construction, or occasionally earthquakes.  I wonder if Braess' Paradox was observable in a few key cases? On days when the Bay Bridge was closed (e.g. certain weekends during the construction of the new east span, or during the long closure after the 1989 Loma Prieta quake), I wonder if by removing a congested causeway, it may create a sort of reverse Braess situation (or conversely, after reopening, a regular Braess situation).  However, during the construction of the new eastern span of the Bay Bridge, periodic closures were announced well ahead of time - if any of these bled over into work weeks, perhaps commuters took extra effort to avoid commuting at all, opting for telecommuting or public transportation.
 
+Finally, the Economics of the Internet paper by MacKie-Mason and Varian (1994) was interesting first off as a primer in how the internet functions (though I imagine things have changed in the past 25 years), but also in light of both the Net Neutrality debate and the way cable broadband ISPs have essentially been granted monopolies.  ISPs already charge differentially based on general top upload/download speeds, but if they were to charge consumers or producers based on type of content or a congestion tax, this seems to violate the basic idea of net neutrality - so does adherence to principles of net neutrality necessarily result in an inefficient provision of teh internetz?
 
+Tying all these concepts to something more applicable to my own interests, it seems like congestion externalities could be an important consideration when modeling such things as sense of place.  This is mentioned in several of the above papers, with Arnott et al (1993) providing some concrete examples.  Outdoor recreational activities are often valued for a sense of remoteness and separation from the crowd.  A crowded beach or hiking path or patch of coral reef detracts from the experience of nature.  When considering whether a community dependent on small-scale fisheries should consider tourism as an alternate source of income, those tourists may reduce that sense of place valued by the residents, and depending on the size and seasonality of the attributes of the community, are likely to adversely affect the experiences of the tourists themselves.  It seems that seasonal pricing of hotels and similar amenities to capture value of increased demand, also creates a signal that reduces that demand - this is basic market economics. But if congestion were a problem of concern to the community, then perhaps an additional tax on hotel rates could serve a similar purpose as the road tolls to establish a more efficient solution.

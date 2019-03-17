@@ -1,0 +1,22 @@
+
+## Reflections on Public Goods with Exclusion readings
+
+Readings referenced in this reflection:
+
+* Bergstrom, C. T., & Bergstrom, T. C. (2004). The costs and benefits of library site licenses to academic journals. Proceedings of the National Academy of Sciences, 101(3), 897–902. https://doi.org/10.1073/pnas.0305628101
+* Bergstrom, T. C. (2001). Free Labor for Costly Journals? Journal of Economic Perspectives, 15(4), 183–198. https://doi.org/10.1257/jep.15.4.183
+* Minasian, J. R. (1964). Television Pricing and the Theory of Public Goods. The Journal of Law and Economics, 7, 71–80. https://doi.org/10.1086/466600
+* Oakland, W. H. (1974). Public Goods, Perfect Competition, and Underproduction. Journal of Political Economy, 82(5), 927–939. https://doi.org/10.1086/260247
+* Samuelson, P. A. (1964). Public Goods and Subscription TV: Correction of the Record. The Journal of Law and Economics, 7, 81–83. https://doi.org/10.1086/466601
+
+This unit was definitely the most challenging for me conceptually - both in the math and applying it to environmental contexts.  In the Oakland (1974) reading (as well as Minasian's seeming straw man challenge of Samuelson and his rejoinder) the key seems to be the zero marginal cost of additional units of production or supply (e.g. from Demsetz 1970 once you've recorded your TV programming at constant cost of production $c$ and set up a broadcasting system, transmission costs are zero and exclusion methods such as a scrambled signal/unscrambler device are costless).  But then once a good has been produced, additional consumers are inclined to understate their preferences to achieve lower prices (since marginal costs are known to be zero), until no one wants to pay anything at all.
+
+Oakland proceeds by assuming that the producer can determine some fixed price at which consumers can purchase full access to the good.  This circumvents the ability of consumers to low-ball their bid, and thus circumvents the problem of a Prisoner's Dilemma style race to the bottom.  As long as enough consumers value the good enough to pay the fixed price, the good will be produced. He also notes that different collective goods consumed at different intensity levels will necessarily be priced differently (assuming constant production cost $c$ and based on price $P = c/n$ for $n$ consumers).
+
+He notes that for a price greater than $P = c/N < c/n$, the producer could reduce the price to attract more consumers, but would then reduce revenue from existing consumers exactly equalling the increase in revenue from new consumers, so there is no incentive to do so; thus this is a stable equilibrium.
+
+Minasian hints at a connection to the prior unit - in that the frequencies used to broadcast TV (and radio and cell and whatnot) have an opportunity cost.  While the actual broadcasting to additional consumers may have no marginal cost, the provision of additional broadcasters might actually cause a congestion externality as when two radio stations with similar frequencies may interfere with each others' signals.  
+
+I wonder if this general concept of "excludable" public goods can be related to the concept of "access" - since what you're really paying for is a key of sorts to unlock your ability to consume the public good.  This may just be restating the idea of a club good - while a nice state beach (at low visitor levels, prior to onset of congestion problems) is technically open to anyone from the public, it can also be made somewhat excludable by putting a ranger booth at the entrance requiring a constant price for access to the beach.  Or more interestingly, you may have de jure property rights to benefit from some resource (such as harvesting some marine resource in a low impact manner) but conditions are such that, de facto, you cannot actually access the resource - e.g. it is prohibitively costly to get to the location.
+
+The applications to academic journals in the various Bergstrom papers seems interesting - particularly since I hope to stick to an all-open-source-all-the-time philosophy in my work, which puts me into the "author pays" camp.  But even more relevant is the recent decision by UC to not renew subscriptions with Elsevier - that could impose a big barrier on researchers.  However, it seems, just as with Napster and free access to digital music, that there are a number of ways around Elsevier's pay wall particularly for articles that have been around a while - the internet seems to be littered with pdf versions of articles (as on Ted's Econ 230 website!).

@@ -1,42 +1,5 @@
----
-title: | 
-  | \hfill \Large{Casey O'Hara}
-author: |
-  | \hfill Econ 230B
-date: |
-  | \hfill `r Sys.Date()`
-output:
-  pdf_document:
-    toc: no
-    number_sections: false
-  html_document:
-    toc: no
-    number_sections: false
-header-includes: 
-  - \usepackage{tikz}
-  - \usepackage{tikz-qtree}
-  - \usepackage{pgfplots}
-  - \usepackage{amsmath}
-  - \usepackage{mathrsfs}
----
 
-``` {r setup, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
-
-knitr::opts_chunk$set(fig.width = 6, fig.height = 4, fig.path = 'figs/',
-                      echo = FALSE, message = FALSE, warning = FALSE)
-
-source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
-### loads tidyverse packages, defines helper functions
-
-library(latex2exp)
-
-```
-
-\newcommand{\EE}{\mathbb{E}}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\LL}{\mathscr{L}}
-
-# Reflections on Externality readings
+## Reflections on Externality readings
 
 Readings referenced in this discussion:
 
