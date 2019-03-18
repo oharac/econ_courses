@@ -30,9 +30,9 @@ source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
 
 ```
 
-# Reading Reflections
+# Reading Reflections: Public Finance Economics
 
-These are organized roughly by the categories and topics on Ted Bergstrom's site in the order presented in class. My goal is not to summarize the math and technical details of each paper, as the problem sets focused on these, but rather to tie together the big ideas of each topic and try to relate them to the general direction of my research, stakeholder preferences around marine conservation as a public good.
+These are organized roughly by the categories and topics on Ted Bergstrom's site in the order presented in class. My goal is not to summarize the math and technical details of each paper, as the problem sets focused on these, but rather to tie together the big ideas of each topic and try to relate them to the general direction of my research, stakeholder preferences around marine conservation as a public good.  To me, the concepts are the most important and interesting part - I can always look up the equations when I need them!
 
 ```{r, child = '1_intro_reflections.md'}
 ```
@@ -65,4 +65,9 @@ These are organized roughly by the categories and topics on Ted Bergstrom's site
 \newpage
 
 ```{r, child = '7_anticommons_reflections.md'}
+```
+
+\newpage
+
+```{r, child = '8_cost_benefit_reflections.md'}
 ```
