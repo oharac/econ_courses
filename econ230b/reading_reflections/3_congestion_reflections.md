@@ -12,7 +12,7 @@ Readings referenced in this reflection:
 Bonus reading:
 
 * Varian, H. R. (2016). How to Build an Economic Model in Your Spare Time. The American Economist, 61(1), 10.
-    * I found this on Hal Varian's page - not related to congestion externalities at all, but fun, interesting, and enlightening.
+    * I found this on Hal Varian's page - fun, interesting, and enlightening.
     
 While I am not particularly interested in the economics of transportation, it's pretty easy to see connections to the fields I am more interested in.  Also, as a long-time resident of the SF Bay Area, many of the issues discussed in these readings could readily be applied to problems with the SF Bay transportation network.
 

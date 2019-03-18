@@ -32,20 +32,37 @@ source('https://raw.githubusercontent.com/oharac/src/master/R/common.R')
 
 # Reading Reflections
 
-These are organized roughly by the categories and topics on Ted's site in the order presented in class. My goal is not to summarize the math and technical details of each paper, as the problem sets focused on these, but rather to tie together the big ideas of each topic and try to relate them to the general direction of my research, stakeholder preferences around marine conservation as a public good.
+These are organized roughly by the categories and topics on Ted Bergstrom's site in the order presented in class. My goal is not to summarize the math and technical details of each paper, as the problem sets focused on these, but rather to tie together the big ideas of each topic and try to relate them to the general direction of my research, stakeholder preferences around marine conservation as a public good.
 
 ```{r, child = '1_intro_reflections.md'}
 ```
 
+\newpage
+
 ```{r, child = '2_externality_reflections.md'}
 ```
+
+\newpage
 
 ```{r, child = '3_congestion_reflections.md'}
 ```
 
+\newpage
+
 ```{r, child = '4_exclusion_reflections.md'}
 ```
+
+\newpage
 
 ```{r, child = '5_public_choice_theory_reflections.md'}
 ```
 
+\newpage
+
+```{r, child = '6_preference_revelation_reflections.md'}
+```
+
+\newpage
+
+```{r, child = '7_anticommons_reflections.md'}
+```
